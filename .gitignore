@@ -1,0 +1,11 @@
+/Library/
+*.sln
+*.csproj
+*.svn
+*.userprefs
+*.apk
+/Temp
+/obj
+*.suo
+/xcode_proj/
+/Temp/
