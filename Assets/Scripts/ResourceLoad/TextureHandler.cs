@@ -36,11 +36,6 @@ namespace ResourceLoad
             LoadTexture(directory + name, directory + "0", textureLoaded);
         }
 
-        public void LuaLoadTexture(string path, string default_path, TextureLoadedCallBack textureLoaded)
-        {
-            LoadTexture(path, default_path, textureLoaded);
-        }
-
         public void LoadTexture(string path, string default_path, TextureLoadedCallBack textureLoaded)
         {
             if (mTextureTable.ContainsKey(path))
