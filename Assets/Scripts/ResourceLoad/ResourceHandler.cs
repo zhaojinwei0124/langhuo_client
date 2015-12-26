@@ -8,46 +8,9 @@ using System.IO;
 public delegate void LoadFinishCb();
 public delegate void LoadGoFinishCb(GameObject go);
 
-
 namespace ResourceLoad
 {
 	public delegate void ResLoadedCallBack (Object res);
-
-    public class ResLifeManager : Single<ResLifeManager>
-    {
-        public static int LIFE_TIMES = 3;
-        private Dictionary<string, int> mLifeTime = new Dictionary<string, int>();
-
-        public void Live(string path)
-        {
-            mLifeTime[path] = LIFE_TIMES;
-        }
-
-        public void Die(string path)
-        {
-            mLifeTime[path] = -1;
-        }
-
-        public bool canRelease(string key)
-        {
-            return mLifeTime.ContainsKey(key) && mLifeTime[key] <= 0;
-        }
-
-        public void Remove(string path)
-        {
-            mLifeTime.Remove(path);
-        }
-
-        public void Refresh()
-        {
-            List<string> keys = mLifeTime.Keys.ToList();
-            foreach (string key in keys)
-            {
-                mLifeTime[key]--;
-            }
-        }
-    }
-
 
 	public class ResourceHandler:Single<ResourceHandler>
 	{
@@ -73,7 +36,6 @@ namespace ResourceLoad
 		
 		public void UnLoadRes(string name)
 		{
-			ResLifeManager.Instance.Die(name);
 			if(mResourceTable.ContainsKey(name))
 			{
 				if(!(mResourceTable[name] is UnityEngine.GameObject))
@@ -115,7 +77,6 @@ namespace ResourceLoad
         public void LoadRes(string path, ResLoadedCallBack resLoaded, bool noticeError, bool compress)
         {
             if (path == null) return;
-            ResLifeManager.Instance.Live(path);
             if (mResourceTable.ContainsKey(path))
             {
                 resLoaded(mResourceTable[path]);
@@ -141,7 +102,6 @@ namespace ResourceLoad
             }
             else
             {
-                ResLifeManager.Instance.Live(path);
                 if (mResourceTable.ContainsKey(path))
                 {
                     resLoaded(mResourceTable[path]);
@@ -173,13 +133,8 @@ namespace ResourceLoad
 			}
 			foreach(string key in keys)
 			{
-
-				if(ResLifeManager.Instance.canRelease(key))
-				{				
-					mResourceTable[key] = null;
-					mResourceTable.Remove(key);
-					ResLifeManager.Instance.Remove(key);
-				}
+				mResourceTable[key] = null;
+				mResourceTable.Remove(key);
 			}
 		}
 

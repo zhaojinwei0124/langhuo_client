@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using GameCore;
 
-
 namespace ResourceLoad
 {
     public delegate void TextureLoadedCallBack(Texture2D texture);
@@ -14,7 +13,6 @@ namespace ResourceLoad
 
         public void UnLoadRes(string name)
         {
-            ResLifeManager.Instance.Die(name);
             if (mTextureTable.ContainsKey(name))
             {
                 Texture2D.Destroy(mTextureTable[name]);
@@ -32,26 +30,6 @@ namespace ResourceLoad
             return null;
         }
 
-        public void N2LoadSmallCardByPicId(int id, TextureLoadedCallBack textureLoaded)
-        {
-            string directory = "Texture/Portrait/";
-            LoadTexture(directory + id, directory + "210000", textureLoaded);
-        }
-
-        public void N2LoadIconByPicID(int pid, TextureLoadedCallBack textureLoaded)
-        {
-            if ((pid >= 210000) && (pid <= 219999))
-            {
-                string directory = "Texture/Portrait/";
-                LoadTexture(directory + pid, directory + "210000", textureLoaded);
-            }
-            else
-            {
-                string directory = "Texture/Item/";
-                LoadTexture(directory + pid, directory + "0", textureLoaded);
-            }
-        }
-
         public void LoadUITexture(string name, TextureLoadedCallBack textureLoaded)
         {
             string directory = "Texture/UI/";
@@ -65,7 +43,6 @@ namespace ResourceLoad
 
         public void LoadTexture(string path, string default_path, TextureLoadedCallBack textureLoaded)
         {
-            ResLifeManager.Instance.Live(path);
             if (mTextureTable.ContainsKey(path))
             {
                 textureLoaded(mTextureTable[path]);
@@ -78,8 +55,6 @@ namespace ResourceLoad
                 textureLoaded(texture);
                 return;
             }
-
-
             if (path.Equals(default_path))
                 return;
             if (!string.IsNullOrEmpty(default_path))
@@ -98,14 +73,9 @@ namespace ResourceLoad
             }
             foreach (string key in keys)
             {
-                if (ResLifeManager.Instance.canRelease(key) && mTextureTable.ContainsKey(key))
-                {
-                    Resources.UnloadAsset(mTextureTable[key]);
-
-                    mTextureTable[key] = null;
-                    mTextureTable.Remove(key);
-                    ResLifeManager.Instance.Remove(key);
-                }
+                Resources.UnloadAsset(mTextureTable[key]);
+                mTextureTable[key] = null;
+                mTextureTable.Remove(key);
             }
         }
     }

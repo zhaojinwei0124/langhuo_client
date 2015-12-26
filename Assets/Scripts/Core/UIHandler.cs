@@ -470,7 +470,6 @@ namespace GameCore
                 curPage.inStack = false;
                 curPage.view.Param = curPage.param;
                 SetCurrentPage(curPage);
-                RefreshLifeTimes();
                 if (PageStack.Count == 1)
                 {
                     ClearAllMemory();
@@ -503,7 +502,6 @@ namespace GameCore
                     curPage.go = go;
                     curPage.view.Param = curPage.param;
                     SetCurrentPage(curPage);
-                    RefreshLifeTimes();
                 }, true);
             }
         }
@@ -562,14 +560,6 @@ namespace GameCore
             }
         }
 
-        private void RefreshLifeTimes()
-        {
-            ResLifeManager.Instance.Refresh();
-            foreach (PageInfo info in PageSlots.Values)
-            {
-                info.lifeTimes--;
-            }
-        }
 
         public void ClearAllMemory()
         {

@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using Network;
 
 
-public class MenuBar : MonoBehaviour {
+public class MenuBar : MonoBehaviour 
+{
 
     public UITab[] tabs;
 
     public GameObject[] panels;
 
-
-
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         UIEventListener.Get(tabs[0].gameObject).onClick=(go)=>Show(0);
         UIEventListener.Get(tabs[1].gameObject).onClick=(go)=>Show(1);
         UIEventListener.Get(tabs[2].gameObject).onClick=(go)=>Show(2);
-        UIEventListener.Get(tabs[3].gameObject).onClick=(go)=>Show(3);
-        UIEventListener.Get(tabs[4].gameObject).onClick=(go)=>Show(4);
 	}
 	
 	void Update()
