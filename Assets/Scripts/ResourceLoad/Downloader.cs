@@ -6,12 +6,10 @@ namespace ResourceLoad
 {
     public class Downloader 
     {
-
         // 已解压的Asset列表 [prefabPath, asset]
         private Dictionary<string, Object> dicAsset = new Dictionary<string, Object>();
         // "正在"加载的资源列表 [prefabPath, www]
         private Dictionary<string, WWW> dicLoadingReq = new Dictionary<string, WWW>();
-
 
         public string ASSET_URL = Network.GameServer.BASE_URL+"ClientRes/";
 
@@ -29,7 +27,6 @@ namespace ResourceLoad
             return obj;
         }
       
-
         // name表示prefabPath，eg:Prefab/Pet/ABC
         public void LoadAsync(string name)
         {
@@ -54,8 +51,8 @@ namespace ResourceLoad
         private IEnumerator AsyncLoadCoroutine(string name, System.Type type)
         {
             string assetBundleName = name;
-            string url = ASSET_URL;
-            int verNum = 1.0;
+            string url = ASSET_URL+name;
+            int verNum = 1;
             
             Debug.Log("WWW AsyncLoad name =" + assetBundleName + " versionNum = " + verNum);
             if (Caching.IsVersionCached(url, verNum) == false)
@@ -74,7 +71,6 @@ namespace ResourceLoad
             dicLoadingReq.Remove(name);
             www.assetBundle.Unload(false);
             www = null;
-            // Debug.Log("WWW AsyncLoad Finished " + assetBundleName + " versionNum = " + verNum);
         }
         
         public bool IsResLoading(string name)
