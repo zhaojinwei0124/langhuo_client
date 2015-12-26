@@ -33,10 +33,10 @@ namespace ResourceLoad
         public void LoadUITexture(string name, TextureLoadedCallBack textureLoaded)
         {
             string directory = "Texture/UI/";
-            LoadTexture(directory + name, directory + "0", textureLoaded);
+            LoadTexture(directory + name,  textureLoaded);
         }
 
-        public void LoadTexture(string path, string default_path, TextureLoadedCallBack textureLoaded)
+        public void LoadTexture(string path, TextureLoadedCallBack textureLoaded)
         {
             if (mTextureTable.ContainsKey(path))
             {
@@ -50,13 +50,9 @@ namespace ResourceLoad
                 textureLoaded(texture);
                 return;
             }
-            if (path.Equals(default_path))
-                return;
-            if (!string.IsNullOrEmpty(default_path))
-            {
-                Texture2D text = Resources.Load(default_path, typeof(Texture2D)) as Texture2D;
-                if (text != null) textureLoaded(text);
-            }
+
+           // Downloader.Instance.LoadTexture(path,textureLoaded);
+          
         }
 
         public void Release()

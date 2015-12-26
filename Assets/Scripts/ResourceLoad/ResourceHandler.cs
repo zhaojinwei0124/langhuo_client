@@ -49,20 +49,6 @@ namespace ResourceLoad
 			}
 		}
 		
-#if UNITY_STANDALONE 	
-		public string LoadText(string name)
-		{
-			string path =  Application.dataPath;
-			//Directory.CreateDirectory(path+"/nba_test");
-			path += "/en/"+name +".txt";
-			if(File.Exists(path))
-			{
-				string info = File.ReadAllText(path);
-				return info;
-			}
-			return "";
-		}
-#endif
 		
 		public void LoadRes (string path, ResLoadedCallBack resLoaded)
 		{

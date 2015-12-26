@@ -11,7 +11,9 @@ namespace Network
     public class GameServer : Single<GameServer>
     {
 
-        public const string BASE_URL = "http://localhost/langjian/Netframework/";
+        public const string BASE_URL = "http://localhost/langhuo/";
+
+        public const string NET_URL = BASE_URL+ "Netframework/";
 
         public enum connectStatusType
         {
@@ -62,7 +64,7 @@ namespace Network
                     form.AddField(post_arg.Key, post_arg.Value);
                     orign += post_arg.Value;
                 }
-                GameEngine.Instance.StartCoroutine(postConnect(BASE_URL + url+".php", form, response));
+                GameEngine.Instance.StartCoroutine(postConnect(NET_URL + url+".php", form, response));
             }
         }
 
@@ -71,7 +73,7 @@ namespace Network
         {
             if (url != null)
             {
-               GameEngine.Instance.StartCoroutine(connect(BASE_URL + url, response));
+               GameEngine.Instance.StartCoroutine(connect(NET_URL + url, response));
             }
         }
 
