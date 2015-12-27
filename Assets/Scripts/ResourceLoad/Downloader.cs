@@ -2,8 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+/// <summary>
+/// author：huailiang.peng
+/// data:   2015,12,27
+/// func:   load remote asset 
+/// </summary>
 namespace ResourceLoad
 {
+    
     public delegate void LoadedCallBack(Object obj);
 
     public struct CallBackNode
@@ -17,6 +24,7 @@ namespace ResourceLoad
             cb = _cb;
         }
     };
+
 
     public class Downloader : Single<Downloader>
     {
@@ -56,14 +64,13 @@ namespace ResourceLoad
             }
         }
 
-        // name表示prefabPath，eg:Prefab/Pet/ABC
         public void LoadAsync(string name, System.Type type)
         {
-            // 如果已经下载，则返回
+            // if has downloaded, return 
             if (dicAsset.ContainsKey(name)) return;
-            // 如果正在下载，则返回
+            // if is downloading, return 
             if (dicLoadingReq.ContainsKey(name)) return;
-            // 如果没下载，则开始下载
+            // if not download, start download 
             GameEngine.Instance.StartCoroutine(AsyncLoadCoroutine(name, type));
         }
 
@@ -92,7 +99,7 @@ namespace ResourceLoad
             www = null;
         }
 
-        //加载完成派发
+        //loaded and dispacher
         private void Dispacher(string name, Object asset)
         {
             foreach (var item in listCB)
