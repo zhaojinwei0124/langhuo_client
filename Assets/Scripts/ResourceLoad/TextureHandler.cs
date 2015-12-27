@@ -51,7 +51,7 @@ namespace ResourceLoad
                 loadedCB(texture);
                 return;
             }
-            Downloader.Instance.LoadAsync(path, typeof(Texture), loadedCB);
+            Downloader.Instance.LoadAsyncTexture(path,loadedCB);
         }
 
         public void Release()

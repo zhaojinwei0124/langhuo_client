@@ -7,39 +7,29 @@ namespace ResourceLoad
 
     public class LoadFileType
     {
-        public const string IMAGE = ".png";
+        public const string IMAGE = "png";
         // unity3d文件格式  
-        public const string UNITY3D = ".unity3d";
+        public const string UNITY3D = "unity3d";
         // 模块资源打包格式  
-        public const string MODULE_RESOURCE = ".moduleResource";
+        public const string MODULE_RESOURCE = "moduleResource";
 
-        public const string BINARY = ".binary";
+        public const string BINARY = "binary";
 
-        public const string TXT = ".txt";
+        public const string TXT = "txt";
 
-        public const string ASSET = ".assetbundle";
+        public const string ASSET = "assetbundle";
 
         // public const string JSON = "json"; 
 
         // fbx打包的assetBundle格式文件  
-        public const string FBX = ".fbx";
+        public const string FBX = "fbx";
 
-        public const string AUDIO = ".audio";
+        public const string AUDIO = "audio";
         // 字体文件  
-        public const string FONT = ".font";
+        public const string FONT = "font";
         // 二进制文件(用于后台更新)  
-        public const string BINARY_BG = ".binary_bg";
+        public const string BINARY_BG = "binary_bg";
 
-
-
-        public static string GetBundlePostfix(System.Type type)
-        {
-            if (typeof(Texture) == type) return IMAGE;
-            else if (typeof(TextAsset) == type) return TXT;
-            else if (typeof(AudioClip) == type) return AUDIO;
-            else if (typeof(AssetBundle) == type) return ASSET;
-            return UNITY3D;
-        }
 
     }
 

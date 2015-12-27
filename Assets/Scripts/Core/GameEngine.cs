@@ -14,7 +14,10 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     void Start()
     {
         Debug.Log("Game engine start.");
-       // TimerManager.Instance.AddTimer(1000, 10, (x) => Debug.Log("req: "+x));
+        ResourceLoad.Downloader.Instance.LoadAsyncTextasset("test",(obj)=>
+        {
+            Debug.Log("load txt is: "+(obj as TextAsset).text);
+        });
     }
 
     void Update()

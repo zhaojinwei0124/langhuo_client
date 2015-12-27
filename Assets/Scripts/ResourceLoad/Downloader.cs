@@ -54,6 +54,17 @@ namespace ResourceLoad
         }
 
 
+        public void LoadAsyncTexture(string name,LoadedCallBack cb)
+        {
+            LoadAsync(name,typeof(Texture),cb);
+        }
+
+
+        public void LoadAsyncTextasset(string name,LoadedCallBack cb)
+        {
+            LoadAsync(name,typeof(TextAsset),cb);
+        }
+
         public void LoadAsync(string name, System.Type type, LoadedCallBack cb)
         {
             if (dicAsset.ContainsKey(name)) cb(dicAsset[name]);
@@ -64,7 +75,7 @@ namespace ResourceLoad
             }
         }
 
-        public void LoadAsync(string name, System.Type type)
+        private void LoadAsync(string name, System.Type type)
         {
             // if has downloaded, return 
             if (dicAsset.ContainsKey(name)) return;
@@ -77,8 +88,8 @@ namespace ResourceLoad
 
         private IEnumerator AsyncLoadCoroutine(string name, System.Type type)
         {
-            string url = ASSET_URL + name + "." + LoadFileType.GetBundlePostfix(type);
-            int verNum = 1;
+            string url = ASSET_URL + name + ".assetbundle";
+            int verNum = 2;
 
             Debug.Log("WWW AsyncLoad name =" + name + " versionNum = " + verNum);
             if (Caching.IsVersionCached(url, verNum) == false)
