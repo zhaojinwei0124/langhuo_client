@@ -4,8 +4,6 @@ using GameCore;
 
 namespace ResourceLoad
 {
-    public delegate void TextureLoadedCallBack(Texture2D texture);
-
     public class TextureHandler : Single<TextureHandler>
     {
         private List<string> keys = new List<string>();
@@ -30,29 +28,30 @@ namespace ResourceLoad
             return null;
         }
 
-        public void LoadUITexture(string name, TextureLoadedCallBack textureLoaded)
+        public void LoadUITexture(string name, LoadedCallBack loadedCB)
         {
             string directory = "Texture/UI/";
-            LoadTexture(directory + name,  textureLoaded);
+            LoadTexture(directory + name, loadedCB);
         }
 
-        public void LoadTexture(string path, TextureLoadedCallBack textureLoaded)
+        /// <summary>
+        /// Load Asset check path local first and remote then
+        /// </summary>
+        public void LoadTexture(string path, LoadedCallBack loadedCB)
         {
             if (mTextureTable.ContainsKey(path))
             {
-                textureLoaded(mTextureTable[path]);
+                loadedCB(mTextureTable[path]);
                 return;
             }
             Texture2D texture = Resources.Load(path, typeof(Texture2D)) as Texture2D;
             if (texture != null)
             {
                 mTextureTable[path] = texture;
-                textureLoaded(texture);
+                loadedCB(texture);
                 return;
             }
-
-           // Downloader.Instance.LoadTexture(path,textureLoaded);
-          
+            Downloader.Instance.LoadAsync(path, typeof(Texture), loadedCB);
         }
 
         public void Release()
@@ -69,6 +68,7 @@ namespace ResourceLoad
                 mTextureTable.Remove(key);
             }
         }
+
     }
 
 }
