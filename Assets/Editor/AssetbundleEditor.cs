@@ -55,15 +55,7 @@ public class AssetbundleEditor : EditorWindow
         GUILayout.Label("选择要打包的内容");
         GUILayout.Space(5);
 
-        GUI.backgroundColor = Color.red;
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("小葵打包(selection)");
-        if (GUILayout.Button("Package"))
-        {
-            PackHimaAssets(GetBuildTarget());
-        }
-        GUILayout.EndHorizontal();
-        GUILayout.Space(10);
+
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("小葵打包   (prefab) ");
@@ -76,10 +68,21 @@ public class AssetbundleEditor : EditorWindow
         GUI.backgroundColor = Color.white;
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("选择打包");
+        GUILayout.Label("选择单个打包");
         if (GUILayout.Button("Package"))
         {
-            BuildSelectAssets(GetBuildTarget());
+            BuildSingleAsset(GetBuildTarget());
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(10);
+
+        GUI.backgroundColor = Color.red;
+        
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("选择多个打包");
+        if (GUILayout.Button("Package"))
+        {
+            BuildMultAsset(GetBuildTarget());
         }
         GUILayout.EndHorizontal();
         GUILayout.Space(10);
@@ -112,51 +115,42 @@ public class AssetbundleEditor : EditorWindow
         return BuildTarget.iPhone;
     }
    
-    /// <summary>
-    /// 资源文件目录
-    /// </summary>
     public static string GetSaveDirPath()
     {
         return EditorUtility.SaveFolderPanel("选择目录", selectPath, "select");
     }
-    
-    public static void BuildSelectAssets(BuildTarget target)
+
+    // output single file
+    public static void BuildSingleAsset(BuildTarget target)
     {
         string path = AssetbundleEditor.selectPath;
         if (path.Length != 0)
         {
-            foreach (var item in Selection.objects)
-            {
-                Debug.Log("se: " + item.name);
-            }
-            // 选择的要保存的对象
             UnityEngine.Object[] selection = Selection.GetFiltered(typeof(UnityEngine.Object),SelectionMode.DeepAssets);
-            
-            //打包
+            if(selection==null){ EditorUtility.DisplayDialog("提示", "NO SELECTION", "提示"); return; }
+            else if (selection.Length>1) { EditorUtility.DisplayDialog("提示", "Please select single file!", "提示"); return; }
+            Debug.Log("se: " + selection[0].name);
             BuildPipeline.BuildAssetBundle(null, selection, path + "/" + selection[0].name+".assetbundle",
                                            BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets, target);
         }
     }
-    
-    
-    /// <summary>
-    /// 小葵资源打包
-    /// </summary>
-    public static void PackHimaAssets(BuildTarget target)
+
+    //output multy files 
+    public static void BuildMultAsset(BuildTarget target)
     {
         string path = AssetbundleEditor.selectPath;
         if (path.Length != 0)
         {
-            foreach (var item in Selection.objects)
+            UnityEngine.Object[] selections = Selection.GetFiltered(typeof(UnityEngine.Object),SelectionMode.DeepAssets);
+            foreach(var item in selections)
             {
                 Debug.Log("se: " + item.name);
+                BuildPipeline.BuildAssetBundle(item, null, path + "/" + item.name+".assetbundle",
+                                               BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets, target);
             }
-            UnityEngine.Object[] selection = Selection.objects;
-
-            BuildPipeline.BuildAssetBundle(null, selection, path + "/" + "CHR_Himawari.assetbundle",
-                                           BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets, target);
         }
     }
+
     
     /// <summary>
     /// 固定场景小葵资源打包

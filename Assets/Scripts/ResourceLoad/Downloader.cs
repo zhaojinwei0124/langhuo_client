@@ -89,7 +89,7 @@ namespace ResourceLoad
         private IEnumerator AsyncLoadCoroutine(string name, System.Type type)
         {
             string url = ASSET_URL + name + ".assetbundle";
-            int verNum = 2;
+            int verNum = 3;
 
             Debug.Log("WWW AsyncLoad name =" + name + " versionNum = " + verNum);
             if (Caching.IsVersionCached(url, verNum) == false)
