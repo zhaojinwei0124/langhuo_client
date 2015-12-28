@@ -91,7 +91,7 @@ namespace ResourceLoad
             string url = ASSET_URL + name + ".assetbundle";
             int verNum = 3;
 
-            Debug.Log("WWW AsyncLoad name =" + name + " versionNum = " + verNum);
+         //   Debug.Log("WWW AsyncLoad name =" + name + " versionNum = " + verNum);
             if (Caching.IsVersionCached(url, verNum) == false)
                 Debug.Log("Version Is not Cached, which will download from net!");
 
