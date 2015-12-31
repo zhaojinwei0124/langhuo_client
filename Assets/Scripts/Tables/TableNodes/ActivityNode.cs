@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace GameCore
+namespace Config
 {
     public struct ActivityNode
     {

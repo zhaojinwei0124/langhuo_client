@@ -18,15 +18,14 @@ namespace Network
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("ID", userId);
-           // param.Add("weibo_id", weiboId);
             HttpPost("user/search", param, response);
         }
 
-        public void GetWorldRankList(int scope, OnResponse response)
+  
+        public void GetItems(OnResponse response)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("scope", scope.ToString());
-            HttpPost("score/searchRedis", param, response);
+            HttpPost("item/search", param, response);
         }
 
         public void GetUserWorldRandList(string userId, int scope, OnResponse response)

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using GameCore;
+using Config;
 
 
 public sealed class GameEngine : MonoSingle<GameEngine>
@@ -16,16 +17,18 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     {
         Debug.Log("Game engine start.");
 
-        ReadTables.Instance.InitAll();
+        Tables.Instance.InitAll();
 
-        ActivityNode[] mlist = ReadTables.Instance.GetTable<ActivityNode[]>("activity");
+        Tables.Instance.GetTable<ActivityNode[]>("activity", (mlist) =>
+        {
+            Debug.Log("length: " + mlist.Length);
+            
+            foreach (var item in mlist)
+            {
+                Debug.LogError("item: " + item.description + " name: " + item.name);
+            }
+        });
 
-//        Debug.Log("length: " + mlist.Length);
-//
-//        foreach (var item in mlist)
-//        {
-//            Debug.LogError("item: " + item.description + " name: " + item.name);
-//        }
     }
 
     void Update()

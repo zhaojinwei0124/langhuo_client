@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using DeJson;
+using ResourceLoad;
+using System;
 
-namespace GameCore
+/// <summary>
+/// author: huailiang.peng
+/// data:   2015.12.31
+/// func:   read or get config tables from remote and local
+/// </summary>
+
+namespace Config
 {
-    public class ReadTables : Single<ReadTables>
+    public class Tables : Single<Tables>
     {
 
         Deserializer _deserial;
@@ -20,6 +28,7 @@ namespace GameCore
         }
 
         string[] tables = new string[]{"items","activity"};
+
         Dictionary<string,string> dicTables;
 
         public void InitAll()
@@ -35,17 +44,35 @@ namespace GameCore
             }
         }
 
+        /// <summary>
+        /// just load local Asset
+        /// </summary>
         public T GetTable<T>(string name) //where T : struct
         {
             if (dicTables.ContainsKey(name))
             {
                 return deserial.Deserialize<T>(dicTables [name]);
-            } else
-            {
-                return default(T);
             }
+            return default(T);
         }
 
+        /// <summary>
+        /// Load Asset check path local first and remote then
+        /// </summary>
+        public void GetTable<T>(string name, Action<T> cb)
+        {
+            if (dicTables.ContainsKey(name))
+            {
+                cb(deserial.Deserialize<T>(dicTables [name]));
+            } else
+            {
+                Downloader.Instance.LoadAsyncTextasset(name, (obj) =>
+                {
+                    string txt = (obj as TextAsset).text;
+                    cb(deserial.Deserialize<T>(txt));
+                });
+            }
+        }
 
     }
 }

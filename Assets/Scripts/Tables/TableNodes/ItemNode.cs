@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameCore
+namespace Config
 {
     public class ItemNode
     {

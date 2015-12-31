@@ -8,6 +8,7 @@ namespace Network
     public delegate void OnResponse(WWW www);
 
 
+
     public class GameServer : Single<GameServer>
     {
 
