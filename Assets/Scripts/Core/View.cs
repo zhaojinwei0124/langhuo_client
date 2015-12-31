@@ -7,106 +7,108 @@ using GameCore;
 public class View : MonoBehaviour
 {
 
-	[NonSerialized]private UIComponentDict components;
-	[NonSerialized]protected int Depth;
-	private List<int> panelsDepth;
+    [NonSerialized]
+    private UIComponentDict components;
+    [NonSerialized]
+    protected int Depth;
+    private List<int> panelsDepth;
 
     public object Param { get; set; }
 
-	public virtual bool HideBack
-	{
-		get
-		{
-			return false;
-		}
-	}
-
-	public virtual bool FullScreen
-	{
-		get
-		{
-			return true;
-		}
-	}
-
-	public virtual bool History
-	{
-		get
-		{
-			return true;
-		}
-	}
-
-	public virtual bool SpaceClose
-	{
-		get 
-		{ 
-			return FullScreen?false:true; 
-		}
-	}
-	public UIComponentDict Components
-	{
-		get
-		{
-			if(components == null)
-			{
-				components = GetComponent<UIComponentDict>();
-			}
-			return components;
-		}
-	}
-
-	public UIComponentDict PanelParent
-	{
-		set
-		{
-			for (int i=0; i< Components.m_panelList.Count; i++)
-			value.m_panelList.Add (Components.m_panelList [i]);
-		}
-	}
-
-	public void SetDepth(int depth)
-	{
-		if(panelsDepth == null || Components.m_panelList.Count != panelsDepth.Count)
-		{
-			panelsDepth = new List<int>();
-			for(int i = 0; i < Components.m_panelList.Count; i++)
-			{
-				panelsDepth.Add( Components.m_panelList[i].depth);
-			}
-		}
-		for(int i = 0; i < Components.m_panelList.Count; i++)
-		{
-			Components.m_panelList[i].depth = panelsDepth[i]%10 + depth;
-		}
-		Depth = depth;
-	}
-
-	public int GetDepth ()
-	{
-		return Depth;
-	}
-	
-	public void SetAlpha(float alpha)
-	{
-		foreach(UIPanel panel in Components.m_panelList)
-		{
-			panel.alpha = alpha;
-			break;
-		}
-	}
-
-
-	private bool m_isDirty = false;
-    public void DoRefreshView()
+    public virtual bool HideBack
     {
-		if (!m_isDirty && gameObject.activeSelf)
-		{
-            StartCoroutine(SetDirty());
-		}
-        RefreshView(); 
+        get
+        {
+            return false;
+        }
     }
 
+    public virtual bool FullScreen
+    {
+        get
+        {
+            return true;
+        }
+    }
+
+    public virtual bool History
+    {
+        get
+        {
+            return true;
+        }
+    }
+
+    public virtual bool SpaceClose
+    {
+        get
+        { 
+            return FullScreen ? false : true; 
+        }
+    }
+
+    public UIComponentDict Components
+    {
+        get
+        {
+            if (components == null)
+            {
+                components = GetComponent<UIComponentDict>();
+            }
+            return components;
+        }
+    }
+
+    public UIComponentDict PanelParent
+    {
+        set
+        {
+            for (int i=0; i< Components.m_panelList.Count; i++)
+                value.m_panelList.Add(Components.m_panelList [i]);
+        }
+    }
+
+    public void SetDepth(int depth)
+    {
+        if (panelsDepth == null || Components.m_panelList.Count != panelsDepth.Count)
+        {
+            panelsDepth = new List<int>();
+            for (int i = 0; i < Components.m_panelList.Count; i++)
+            {
+                panelsDepth.Add(Components.m_panelList [i].depth);
+            }
+        }
+        for (int i = 0; i < Components.m_panelList.Count; i++)
+        {
+            Components.m_panelList [i].depth = panelsDepth [i] % 10 + depth;
+        }
+        Depth = depth;
+    }
+
+    public int GetDepth()
+    {
+        return Depth;
+    }
+    
+    public void SetAlpha(float alpha)
+    {
+        foreach (UIPanel panel in Components.m_panelList)
+        {
+            panel.alpha = alpha;
+            break;
+        }
+    }
+
+    private bool m_isDirty = false;
+
+    public void DoRefreshView()
+    {
+        if (!m_isDirty && gameObject.activeSelf)
+        {
+            StartCoroutine(SetDirty());
+        }
+        RefreshView(); 
+    }
   
     IEnumerator SetDirty()
     {
@@ -123,22 +125,24 @@ public class View : MonoBehaviour
         m_isDirty = false;
     }
 
-	public virtual void RefreshView()
-	{
+    public virtual void RefreshView()
+    {
 
-	}
+    }
 
-    public virtual void Refresh(object data) { }
+    public virtual void Refresh(object data)
+    {
+    }
 
-	public virtual void CloseView()
-	{
-		
-	}
+    public virtual void CloseView()
+    {
+        
+    }
 
-	public virtual void UnFocusView()
-	{
-		
-	}
+    public virtual void UnFocusView()
+    {
+        
+    }
 
     UIPanel CreateFullScreenCollider()
     {
@@ -209,7 +213,8 @@ public class View : MonoBehaviour
         foreach (UIPanel panel in Components.m_panelList)
         {
             int curDepth = panel.depth;
-            if (curDepth > maxDepth) maxDepth = curDepth;
+            if (curDepth > maxDepth)
+                maxDepth = curDepth;
         }
         return maxDepth;
     }

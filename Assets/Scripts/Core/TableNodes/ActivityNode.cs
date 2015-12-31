@@ -5,15 +5,10 @@ namespace GameCore
 {
     public struct ActivityNode
     {
-
         public string name;
         public string score;
         public string price;
         public string description;
     }
 
-    public class ActivityDataList
-    {
-        public List<ActivityNode> data { get; set; }
-    }
 }

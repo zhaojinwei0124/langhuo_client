@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using ResourceLoad;
 
-
 namespace GameCore
 {
     public class UILayer
@@ -71,9 +70,13 @@ namespace GameCore
     }
 
     public delegate void CallBack();
+
     public delegate void IntCallBack(int i);
+
     public delegate void FloatCallBack(float f);
+
     public delegate void StringCallBack(string s);
+
     public delegate void GameObjectCallBack(GameObject go);
 
     public class UIHandler : Single<UIHandler>
@@ -88,6 +91,7 @@ namespace GameCore
         private Font mFont;
         private static UIHandler mInstance;
         private UIRoot uiRoot;
+
         public UIRoot Root
         {
             get
@@ -100,10 +104,12 @@ namespace GameCore
 
             }
         }
+
         public UIHandler()
         {
             mFont = Resources.Load<Font>("Font/msyh");
         }
+
         public Font DefaultFont { get { return mFont; } }
 
         public Transform MainPanel
@@ -122,9 +128,8 @@ namespace GameCore
         {
             if (PageSlots.ContainsKey(name))
             {
-                return PageSlots[name];
-            }
-            else
+                return PageSlots [name];
+            } else
             {
                 return null;
             }
@@ -134,9 +139,8 @@ namespace GameCore
         {
             if (PageSlots.ContainsKey(name))
             {
-                PageSlots[name] = info;
-            }
-            else
+                PageSlots [name] = info;
+            } else
             {
                 PageSlots.Add(name, info);
             }
@@ -146,13 +150,13 @@ namespace GameCore
         {
             if (ControlSlots.ContainsKey(name))
             {
-                return ControlSlots[name];
-            }
-            else
+                return ControlSlots [name];
+            } else
             {
                 return null;
             }
         }
+
         public Camera MainCamera
         {
             get
@@ -180,18 +184,19 @@ namespace GameCore
             });
             return pref;
         }
+
         public GameObject GetUnitInstance(string _name)
         {
             GameObject _pref = GetUnit(_name);
             if (_pref != null)
             {
                 return (GameObject.Instantiate(_pref) as GameObject);
-            }
-            else
+            } else
             {
                 return null;
             }
         }
+
         public void GetUnitAsync(string _name, LoadGoFinishCb cb)
         {
             GameObject pref = null;
@@ -202,6 +207,7 @@ namespace GameCore
                     cb(pref);
             });
         }
+
         public Component CreateUnit(string unitName, System.Type componentType, Transform parentTrans, int depth, UIComponentDict pageComponents)
         {
             Transform trans = MonoUtil.CreatePrefab(UIHandler.Instance.GetUnit(unitName), unitName, parentTrans);
@@ -221,7 +227,7 @@ namespace GameCore
         {
             if (!string.IsNullOrEmpty(CurrentPageName) && PageSlots.ContainsKey(CurrentPageName))
             {
-                return PageSlots[CurrentPageName].go;
+                return PageSlots [CurrentPageName].go;
             }
             return null;
         }
@@ -230,7 +236,7 @@ namespace GameCore
         {
             if (PageSlots.ContainsKey(CurrentPageName))
             {
-                return PageSlots[CurrentPageName];
+                return PageSlots [CurrentPageName];
             }
             return null;
         }
@@ -238,7 +244,7 @@ namespace GameCore
         public GameObject GetPage(string name)
         {
             if (LoadedPage(name))
-                return PageSlots[name].go;
+                return PageSlots [name].go;
             return null;
         }
 
@@ -246,13 +252,13 @@ namespace GameCore
         {
             string page = typeof(T).Name;
             if (LoadedPage(page))
-                return PageSlots[page].view as T;
+                return PageSlots [page].view as T;
             return default(T);
         }
 
         public bool LoadedPage(string name)
         {
-            if (PageSlots.ContainsKey(name) && PageSlots[name].go != null)
+            if (PageSlots.ContainsKey(name) && PageSlots [name].go != null)
                 return true;
             return false;
         }
@@ -264,6 +270,7 @@ namespace GameCore
                 return PageStack.Count > 0 ? PageStack.Peek().name : null;
             }
         }
+
         public int CurrentDepth
         {
             get
@@ -279,14 +286,13 @@ namespace GameCore
             string cachePageName = CurrentPageName;
             for (int i = pages.Length - 1; i >= 0; i--)
             {
-                if (name.Equals(pages[i].name))
+                if (name.Equals(pages [i].name))
                 {
-                    PageSlots[pages[i].name].inStack = false;
-                    HidePage(pages[i].name);
-                }
-                else
+                    PageSlots [pages [i].name].inStack = false;
+                    HidePage(pages [i].name);
+                } else
                 {
-                    PageStack.Push(pages[i]);
+                    PageStack.Push(pages [i]);
                 }
             }
         }
@@ -298,11 +304,11 @@ namespace GameCore
                 PageInfo curPage = PageStack.Pop();
                 if (curPage != null)
                 {
-                    PageSlots[curPage.name].inStack = false;
+                    PageSlots [curPage.name].inStack = false;
                     HidePage(curPage.name);
                 }
             }
-            PageInfo pageInfo = PageSlots[CurrentPageName];
+            PageInfo pageInfo = PageSlots [CurrentPageName];
             pageInfo.lifeTimes = LIFE_TIMES;
             pageInfo.callBack = OnPageCallback;
             pageInfo.onPageClosed = null;
@@ -319,7 +325,7 @@ namespace GameCore
             while (!CurrentPageName.Equals(name) && PageStack.Count >= 1)
             {
                 PageInfo page = PageStack.Pop();
-                PageSlots[page.name].inStack = false;
+                PageSlots [page.name].inStack = false;
                 HidePage(page.name);
             }
             PageStack.Push(curPage);
@@ -335,7 +341,7 @@ namespace GameCore
             if (PageStack.Count >= 2)
             {
                 PageInfo curPage = PageStack.Pop();
-                PageSlots[curPage.name].inStack = false;
+                PageSlots [curPage.name].inStack = false;
                 HidePage(curPage.name);
                 PageInfo lastPage = PageStack.Peek();
                 lastPage.lifeTimes = LIFE_TIMES;
@@ -360,14 +366,14 @@ namespace GameCore
         public View ShowAndGetPage(string name)
         {
             ShowPage(name);
-            name = name.Split('&')[0];
+            name = name.Split('&') [0];
             return UIHandler.Instance.GetPageInfo(name).view;
         }
 
         public View ShowAndGetControl(string name)
         {
             ShowControl(name);
-            name = name.Split('&')[0];
+            name = name.Split('&') [0];
             return UIHandler.Instance.GetControlInfo(name).view;
         }
 
@@ -375,7 +381,6 @@ namespace GameCore
         {
             ShowPage(name, null);
         }
-
 
         public void ShowPage(string name, bool hideBack, bool history)
         {
@@ -393,9 +398,9 @@ namespace GameCore
             if (!string.IsNullOrEmpty(rule))
             {
                 string[] info = rule.Split('&');
-                if (info[0].Equals("False"))
+                if (info [0].Equals("False"))
                 {
-                    Debug.LogError(info[2]);
+                    Debug.LogError(info [2]);
                     return null;
                 }
             }
@@ -432,19 +437,19 @@ namespace GameCore
             if (!string.IsNullOrEmpty(rule))
             {
                 string[] info = rule.Split('&');
-                if (info[0].Equals("False"))
+                if (info [0].Equals("False"))
                 {
-                    Debug.LogError(info[2]);
+                    Debug.LogError(info [2]);
                     return;
                 }
             }
             if (!PageSlots.ContainsKey(name))
             {
-                PageSlots[name] = new PageInfo();
+                PageSlots [name] = new PageInfo();
             }
-            PageInfo pageInfo = PageSlots[name];
+            PageInfo pageInfo = PageSlots [name];
             pageInfo.arg = arg;
-            if (PageSlots[name].inStack)
+            if (PageSlots [name].inStack)
             {
                 ShowLastPage(name, OnPageCallback);
                 return;
@@ -474,8 +479,7 @@ namespace GameCore
                 {
                     ClearAllMemory();
                 }
-            }
-            else
+            } else
             {
                 curPage.inStack = false;
                 ResourceHandler.Instance.LoadRes("Prefabs/GamePage/" + curPage.name,
@@ -517,8 +521,7 @@ namespace GameCore
                     PageStack.Pop();
                     lastPage.inStack = false;
                     HidePage(lastPage.name);
-                }
-                else
+                } else
                 {
                     lastPage.view.UnFocusView();
                 }
@@ -529,22 +532,26 @@ namespace GameCore
         {
             curPage.depth = CurrentDepth + UILayer.DepthOffset;
             curPage.view.SetDepth(curPage.depth);
-            if (curPage.view.HideBack || curPage.view.FullScreen) HideStackPage();
-            else ShowStackPage();
+            if (curPage.view.HideBack || curPage.view.FullScreen)
+                HideStackPage();
+            else
+                ShowStackPage();
             PageStack.Push(curPage);
             curPage.inStack = true;
         }
 
-
         public string PageCheckIn(string name, string arg = "")
         {
-            if (string.IsNullOrEmpty(name)) return "";
+            if (string.IsNullOrEmpty(name))
+                return "";
             string msg = string.Empty;
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             System.Type type = assembly.GetType(name);
-            if (type == null) return "";
+            if (type == null)
+                return "";
             System.Reflection.MethodInfo methodInfo = type.GetMethod("CheckIn", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-            if (methodInfo == null) return "";
+            if (methodInfo == null)
+                return "";
             msg = (string)methodInfo.Invoke(null, new string[] { arg });
             return msg;
         }
@@ -553,13 +560,12 @@ namespace GameCore
         {
             foreach (string name in PageSlots.Keys)
             {
-                if (PageSlots[name].inStack && !name.Equals(PageStack.Peek().name))
+                if (PageSlots [name].inStack && !name.Equals(PageStack.Peek().name))
                 {
-                    PageSlots[name].view.DoRefreshView();
+                    PageSlots [name].view.DoRefreshView();
                 }
             }
         }
-
 
         public void ClearAllMemory()
         {
@@ -578,9 +584,9 @@ namespace GameCore
 
             foreach (string key in keys)
             {
-                if (PageSlots.ContainsKey(key) && PageSlots[key].lifeTimes <= 0)
+                if (PageSlots.ContainsKey(key) && PageSlots [key].lifeTimes <= 0)
                 {
-                    if (!PageSlots[key].inStack)
+                    if (!PageSlots [key].inStack)
                     {
                         DestroyPage(key);
                     }
@@ -595,25 +601,27 @@ namespace GameCore
             PageInfo pageInfo = GetPageInfo(name);
             if (pageInfo != null && !pageInfo.inStack)
             {
-                if (pageInfo.view != null) pageInfo.view.CloseView();
+                if (pageInfo.view != null)
+                    pageInfo.view.CloseView();
                 System.Action onPageClosed = pageInfo.onPageClosed;
                 pageInfo.onPageClosed = null;
-                if (onPageClosed != null) onPageClosed();
+                if (onPageClosed != null)
+                    onPageClosed();
             }
 
-            if (PageSlots.ContainsKey(name) && PageSlots[name] != null && PageSlots[name].go != null)
+            if (PageSlots.ContainsKey(name) && PageSlots [name] != null && PageSlots [name].go != null)
             {
-                PageSlots[name].go.SetActive(false);
+                PageSlots [name].go.SetActive(false);
             }
         }
 
         public void DestroyPage(string name)
         {
             HidePage(name);
-            if (PageSlots.ContainsKey(name) && PageSlots[name] != null && PageSlots[name].go != null)
+            if (PageSlots.ContainsKey(name) && PageSlots [name] != null && PageSlots [name].go != null)
             {
-                GameObject.Destroy(PageSlots[name].go);
-                PageSlots[name] = null;
+                GameObject.Destroy(PageSlots [name].go);
+                PageSlots [name] = null;
             }
             PageSlots.Remove(name);
         }
@@ -640,12 +648,13 @@ namespace GameCore
             int index = 0;
             for (index = 0; index < pages.Length; index++)
             {
-                pages[index].go.SetActive(true);
-                if (pages[index].view.FullScreen == true) break;
+                pages [index].go.SetActive(true);
+                if (pages [index].view.FullScreen == true)
+                    break;
             }
             while (++index < pages.Length)
             {
-                pages[index].go.SetActive(false);
+                pages [index].go.SetActive(false);
             }
         }
 
@@ -661,7 +670,7 @@ namespace GameCore
         public GameObject GetControl(string name)
         {
             if (LoadedControl(name))
-                return ControlSlots[name].go;
+                return ControlSlots [name].go;
             return null;
         }
 
@@ -669,7 +678,7 @@ namespace GameCore
         {
             string ctl = typeof(T).Name;
             if (LoadedControl(ctl))
-                return ControlSlots[ctl].view as T;
+                return ControlSlots [ctl].view as T;
             return default(T);
         }
 
@@ -680,10 +689,11 @@ namespace GameCore
 
         public ControlInfo ShowControl(string name, Transform parent, ref List<ControlInfo> controls, bool isDestroyCtl = false)
         {
-            if (controls == null) controls = new List<ControlInfo>();
+            if (controls == null)
+                controls = new List<ControlInfo>();
             foreach (var v in controls)
             {
-                if (v == null || v.view == null || v.view.name.Equals(name.Split('&')[0]))
+                if (v == null || v.view == null || v.view.name.Equals(name.Split('&') [0]))
                     continue;
                 if (v.view.gameObject.activeSelf && v.view.History)
                 {
@@ -695,7 +705,8 @@ namespace GameCore
 
                 }
             }
-            if (string.IsNullOrEmpty(name)) return null;
+            if (string.IsNullOrEmpty(name))
+                return null;
             ControlInfo ci = ShowControl(name, parent);
             if (ci != null)
             {
@@ -708,7 +719,7 @@ namespace GameCore
         public ControlInfo ShowControl(string name, Transform parent)
         {
             ShowControl(name);
-            ControlInfo ci = GetControlInfo(name.Split('&')[0]);
+            ControlInfo ci = GetControlInfo(name.Split('&') [0]);
             if (ci != null)
             {
                 if (ci.view != null)
@@ -744,17 +755,16 @@ namespace GameCore
 
             if (!ControlSlots.ContainsKey(name))
             {
-                ControlSlots[name] = new ControlInfo();
+                ControlSlots [name] = new ControlInfo();
             }
-            ControlSlots[name].lifeTimes = LIFE_TIMES;
-            ControlSlots[name].arg = arg;
-            if (ControlSlots[name].go != null)
+            ControlSlots [name].lifeTimes = LIFE_TIMES;
+            ControlSlots [name].arg = arg;
+            if (ControlSlots [name].go != null)
             {
-                ControlSlots[name].go.SetActive(true);
-                View view = ControlSlots[name].view;
+                ControlSlots [name].go.SetActive(true);
+                View view = ControlSlots [name].view;
                 view.SetDepth(depth);
-            }
-            else
+            } else
             {
                 ResourceHandler.Instance.LoadRes("Prefabs/GameControl/" + name,
                 delegate(Object prefab)
@@ -777,12 +787,11 @@ namespace GameCore
                         view = component as View;
                     }
                     view.SetDepth(depth);
-                    ControlSlots[name].view = view;
-                    ControlSlots[name].go = go;
+                    ControlSlots [name].view = view;
+                    ControlSlots [name].go = go;
                 }, true);
             }
         }
-
 
         public void HideControl(string name)
         {
@@ -791,9 +800,9 @@ namespace GameCore
             {
                 controlInfo.view.CloseView();
             }
-            if (ControlSlots.ContainsKey(name) && ControlSlots[name] != null && ControlSlots[name].go != null)
+            if (ControlSlots.ContainsKey(name) && ControlSlots [name] != null && ControlSlots [name].go != null)
             {
-                ControlSlots[name].go.SetActive(false);
+                ControlSlots [name].go.SetActive(false);
             }
         }
 
@@ -808,10 +817,10 @@ namespace GameCore
         public void DestroyControl(string name)
         {
             HideControl(name);
-            if (ControlSlots.ContainsKey(name) && ControlSlots[name] != null && ControlSlots[name].go != null)
+            if (ControlSlots.ContainsKey(name) && ControlSlots [name] != null && ControlSlots [name].go != null)
             {
-                GameObject.Destroy(ControlSlots[name].go);
-                ControlSlots[name] = null;
+                GameObject.Destroy(ControlSlots [name].go);
+                ControlSlots [name] = null;
             }
             ControlSlots.Remove(name);
         }
@@ -828,7 +837,8 @@ namespace GameCore
             DialogQueue.Clear();
             foreach (PageInfo page in PageSlots.Values)
             {
-                if (page.go == null) continue;
+                if (page.go == null)
+                    continue;
                 page.go.SetActive(false);
                 GameObject.Destroy(page.go);
             }
@@ -842,8 +852,8 @@ namespace GameCore
             if (parent != null)
             {
                 return Instantiate(original, parent, parent.position, Quaternion.identity, Vector3.one);
-            }
-            else return Instantiate(original, parent, Vector3.zero, Quaternion.identity, Vector3.one);
+            } else
+                return Instantiate(original, parent, Vector3.zero, Quaternion.identity, Vector3.one);
         }
 
         public GameObject Instantiate(Object original, Transform parent, Vector3 position)
@@ -868,8 +878,7 @@ namespace GameCore
                 instance = GameObject.Instantiate(original, parent.position, rotation) as GameObject;
                 instance.transform.parent = parent;
                 instance.transform.localPosition = position;
-            }
-            else
+            } else
             {
                 instance = GameObject.Instantiate(original, position, rotation) as GameObject;
             }

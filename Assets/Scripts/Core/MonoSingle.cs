@@ -59,13 +59,11 @@ public class MonoSingle<T> : MonoBehaviour where T : MonoSingle<T>
             if (Application.isPlaying)
             {
                 Destroy(gameObject);
-            }
-            else
+            } else
             {
                 DestroyImmediate(gameObject);
             }
-        }
-        else if (_instance == null)
+        } else if (_instance == null)
         {
             _instance = GetComponent<T>();
         }
