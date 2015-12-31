@@ -30,6 +30,11 @@ public class HomeUI : View
             HomeScrollData data = new HomeScrollData(items [2 * i], items.Count - 1 >= 2 * i + 1 ? items [2 * i + 1] : null);
             datas.Add(data);
         }
+        for(int i=0;i<2;i++)
+        {
+            HomeScrollData data = new HomeScrollData(items[0],items[1]);
+            datas.Add(data);
+        }
         if (datas != null && datas.Count > 0)
         {
             m_pool.Initialize(datas.ToArray());

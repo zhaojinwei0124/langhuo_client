@@ -12,7 +12,7 @@ namespace Network
     public class GameServer : Single<GameServer>
     {
 
-        public const string BASE_URL = "http://localhost/langhuo/";
+        public const string BASE_URL = "http://192.168.0.103/langhuo/";
 
         public const string NET_URL = BASE_URL+ "Netframework/";
 

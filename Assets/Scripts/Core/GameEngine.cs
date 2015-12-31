@@ -36,6 +36,15 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     void Update()
     {
         TimerManager.Instance.Update();
+
+#if UNITY_EDITOR
+        if(Input.GetKeyUp(KeyCode.C))
+        {
+            Debug.Log("clean cache");
+            Caching.CleanCache();
+        }
+#endif
+
     }
 
  

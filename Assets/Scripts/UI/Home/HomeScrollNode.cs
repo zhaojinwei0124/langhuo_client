@@ -39,20 +39,35 @@ public class HomeScrollNode : UIPoolListNode
         {
             m_textures [0].mainTexture = obj as Texture;
         });
-        TextureHandler.Instance.LoadTexture("Item/" + data.item2.t_item.img, (obj) =>
+        m_lbldesc [0].text = "[ff0000]"+data.item1.t_item.name+"[-] "+ data.item1.t_item.description;
+        m_lblpprice [0].text = "￥" + data.item1.n_item.pprice;
+        m_lblnprice [0].text = "￥" + data.item1.n_item.nprice + "元/份";
+        UIEventListener.Get(m_textures [0].gameObject).onClick = OnItem1Click;
+
+        if (data != null)
         {
-            m_textures[1].mainTexture= obj as Texture;
-        });
+            m_textures[1].transform.parent.gameObject.SetActive(true);
+            TextureHandler.Instance.LoadTexture("Item/" + data.item2.t_item.img, (obj) =>
+            {
+                m_textures [1].mainTexture = obj as Texture;
+            });
+            m_lbldesc [1].text = "[ff0000]"+data.item2.t_item.name+"[-] "+ data.item2.t_item.description;
+            m_lblpprice [1].text = "￥" + data.item2.n_item.pprice;
+            m_lblnprice [1].text = "￥" + data.item2.n_item.nprice + "元/份";
+            UIEventListener.Get(m_textures [1].gameObject).onClick = OnItem2Click;
+        } else
+        {
+            m_textures[1].transform.gameObject.SetActive(false);
+        }
+    }
 
-        m_lbldesc[0].text=data.item1.t_item.description;
-        m_lbldesc[1].text=data.item2.t_item.description;
+    private void OnItem1Click(GameObject go)
+    {
+        Debug.Log("click name: " + Data.item1.t_item.name);
+    }
 
-        m_lblpprice[0].text="￥"+data.item1.n_item.pprice;
-        m_lblpprice[1].text="￥"+data.item2.n_item.pprice;
-
-        m_lblnprice[0].text="￥"+data.item1.n_item.nprice+"元/份";
-        m_lblnprice[1].text="￥"+data.item2.n_item.nprice+"元/份";
-
-
+    private void OnItem2Click(GameObject go)
+    {
+        Debug.Log("click name: " + Data.item2.t_item.name);
     }
 }
