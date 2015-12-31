@@ -7,7 +7,7 @@ public class HomeUI : View
 {
     public UIPoolList m_pool;
     public UITexture m_txtBanner;
-    private NItem[] n_items;
+
 
     public override void RefreshView()
     {
@@ -16,20 +16,8 @@ public class HomeUI : View
         NetCommand.Instance.GetItems((w) => 
         {
             // Debug.Log("w text: " + w.text);
-            n_items = Util.Instance.Get<NItem[]>(w.text);
-            Debug.Log("items length: " + n_items.Length);
-            if (n_items != null)
-            {
-//                foreach (var item in n_items)
-//                {
-//                    Debug.Log("item id: " + item.id + " cnt:" + item.cnt + " nprice: " + item.nprice + " pprice: " + item.pprice);
-//                }
-
-                RefreshList();
-            } else
-            {
-                Debug.LogError("net work is error!");
-            }
+            Home.Instance.Set(Util.Instance.Get<NItem[]>(w.text));
+            RefreshList();
         });
     }
 

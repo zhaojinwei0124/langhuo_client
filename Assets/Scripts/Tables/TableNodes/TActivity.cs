@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Config
 {
-    public struct ItemNode
+    public struct TActivity
     {
-        public int id;
-
         public string name;
-
         public string score;
-
-        public float price;
-
+        public string price;
         public string description;
     }
 
