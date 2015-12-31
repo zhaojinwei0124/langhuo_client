@@ -5,15 +5,6 @@ using ResourceLoad;
 
 namespace GameCore
 {
-    public class UILayer
-    {
-        public const int PageDepth = 1000;
-        public const int ControlDepth = 2000;
-        public const int DialogDepth = 11000;
-        public const int TooltipDepth = 4000;
-        public const int FlowerDepth = 12000;
-        public const int DepthOffset = 20;
-    }
 
     public class PageInfo
     {
@@ -157,15 +148,6 @@ namespace GameCore
             }
         }
 
-        public int CurrentDepth
-        {
-            get
-            {
-                return PageStack.Count > 0 ? PageStack.Peek().depth : UILayer.PageDepth;
-            }
-        }
-
-
         public bool HasLastPage
         {
             get
@@ -175,8 +157,6 @@ namespace GameCore
             }
         }
            
- 
-
         public void ClearStack()
         {
             PageStack.Clear();
