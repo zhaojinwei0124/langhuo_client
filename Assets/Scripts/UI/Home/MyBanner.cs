@@ -9,7 +9,6 @@ public class MyBanner : MonoBehaviour
 	[SerializeField]
 	private UITexture m_txtBanner;
    
-
 	void Start () {
 
         int i=0;
@@ -20,11 +19,6 @@ public class MyBanner : MonoBehaviour
                 m_txtBanner.mainTexture= (txt as Texture);
                 i++;
             });
-//            ResourceLoad.Downloader.Instance.LoadAsyncTexture("Texture/banner/banner"+i%3,(txt)=>
-//            {
-//                m_txtBanner.mainTexture= (txt as Texture);
-//                i++;
-//            });
 		});
 	}
 	

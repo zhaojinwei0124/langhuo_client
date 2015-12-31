@@ -3,17 +3,17 @@ using System.Collections;
 
 namespace Config
 {
-    public class ItemNode
+    public struct ItemNode
     {
-        public int id{ get; set; }
+        public int id;
 
-        public string name{ get; set; }
+        public string name;
 
-        public string score{ get; set; }
+        public string score;
 
-        public string price{ get; set; }
+        public float price;
 
-        public string description{ get; set; }
+        public string description;
     }
 
 }

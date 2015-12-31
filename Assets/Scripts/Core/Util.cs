@@ -7,7 +7,7 @@ using Config;
 
 namespace GameCore
 {
-    class Util
+    class Util:Single<Util>
     {
 
         public string UnzipString (byte[] compbytes )

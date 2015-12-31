@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Network
 {
 
-    public class CommandAPI :Single<CommandAPI>
+    public class NetCommand :Single<NetCommand>
     {
 
         //------------------ API -------------------------
@@ -14,10 +14,10 @@ namespace Network
             GameServer.Instance.HttpPost(url, param, response);
         }
 
-        public void SearchUser(string userId, string weiboId, OnResponse response)
+        public void SearchUser(string weiboId, OnResponse response)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("ID", userId);
+            param.Add("ID", GameBaseInfo.Instance.userid.ToString());
             HttpPost("user/search", param, response);
         }
 
@@ -25,13 +25,14 @@ namespace Network
         public void GetItems(OnResponse response)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            HttpPost("item/search", param, response);
+            param.Add("ID",GameBaseInfo.Instance.userid.ToString());
+            HttpPost("item/search", param,response);
         }
 
         public void GetUserWorldRandList(string userId, int scope, OnResponse response)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("date", "");
+            param.Add("ID", GameBaseInfo.Instance.userid.ToString());
             param.Add("scope", scope.ToString());
             HttpPost("score/getScopeRedis", param, response);
         }

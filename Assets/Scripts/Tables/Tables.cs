@@ -40,7 +40,7 @@ namespace Config
             {
                 TextAsset txt = Resources.Load<TextAsset>("Tables/" + tables [i]);
                 //  Debug.Log("add: "+txt.text);
-                dicTables.Add(tables [i], txt.text);
+                dicTables.Add(tables[i], txt.text);
             }
         }
 
@@ -63,6 +63,7 @@ namespace Config
         {
             if (dicTables.ContainsKey(name))
             {
+                Debug.Log(name+" : "+dicTables[name]);
                 cb(deserial.Deserialize<T>(dicTables [name]));
             } else
             {
