@@ -22,8 +22,8 @@ public class UIPoolList : MonoBehaviour
     public int m_columnCount = 1;
     public Transform m_transNodeRoot;
     public Transform m_prototype;
-    public UISprite m_sprHead;
-    public UISprite m_sprTail;
+    public UIWidget m_sprHead;
+    public UIWidget m_sprTail;
     public System.Action<int> m_onPullRefresh;
 
     public IList<System.Object> m_dataArray = new System.Object[0];
@@ -87,13 +87,13 @@ public class UIPoolList : MonoBehaviour
 
         m_firstIndexLastFrame = -1;
         if (scrollOption == E_ScrollOption.ResetToZero) {
-			CachedScrollView.ResetPosition ();
-			UpdateItems(0);
-		} else {
-			if (gameObject.activeInHierarchy)
-				StartCoroutine (RestrictWithInBounds ());
-			UpdateItems(GetFirstVisibleIndex());
-		}
+            CachedScrollView.ResetPosition ();
+            UpdateItems(0);
+        } else {
+            if (gameObject.activeInHierarchy)
+                StartCoroutine (RestrictWithInBounds ());
+            UpdateItems(GetFirstVisibleIndex());
+        }
         //CachedScrollView.onDragFinished = OnPanelDragFinished;
         
         m_lastPull = 0;
@@ -110,8 +110,8 @@ public class UIPoolList : MonoBehaviour
     {
         foreach (UIPoolListNode node in m_dynamicNodes)
         {
-			if (node != null)
-            	node.Refresh();
+            if (node != null)
+                node.Refresh();
         }
     }
 

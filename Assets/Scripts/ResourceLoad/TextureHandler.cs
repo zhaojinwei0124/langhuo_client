@@ -28,30 +28,31 @@ namespace ResourceLoad
             return null;
         }
 
-        public void LoadUITexture(string name, LoadedCallBack loadedCB)
+        public void LoadUITexture(string _name, LoadedCallBack _loadedCB)
         {
-            string directory = "Texture/UI/";
-            LoadTexture(directory + name, loadedCB);
+            string directory = "UI/";
+            LoadTexture(directory + _name, _loadedCB);
         }
 
         /// <summary>
         /// Load Asset check path local first and remote then
         /// </summary>
-        public void LoadTexture(string path, LoadedCallBack loadedCB)
+        public void LoadTexture(string _path, LoadedCallBack _loadedCB)
         {
+            string path="Texture/"+_path;
             if (mTextureTable.ContainsKey(path))
             {
-                loadedCB(mTextureTable[path]);
+                _loadedCB(mTextureTable[path]);
                 return;
             }
             Texture2D texture = Resources.Load(path, typeof(Texture2D)) as Texture2D;
             if (texture != null)
             {
                 mTextureTable[path] = texture;
-                loadedCB(texture);
+                _loadedCB(texture);
                 return;
             }
-            Downloader.Instance.LoadAsyncTexture(path,loadedCB);
+            Downloader.Instance.LoadAsyncTexture(path,_loadedCB);
         }
 
         public void Release()

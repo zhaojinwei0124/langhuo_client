@@ -7,7 +7,7 @@ using Config;
 /// Homeui parse class
 /// </summary>
 /// 
-public struct ItemNode
+public class ItemNode
 {
     public NItem n_item;
     public TItem t_item;

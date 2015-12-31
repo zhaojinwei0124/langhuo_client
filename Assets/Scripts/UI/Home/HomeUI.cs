@@ -8,7 +8,6 @@ public class HomeUI : View
     public UIPoolList m_pool;
     public UITexture m_txtBanner;
 
-
     public override void RefreshView()
     {
         base.RefreshView();
@@ -23,7 +22,22 @@ public class HomeUI : View
 
     private void RefreshList()
     {
-        List<ItemNode> items=Home.Instance.items;
+        List<ItemNode> items = Home.Instance.items;
+//        Debug.LogError("items count: " + items.Count);
+        List<HomeScrollData> datas = new List<HomeScrollData>();
+        for (int i=0; i<items.Count/2; i++)
+        {
+            HomeScrollData data = new HomeScrollData(items [2 * i], items.Count - 1 >= 2 * i + 1 ? items [2 * i + 1] : null);
+            datas.Add(data);
+        }
+        if (datas != null && datas.Count > 0)
+        {
+            m_pool.Initialize(datas.ToArray());
+        }
+        else
+        {
+            Debug.LogError("datas is null!");
+        }
     }
 
     int i, seq = -1;
@@ -35,7 +49,7 @@ public class HomeUI : View
             TimerManager.Instance.AddTimer(2000, 0, (_seq) =>
             {
                 seq = _seq;
-                ResourceLoad.TextureHandler.Instance.LoadTexture("Texture/banner/banner" + i % 3, (txt) =>
+                ResourceLoad.TextureHandler.Instance.LoadTexture("banner/banner" + i % 3, (txt) =>
                 {
                     m_txtBanner.mainTexture = (txt as Texture);
                     i++;
