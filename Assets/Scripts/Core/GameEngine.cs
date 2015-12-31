@@ -18,16 +18,6 @@ public sealed class GameEngine : MonoSingle<GameEngine>
 
         Tables.Instance.InitAll();
 
-//        Tables.Instance.GetTable<ActivityNode[]>("activity", (mlist) =>
-//        {
-//            Debug.Log("length: " + mlist.Length);
-//            
-//            foreach (var item in mlist)
-//            {
-//                Debug.LogError("item: " + item.description + " name: " + item.name);
-//            }
-//        });
-//
 //        Tables.Instance.GetTable<ItemNode[]>("items", (mlist) =>
 //        {
 //                        Debug.Log("length: " + mlist.Length);

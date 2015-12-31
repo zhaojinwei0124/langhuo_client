@@ -3,23 +3,21 @@ using System.Collections;
 using Network;
 using GameCore;
 
-public class HomeUI : MonoBehaviour
+public class HomeUI : View
 {
+    public UIPoolList m_pool;
 
 
-    [SerializeField]
-    private UIPoolList m_pool;
     private NItem[] n_items;
 
-    void Awake()
-    {
-    }
+    void Awake(){}
 
-    void Start()
+    public override void RefreshView()
     {
+        base.RefreshView();
         NetCommand.Instance.GetItems((w) => 
         {
-            Debug.Log("w text: " + w.text);
+           // Debug.Log("w text: " + w.text);
             n_items = Util.Instance.Get<NItem[]>(w.text);
             Debug.Log("items length: " + n_items.Length);
             if (n_items != null)
@@ -28,6 +26,8 @@ public class HomeUI : MonoBehaviour
                 {
                     Debug.Log("item id: " + item.id + " cnt:" + item.cnt + " nprice: " + item.nprice + " pprice: " + item.pprice);
                 }
+
+                RefreshList();
             } else
             {
                 Debug.LogError("net work is error!");
@@ -35,7 +35,13 @@ public class HomeUI : MonoBehaviour
         });
     }
 
-    private void Refresh()
+    void Refresh()
+    {
+
+    }
+
+
+    private void RefreshList()
     {
     }
     
