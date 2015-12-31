@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MyPage : MonoBehaviour 
+public class MyPage : View 
 {
 
     [SerializeField]

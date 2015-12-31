@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasketPage : MonoBehaviour {
+public class BasketPage : View
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public override void RefreshView()
+    {
+        base.RefreshView();
+    }
 }

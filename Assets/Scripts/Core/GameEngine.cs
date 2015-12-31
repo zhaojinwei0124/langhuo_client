@@ -16,6 +16,8 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     {
         Debug.Log("Game engine start.");
 
+        UIManager.Instance.Init();
+
         Tables.Instance.InitAll();
 
 //        Tables.Instance.GetTable<ItemNode[]>("items", (mlist) =>
