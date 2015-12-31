@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using GameCore;
-using MobageLitJson;
+using DeJson;
+
 
 public sealed class GameEngine : MonoSingle<GameEngine>
 {
+
+    Deserializer m_json;
+
     protected override void Awake()
     {
         base.Awake();
@@ -15,57 +19,37 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     {
         Debug.Log("Game engine start.");
 
+        ReadTables.Instance.InitAll();
 
-        TextAsset txt=Resources.Load<TextAsset>("Tables/activity");
-        Debug.Log(txt.text);
+        ActivityNode[] mlist = ReadTables.Instance.GetTable<ActivityNode[]>("activity");
 
-        JsonData json=JsonMapper.ToObject(txt.text);
-        Debug.Log("length: "+json.Count);
-        Debug.Log(json[0]["name"]);
-//        foreach(var item in list)
-//        {
-//            Debug.Log("ite: "+item.name);
-//        }
+        //TextAsset txt = Resources.Load<TextAsset>("Tables/activity");
 
-//        List<object> list =  MiniJSON.Json.Deserialize(txt.text) as List<object>;
-//        Debug.Log("list cnt: "+list.Count);
-//        foreach(var item in list)
-//        {
-//            Debug.Log("obj "+item.ToString());
-//           ActivityNode it =  item as ActivityNode;
-//            Debug.Log("name: "+it.name);
-//        }
-       
+        //Debug.Log(txt.text);
 
-       // ReadTables.Instance.InitAll();
+        //m_json = new DeJson.Deserializer();
 
-//        ResourceLoad.Downloader.Instance.LoadAsyncTextasset("test",(obj)=>
-//        {
-//            Debug.Log("load txt is: "+(obj as TextAsset).text);
-//        });
+        //ActivityNode[] mlist = m_json.Deserialize<ActivityNode[]>(txt.text);
 
-//        List<ItemNode> items = ReadTables.Instance.GetTable("items") as List<ItemNode>;
-//
-//        if(items!=null)
-//        {
-//            Debug.Log("item cnt: "+items.Count);
-//            foreach(var item in items)
-//            {
-//                Debug.Log(item.id+" name: "+item.name+" desc: "+item.description);
-//            }
-//        }
-//        else
-//        {
-//            Debug.Log("items is null");
-//        }
+        Debug.LogError("length: " + mlist.Length);
+
+        foreach (var item in mlist)
+        {
+            Debug.LogError("item: " + item.description + " name: " + item.name);
+        }
     }
+
 
     void Update()
     {
         TimerManager.Instance.Update();
     }
 
-
+    public Deserializer getJson()
+    {
+        if (m_json == null) m_json = new Deserializer();
+        return m_json;
+    }
 
 
 }

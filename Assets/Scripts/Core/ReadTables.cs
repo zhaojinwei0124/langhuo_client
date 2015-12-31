@@ -10,39 +10,35 @@ namespace GameCore
 
         string[] tables=new string[]{"items","activity"};
 
-        Dictionary<string,object> dicTables;
+        Dictionary<string,string> dicTables;
 
 
         public void InitAll()
         {
             if(dicTables==null) 
-                dicTables=new Dictionary<string, object>();
+                dicTables=new Dictionary<string, string>();
             dicTables.Clear();
             for(int i=0;i<tables.Length;i++)
             {
                 TextAsset txt=Resources.Load<TextAsset>("Tables/"+tables[i]);
-                Debug.Log("add: "+txt.text);
-                dicTables.Add(tables[i], Json.Deserialize(txt.text));
+              //  Debug.Log("add: "+txt.text);
+                dicTables.Add(tables[i], txt.text);
             }
         }
-    	
 
-        public object GetTable(string name)
+
+        public T GetTable<T>(string name) //where T : struct
         {
-            if(dicTables==null) 
+            if (dicTables.ContainsKey(name))
             {
-                Debug.LogError("not load table end!");
-                return null;
-            }
-            else if(!dicTables.ContainsKey(name))
-            {
-                Debug.LogError("table "+name+" is null");
-                return null;
+                return GameEngine.Instance.getJson().Deserialize<T>(dicTables[name]);
             }
             else
             {
-                return dicTables[name];
+                return default(T);
             }
         }
+
+
     }
 }
