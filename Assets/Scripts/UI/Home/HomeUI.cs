@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Network;
 using GameCore;
 
@@ -23,13 +23,13 @@ public class HomeUI : View
 
     private void RefreshList()
     {
+        List<ItemNode> items=Home.Instance.items;
     }
 
     int i, seq = -1;
 
     private void RefreshBanner()
     {
-        Debug.Log("refresh nann");
         if (seq == -1)
         {
             TimerManager.Instance.AddTimer(2000, 0, (_seq) =>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DeJson;
 using ResourceLoad;
 using System;
+using System.Reflection;
 
 /// <summary>
 /// author: huailiang.peng
@@ -27,12 +28,12 @@ namespace Config
             }
         }
 
-        string[] tables = new string[]{"items","activity"};
+        string[] tables;
 
         Dictionary<string,string> dicTables;
-
         public void InitAll()
         {
+            if(tables==null) tables=TableID.ids;
             if (dicTables == null) 
                 dicTables = new Dictionary<string, string>();
             dicTables.Clear();

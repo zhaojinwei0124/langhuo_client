@@ -19,15 +19,15 @@ public sealed class GameEngine : MonoSingle<GameEngine>
         UIManager.Instance.Init();
 
         Tables.Instance.InitAll();
-
-//        Tables.Instance.GetTable<ItemNode[]>("items", (mlist) =>
+//
+//        Tables.Instance.GetTable<List<TItem>>(TableID.ITEMS, (mlist) =>
 //        {
-//                        Debug.Log("length: " + mlist.Length);
-//                        
-//                        foreach (var item in mlist)
-//                        {
-//                            Debug.LogError("item: " + item.id + " score: " + item.score+" name:"+item.price);
-//                        }
+//                Debug.Log("length: " + mlist.Count);
+//                
+//                foreach (var item in mlist)
+//                {
+//                    Debug.LogError("item: " + item.id + " type: " + item.type+" name:"+item.description);
+//                }
 //
 //        });
 

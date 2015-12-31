@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
 
 namespace Config
 {
@@ -9,11 +8,12 @@ namespace Config
 
         public string name;
 
-        public string score;
+        public int type;
 
-        public float price;
+        public string img;
 
         public string description;
     }
+
 
 }
