@@ -2,7 +2,8 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// 基类继承树中有MonoBehavrour类的单件实现，这种单件实现有利于减少对场景树的查询操作
+/// @huailiang.peng
+/// @2015.11.30
 /// </summary>
 public class MonoSingle<T> : MonoBehaviour where T : MonoSingle<T>
 {
@@ -37,9 +38,6 @@ public class MonoSingle<T> : MonoBehaviour where T : MonoSingle<T>
     }
 
 
-    /// <summary>
-    /// 删除单件实例,这种继承关系的单件生命周期应该由模块显示管理
-    /// </summary>
     public static void DestroyInstance()
     {
         if (_instance != null)
@@ -49,9 +47,6 @@ public class MonoSingle<T> : MonoBehaviour where T : MonoSingle<T>
         _instance = null;
     }
 
-    /// <summary>
-    ///  Awake消息，确保单件实例的唯一性
-    /// </summary>
     protected virtual void Awake()
     {
         if (_instance != null && _instance.gameObject != gameObject)
@@ -71,9 +66,6 @@ public class MonoSingle<T> : MonoBehaviour where T : MonoSingle<T>
         Init();
     }
 
-    /// <summary>
-    /// OnDestroy消息，确保单件的静态实例会随着GameObject销毁
-    /// </summary>
     protected virtual void OnDestroy()
     {
         if (_instance != null && _instance.gameObject == gameObject)

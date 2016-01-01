@@ -5,138 +5,63 @@ using ResourceLoad;
 
 namespace GameCore
 {
-
     public class PageInfo
     {
         public string name;
-        public string arg;
-        public bool forward;
-        public GameObjectCallBack callBack;
-        public int lifeTimes;
+        public object arg;
         public bool inStack;
         public System.Action onPageClosed;
         public View view;
-        public int depth;
         public GameObject go;
-        public object param;
     }
 
     public delegate void GameObjectCallBack(GameObject go);
 
     public class UIHandler : Single<UIHandler>
     {
-        public static int LIFE_TIMES = 3;
-        private Transform mMainPanel = null;
-        private Camera mMainCamera = null;
-        private Dictionary<string, PageInfo> PageSlots = new Dictionary<string, PageInfo>();
         private Stack<PageInfo> PageStack = new Stack<PageInfo>();
         private Font mFont;
         private static UIHandler mInstance;
-        private UIRoot uiRoot;
 
-        public UIRoot Root
+        public UIRoot Root{ get { return UIManager.Instance.root; } }
+
+        public override void Init()
         {
-            get
-            {
-                if (uiRoot == null)
-                {
-                    uiRoot = GameObject.FindObjectOfType<UIRoot>();
-                }
-                return uiRoot;
-
-            }
-        }
-
-        public UIHandler()
-        {
+            base.Init();
             mFont = Resources.Load<Font>("Font/msyh");
         }
 
+        public Transform transFront{ get { return UIManager.Instance.front_obj.transform; } }
+
+        public Transform transHome{ get { return UIManager.Instance.home_obj.transform; } }
+
         public Font DefaultFont { get { return mFont; } }
 
-        public Transform MainPanel
-        {
-            get
-            {
-                if (mMainPanel == null)
-                {
-                    mMainPanel = GameObject.Find("MainPanel").transform;
-                }
-                return mMainPanel;
-            }
-        }
+        public UICamera MainCamera{ get { return UIManager.Instance.uicamera; } }
 
-        public PageInfo GetPageInfo(string name)
-        {
-            if (PageSlots.ContainsKey(name))
-            {
-                return PageSlots [name];
-            } else
-            {
-                return null;
-            }
-        }
-
-        public void AddPageInfo(string name, PageInfo info)
-        {
-            if (PageSlots.ContainsKey(name))
-            {
-                PageSlots [name] = info;
-            } else
-            {
-                PageSlots.Add(name, info);
-            }
-        }
-
-        public Camera MainCamera
-        {
-            get
-            {
-                if (mMainCamera == null)
-                {
-                    mMainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
-                }
-                return mMainCamera;
-            }
-        }
-
-        public GameObject GetCurrentPage()
-        {
-            if (!string.IsNullOrEmpty(CurrentPageName) && PageSlots.ContainsKey(CurrentPageName))
-            {
-                return PageSlots [CurrentPageName].go;
-            }
-            return null;
-        }
-
+       
         public PageInfo GetCurrentPageInfo()
         {
-            if (PageSlots.ContainsKey(CurrentPageName))
-            {
-                return PageSlots [CurrentPageName];
-            }
             return null;
         }
 
         public GameObject GetPage(string name)
         {
-            if (LoadedPage(name))
-                return PageSlots [name].go;
             return null;
         }
 
         public T GetPage<T>() where T : class
         {
-            string page = typeof(T).Name;
-            if (LoadedPage(page))
-                return PageSlots [page].view as T;
+//            string page = typeof(T).Name;
+//            if (LoadedPage(page))
+//                return PageSlots [page].view as T;
             return default(T);
         }
 
         public bool LoadedPage(string name)
         {
-            if (PageSlots.ContainsKey(name) && PageSlots [name].go != null)
-                return true;
+//            if (PageSlots.ContainsKey(name) && PageSlots [name].go != null)
+//                return true;
             return false;
         }
 
@@ -147,15 +72,6 @@ namespace GameCore
                 return PageStack.Count > 0 ? PageStack.Peek().name : null;
             }
         }
-
-        public bool HasLastPage
-        {
-            get
-            {
-                Debug.Log(">>>>>>>>>>>>>>>>>>>>>>PageStack.Count:" + PageStack.Count);
-                return (PageStack.Count >= 2);
-            }
-        }
            
         public void ClearStack()
         {
@@ -164,7 +80,7 @@ namespace GameCore
 
         private void HideStackPage()
         {
-            foreach (PageInfo page in PageSlots.Values)
+            foreach (PageInfo page in PageStack)
             {
                 if (page.inStack && page.go.activeSelf)
                 {
@@ -173,21 +89,8 @@ namespace GameCore
             }
         }
 
-        private void ShowStackPage()
-        {
-        }
-
-
         public void Reset()
         {
-            foreach (PageInfo page in PageSlots.Values)
-            {
-                if (page.go == null)
-                    continue;
-                page.go.SetActive(false);
-                GameObject.Destroy(page.go);
-            }
-            PageSlots.Clear();
             PageStack.Clear();
         }
 

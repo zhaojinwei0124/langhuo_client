@@ -7,6 +7,8 @@ public class HomeUI : View
 {
     public UIPoolList m_pool;
     public UITexture m_txtBanner;
+    public UILabel m_lblCity;
+    public UILabel m_lbllDistric;
 
     public override void RefreshView()
     {
@@ -18,6 +20,13 @@ public class HomeUI : View
             Home.Instance.Set(Util.Instance.Get<NItem[]>(w.text));
             RefreshList();
         });
+    }
+
+
+    public void RefreshTitle()
+    {
+        m_lblCity.text=GameBaseInfo.Instance.city;
+        m_lbllDistric.text=GameBaseInfo.Instance.distric;
     }
 
     private void RefreshList()

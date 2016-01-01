@@ -28,6 +28,17 @@ namespace Network
         };
 
         public List<BuyNode> buy_list=new List<BuyNode>();
+
+
+        public void AddBuyNode(BuyNode node)
+        {
+            buy_list.Add(node);
+        }
+
+        public void ClearBuy()
+        {
+            buy_list.Clear();
+        }
     }
 
 }
