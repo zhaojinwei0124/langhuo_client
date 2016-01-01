@@ -21,11 +21,19 @@ public class ItemDetailPage : View
     {
         base.Refresh(data);
         m_item = data as ItemNode;
-        m_cnt = 1;
+        m_cnt = GetCnt();
         UIEventListener.Get(m_sprAdd.gameObject).onClick = OnAdd;
         UIEventListener.Get(m_sprReduce.gameObject).onClick = OnReduce;
         UIEventListener.Get(m_objBuy).onClick = GoBuy;
         RefreshUI();
+    }
+
+    private int GetCnt()
+    {
+        GameBaseInfo.BuyNode node = GameBaseInfo.Instance.buy_list.Find(x => x.id == m_item.n_item.id);
+        if (node.cnt == 0)
+            return 1;
+        return node.cnt;
     }
 
     private void RefreshUI()
@@ -49,16 +57,17 @@ public class ItemDetailPage : View
 
     private void OnReduce(GameObject go)
     {
-        if(m_cnt>1) m_cnt--;
+        if (m_cnt > 1)
+            m_cnt--;
         m_lblcnt.text = m_cnt.ToString();
     }
 
     private void GoBuy(GameObject go)
     {
 //        Debug.Log("add card list");
-        GameBaseInfo.Instance.AddBuyNode(new GameBaseInfo.BuyNode(m_item.n_item.id, m_cnt));
+        GameBaseInfo.Instance.AddBuyNode(m_item.n_item.id, m_cnt);
         Close();
-       // UIManager.Instance.ShowHomeView(1);
+        // UIManager.Instance.ShowHomeView(1);
     }
 
   

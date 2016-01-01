@@ -20,19 +20,31 @@ namespace Network
             public int id;
             public int cnt;
 
-            public BuyNode (int _id,int _cnt)
+            public BuyNode(int _id, int _cnt)
             {
-                id=_id;
-                cnt=_cnt;
+                id = _id;
+                cnt = _cnt;
             }
         };
 
-        public List<BuyNode> buy_list=new List<BuyNode>();
+        public List<BuyNode> buy_list = new List<BuyNode>();
 
-
-        public void AddBuyNode(BuyNode node)
+        public void AddBuyNode(int id,int cnt)
         {
-            buy_list.Add(node);
+            if (buy_list.ConvertAll(x => x.id).Contains(id))
+            {
+                for (int i=0; i<buy_list.Count; i++)
+                {
+                    if (buy_list [i].id == id)
+                    {
+                         buy_list [i]=new BuyNode(id,cnt);
+                         break;
+                    }
+                }
+            } else
+            {
+                buy_list.Add(new BuyNode(id,cnt));
+            }
         }
 
         public void ClearBuy()
@@ -40,11 +52,10 @@ namespace Network
             buy_list.Clear();
         }
 
-
         public void InitLocal()
         {
-           city="上海";
-           distric="五角场提货点";
+            city = "上海";
+            distric = "五角场提货点";
         }
     }
 

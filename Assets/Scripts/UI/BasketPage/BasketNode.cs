@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using ResourceLoad;
+using GameCore;
+
 
 public class BasketItem
 {
@@ -19,10 +21,7 @@ public class BasketNode : UIPoolListNode
         
     void Start()
     {
-        UIEventListener.Get(m_goModify).onClick = (go) =>
-        {
-            Debug.Log("modify count");
-        };
+        UIEventListener.Get(m_goModify).onClick = OnModify;
     }
    
     protected BasketItem Data
@@ -30,18 +29,27 @@ public class BasketNode : UIPoolListNode
         get{ return m_data as BasketItem;}
     }
 
+
+    private ItemNode mItemNode;
+
     public override void Refresh()
     {
         base.Refresh();
-        ItemNode item = Home.Instance.items.Find(x => x.n_item.id == Data.id);
+        mItemNode = Home.Instance.items.Find(x => x.n_item.id == Data.id);
 
         m_lbCnt.text = Data.cnt.ToString();
-        m_lbPrice.text = "价格： ￥" + item.n_item.nprice;
-        m_lbDesc.text = "[ff0000]" + item.t_item.name + "[-] " + item.t_item.description;
-        TextureHandler.Instance.LoadTexture("Item/" + item.t_item.img, (obj) =>
+        m_lbPrice.text = "价格： ￥" + mItemNode.n_item.nprice;
+        m_lbDesc.text = "[ff0000]" + mItemNode.t_item.name + "[-] " + mItemNode.t_item.description;
+        TextureHandler.Instance.LoadTexture("Item/" + mItemNode.t_item.img, (obj) =>
         {
             m_txtIcon.mainTexture = obj as Texture;
         });
 
+    }
+
+
+    private void OnModify(GameObject go)
+    {
+        UIHandler.Instance.Push(PageID.ITEMSDETAIL,mItemNode);
     }
 }

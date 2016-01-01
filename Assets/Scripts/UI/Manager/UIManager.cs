@@ -21,14 +21,17 @@ public class UIManager : MonoSingle<UIManager>
 
     private bool mFront=false;
 
+    private int mIndex=0;
+
     public void Init()
     {
         UIEventListener.Get(home_tabs [0].gameObject).onClick = (go) => ShowHomeView(0);
         UIEventListener.Get(home_tabs [1].gameObject).onClick = (go) => ShowHomeView(1);
         UIEventListener.Get(home_tabs [2].gameObject).onClick = (go) => ShowHomeView(2);
         UIEventListener.Get(close_obj).onClick=Close;
+
+        mIndex=0;
         ShowFront(false);
-        ShowHomeView(0);
     }
    
     public bool IsFront()
@@ -52,6 +55,7 @@ public class UIManager : MonoSingle<UIManager>
    
     public void ShowHomeView(int index)
     {
+        mIndex=index;
         HideHomeViews();
         home_views[index].gameObject.SetActive(true);
         home_views[index].RefreshView();
@@ -62,6 +66,7 @@ public class UIManager : MonoSingle<UIManager>
         mFront=show;
         home_obj.SetActive(!show);
         front_obj.SetActive(show);
+        if(!show) ShowHomeView(mIndex);
     }
 
 

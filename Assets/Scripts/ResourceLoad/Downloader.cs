@@ -37,7 +37,11 @@ namespace ResourceLoad
         // "正在"加载的资源列表 [prefabPath, www]
         private Dictionary<string, WWW> dicLoadingReq = new Dictionary<string, WWW>();
 
-        public string ASSET_URL = Network.GameServer.BASE_URL + "ClientRes/";
+#if UNITY_ANDROID
+        public string ASSET_URL = Network.GameServer.BASE_URL + "ClientRes/Android/";
+#else
+        public string ASSET_URL = Network.GameServer.BASE_URL + "ClientRes/ios/";
+#endif
 
         public Object GetResource(string name)
         {
