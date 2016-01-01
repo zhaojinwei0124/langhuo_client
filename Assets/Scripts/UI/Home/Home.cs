@@ -44,5 +44,4 @@ public class Home : Single<Home>
     }
 
 
-
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using ResourceLoad;
+using GameCore;
 
 public class HomeScrollData
 {
@@ -63,11 +64,13 @@ public class HomeScrollNode : UIPoolListNode
 
     private void OnItem1Click(GameObject go)
     {
-        Debug.Log("click name: " + Data.item1.t_item.name);
+//        Debug.Log("click name: " + Data.item1.t_item.name);
+        UIHandler.Instance.Push(PageID.ITEMSDETAIL,Data.item1);
     }
 
     private void OnItem2Click(GameObject go)
     {
-        Debug.Log("click name: " + Data.item2.t_item.name);
+//        Debug.Log("click name: " + Data.item2.t_item.name);
+        UIHandler.Instance.Push(PageID.ITEMSDETAIL,Data.item2);
     }
 }

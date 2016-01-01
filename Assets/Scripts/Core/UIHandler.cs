@@ -105,6 +105,10 @@ namespace GameCore
             if(arg!=null) info.view.Refresh(arg);
             else info.view.RefreshView();
             mPageStack.Push(info);
+            if(!UIManager.Instance.IsFront()) 
+            {
+                UIManager.Instance.ShowFront(true);
+            }
             return info;
         }
 
@@ -112,9 +116,14 @@ namespace GameCore
         public void Pop()
         {
             PageInfo info=mPageStack.Peek();
-            info.onPageClosed();
+            if(info.onPageClosed!=null)info.onPageClosed();
             GameObject.Destroy(info.go);
             mPageStack.Pop();
+
+            if(mPageStack.Count<=0)
+            {
+                UIManager.Instance.ShowFront(false);
+            }
         }
 
         private GameObject Instantiate(Object original)

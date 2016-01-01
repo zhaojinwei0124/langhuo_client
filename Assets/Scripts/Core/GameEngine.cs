@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameCore;
 using Config;
+using Network;
 
 public sealed class GameEngine : MonoSingle<GameEngine>
 {
@@ -15,6 +16,8 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     void Start()
     {
         Debug.Log("Game engine start.");
+
+        GameBaseInfo.Instance.InitLocal();
 
         UIManager.Instance.Init();
 

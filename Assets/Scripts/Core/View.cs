@@ -57,9 +57,9 @@ public abstract class View : MonoBehaviour
 
     private UIPanel m_panelBlock;
 
-    protected virtual void Close(Action cb)
+    protected virtual void Close()
     {
-        UIHandler.Instance.Pop(cb);
+        UIHandler.Instance.Pop();
     }
 
     public void BlockInput()

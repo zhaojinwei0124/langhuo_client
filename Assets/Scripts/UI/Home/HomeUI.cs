@@ -14,6 +14,7 @@ public class HomeUI : View
     {
         base.RefreshView();
         RefreshBanner();
+        RefreshTitle();
         NetCommand.Instance.GetItems((w) => 
         {
             // Debug.Log("w text: " + w.text);

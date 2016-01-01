@@ -39,6 +39,13 @@ namespace Network
         {
             buy_list.Clear();
         }
+
+
+        public void InitLocal()
+        {
+           city="上海";
+           distric="五角场提货点";
+        }
     }
 
 }

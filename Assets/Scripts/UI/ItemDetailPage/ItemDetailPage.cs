@@ -5,7 +5,6 @@ using Network;
 
 public class ItemDetailPage : View
 {
-
     public UITexture m_texture;
     public UILabel m_lblName;
     public UILabel m_lbldesc;
@@ -15,8 +14,6 @@ public class ItemDetailPage : View
     public UISprite m_sprAdd;
     public UISprite m_sprReduce;
     public GameObject m_objBuy;
-
-
     ItemNode m_item;
     int m_cnt;
 
@@ -24,10 +21,10 @@ public class ItemDetailPage : View
     {
         base.Refresh(data);
         m_item = data as ItemNode;
-        m_cnt=1;
+        m_cnt = 1;
         UIEventListener.Get(m_sprAdd.gameObject).onClick = OnAdd;
         UIEventListener.Get(m_sprReduce.gameObject).onClick = OnReduce;
-        UIEventListener.Get(m_objBuy).onClick = AddBuy;
+        UIEventListener.Get(m_objBuy).onClick = GoBuy;
         RefreshUI();
     }
 
@@ -41,24 +38,27 @@ public class ItemDetailPage : View
         m_lblpprice.text = "￥" + m_item.n_item.pprice;
         m_lblnprice.text = "￥" + m_item.n_item.nprice + "元/份";
         m_lblcnt.text = m_cnt.ToString();
+        m_lblName.text = m_item.t_item.name;
     }
 
     private void OnAdd(GameObject go)
     {
         m_cnt++;
-        m_lblcnt.text=m_cnt.ToString();
+        m_lblcnt.text = m_cnt.ToString();
     }
 
     private void OnReduce(GameObject go)
     {
-        m_cnt--;
-        m_lblcnt.text=m_cnt.ToString();
+        if(m_cnt>1) m_cnt--;
+        m_lblcnt.text = m_cnt.ToString();
     }
 
-    private void AddBuy(GameObject go)
+    private void GoBuy(GameObject go)
     {
-        Debug.Log("add card list");
-        GameBaseInfo.Instance.AddBuyNode(new GameBaseInfo.BuyNode(m_item.n_item.id,m_cnt));
+//        Debug.Log("add card list");
+        GameBaseInfo.Instance.AddBuyNode(new GameBaseInfo.BuyNode(m_item.n_item.id, m_cnt));
+        Close();
+       // UIManager.Instance.ShowHomeView(1);
     }
 
   
