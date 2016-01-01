@@ -10,16 +10,13 @@ public class MyPage : View
     [SerializeField]
     private UITab[] m_tabs;
 
-    [SerializeField]
-
-	void Start () 
+    public override void RefreshView()
     {
-        Debug.Log("MyPage Start");
+        base.RefreshView();
         UIEventListener.Get(m_tabs[0].gameObject).onClick=(go)=>Show(0);
         UIEventListener.Get(m_tabs[1].gameObject).onClick=(go)=>Show(1);
         UIEventListener.Get(m_tabs[2].gameObject).onClick=(go)=>Show(2);
-	}
-	
+    }
 
 
     private void HideAll()

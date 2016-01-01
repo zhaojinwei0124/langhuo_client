@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameCore;
 
-public class View : MonoBehaviour
+public abstract class View : MonoBehaviour
 {
 
     private List<int> panelsDepth;
@@ -56,6 +56,11 @@ public class View : MonoBehaviour
     }
 
     private UIPanel m_panelBlock;
+
+    protected virtual void Close(Action cb)
+    {
+        UIHandler.Instance.Pop(cb);
+    }
 
     public void BlockInput()
     {

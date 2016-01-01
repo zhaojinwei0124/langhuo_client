@@ -9,4 +9,5 @@ public class BasketPage : View
     {
         base.RefreshView();
     }
+
 }

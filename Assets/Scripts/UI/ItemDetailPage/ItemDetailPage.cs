@@ -15,7 +15,7 @@ public class ItemDetailPage : View
     public UISprite m_sprAdd;
     public UISprite m_sprReduce;
     public GameObject m_objBuy;
-    public GameObject m_objClose;
+
 
     ItemNode m_item;
     int m_cnt;
@@ -28,7 +28,6 @@ public class ItemDetailPage : View
         UIEventListener.Get(m_sprAdd.gameObject).onClick = OnAdd;
         UIEventListener.Get(m_sprReduce.gameObject).onClick = OnReduce;
         UIEventListener.Get(m_objBuy).onClick = AddBuy;
-        UIEventListener.Get(m_objClose).onClick=Close;
         RefreshUI();
     }
 
@@ -62,10 +61,5 @@ public class ItemDetailPage : View
         GameBaseInfo.Instance.AddBuyNode(new GameBaseInfo.BuyNode(m_item.n_item.id,m_cnt));
     }
 
-    private void Close(GameObject go)
-    {
-        Debug.Log("close page");
-        UIManager.Instance.ShowFront(false);
-    }
-
+  
 }

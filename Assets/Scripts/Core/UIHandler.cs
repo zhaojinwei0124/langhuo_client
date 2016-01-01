@@ -9,7 +9,6 @@ namespace GameCore
     {
         public string name;
         public object arg;
-        public bool inStack;
         public System.Action onPageClosed;
         public View view;
         public GameObject go;
@@ -19,7 +18,7 @@ namespace GameCore
 
     public class UIHandler : Single<UIHandler>
     {
-        private Stack<PageInfo> PageStack = new Stack<PageInfo>();
+        private Stack<PageInfo> mPageStack = new Stack<PageInfo>();
         private Font mFont;
         private static UIHandler mInstance;
 
@@ -38,97 +37,109 @@ namespace GameCore
         public Font DefaultFont { get { return mFont; } }
 
         public UICamera MainCamera{ get { return UIManager.Instance.uicamera; } }
-
        
         public PageInfo GetCurrentPageInfo()
         {
-            return null;
+            return mPageStack.Count > 0 ? mPageStack.Peek() : null;;
         }
 
-        public GameObject GetPage(string name)
+        public GameObject GetCurrentPage()
         {
-            return null;
-        }
-
-        public T GetPage<T>() where T : class
-        {
-//            string page = typeof(T).Name;
-//            if (LoadedPage(page))
-//                return PageSlots [page].view as T;
-            return default(T);
-        }
-
-        public bool LoadedPage(string name)
-        {
-//            if (PageSlots.ContainsKey(name) && PageSlots [name].go != null)
-//                return true;
-            return false;
+            return mPageStack.Count > 0 ? mPageStack.Peek().go : null;
         }
 
         public string CurrentPageName
         {
             get
             {
-                return PageStack.Count > 0 ? PageStack.Peek().name : null;
+                return mPageStack.Count > 0 ? mPageStack.Peek().name : null;
             }
         }
            
         public void ClearStack()
         {
-            PageStack.Clear();
+            foreach(PageInfo info in mPageStack)
+            {
+                info.onPageClosed();
+                GameObject.Destroy(info.go);
+            }
+            mPageStack.Clear();
         }
 
         private void HideStackPage()
         {
-            foreach (PageInfo page in PageStack)
+            foreach (PageInfo page in mPageStack)
             {
-                if (page.inStack && page.go.activeSelf)
+                if (page.go.activeSelf)
                 {
                     page.go.SetActive(false);
                 }
             }
         }
 
-        public void Reset()
+        public PageInfo Push(PageID id)
         {
-            PageStack.Clear();
+            return Push(id, null);
         }
 
-        public GameObject Instantiate(Object original, Transform parent)
+        public PageInfo Push(PageID id, object arg)
         {
-            if (parent != null)
-            {
-                return Instantiate(original, parent, parent.position, Quaternion.identity, Vector3.one);
-            } else
-                return Instantiate(original, parent, Vector3.zero, Quaternion.identity, Vector3.one);
+            return Push(id,arg,null);
         }
 
-        public GameObject Instantiate(Object original, Transform parent, Vector3 position)
+        public PageInfo Push(PageID id,System.Action onClose)
         {
-
-            return Instantiate(original, parent, position, Quaternion.identity, Vector3.one);
+            return Push(id,null,onClose);
         }
 
-        public GameObject Instantiate(Object original, Transform parent, Vector3 position, Vector3 scale)
+        public PageInfo Push(PageID id, object arg,System.Action onClose)
         {
-
-            return Instantiate(original, parent, position, Quaternion.identity, scale);
+            Object obj = Resources.Load("Prefabs/GamePage/" + id);
+            GameObject go = Instantiate(obj);
+            PageInfo info = new PageInfo();
+            info.go = go;
+            info.name = id;
+            info.arg = obj;
+            info.onPageClosed=onClose;
+            info.view=go.GetComponent<View>();
+            if(arg!=null) info.view.Refresh(arg);
+            else info.view.RefreshView();
+            mPageStack.Push(info);
+            return info;
         }
 
-        public GameObject Instantiate(Object original, Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
+
+        public void Pop()
+        {
+            PageInfo info=mPageStack.Peek();
+            info.onPageClosed();
+            GameObject.Destroy(info.go);
+            mPageStack.Pop();
+        }
+
+        private GameObject Instantiate(Object original)
+        {
+            return Instantiate(original, Vector3.zero, Quaternion.identity, Vector3.one);
+        }
+
+        private GameObject Instantiate(Object original, Vector3 position)
+        {
+            return Instantiate(original, position, Quaternion.identity, Vector3.one);
+        }
+
+        private GameObject Instantiate(Object original, Vector3 position, Vector3 scale)
+        {
+            return Instantiate(original, position, Quaternion.identity, scale);
+        }
+
+        private GameObject Instantiate(Object original, Vector3 position, Quaternion rotation, Vector3 scale)
         {
             if (original == null)
                 return null;
-            GameObject instance;
-            if (parent != null)
-            {
-                instance = GameObject.Instantiate(original, parent.position, rotation) as GameObject;
-                instance.transform.parent = parent;
-                instance.transform.localPosition = position;
-            } else
-            {
-                instance = GameObject.Instantiate(original, position, rotation) as GameObject;
-            }
+            Transform parent = transFront;
+            GameObject instance = GameObject.Instantiate(original, parent.position, rotation) as GameObject;
+            instance.transform.parent = parent;
+            instance.transform.localPosition = position;
             instance.name = original.name;
             instance.transform.localScale = scale;
             return instance;
