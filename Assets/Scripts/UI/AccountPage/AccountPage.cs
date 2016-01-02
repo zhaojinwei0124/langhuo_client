@@ -66,6 +66,7 @@ public class AccountPage : View
             NetCommand.Instance.SysnOrder((msg) =>
             {
                 Debug.Log("commit order success!");
+                GameBaseInfo.Instance.buy_list.Clear();
                 Close();
             },
             (err)=>

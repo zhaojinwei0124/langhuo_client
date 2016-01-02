@@ -35,7 +35,7 @@ public class BasketNode : UIPoolListNode
     public override void Refresh()
     {
         base.Refresh();
-        mItemNode = Home.Instance.items.Find(x => x.n_item.id == Data.id);
+        mItemNode = Network.GameBaseInfo.Instance.items.Find(x => x.n_item.id == Data.id);
 
         m_lbCnt.text = Data.cnt.ToString();
         m_lbPrice.text = "价格： ￥" + mItemNode.n_item.nprice;

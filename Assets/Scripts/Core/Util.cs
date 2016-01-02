@@ -42,7 +42,7 @@ namespace GameCore
                     builder.Append(obj);
                     builder.Append(',');
                 }
-                builder.Append(obj);
+                else builder.Append(obj);
             }
             builder.Append(']');
             return builder.ToString();
