@@ -10,7 +10,9 @@ namespace GameCore
 {
     class Util:Single<Util>
     {
-
+        /// <summary>
+        /// Unzips the file bytes
+        /// </summary>
         public string UnzipString (byte[] compbytes )
         {
             return 	ZlibStream.UncompressString(compbytes);
@@ -27,15 +29,15 @@ namespace GameCore
         /// <summary>
         /// make array or list to json string
         /// </summary>
-        public string SerializeArray(IList anArray)
+        public string SerializeArray(IList array)
         {
             StringBuilder builder=new StringBuilder();
             builder.Append('[');
             int index=0;
-            foreach (object obj in anArray) 
+            foreach (object obj in array) 
             {
                 index++;
-                if (index<anArray.Count) 
+                if (index<array.Count) 
                 {
                     builder.Append(obj);
                     builder.Append(',');
