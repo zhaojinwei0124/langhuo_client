@@ -41,12 +41,12 @@ public class AccountPage : View
 
     private void OnTextClick(GameObject go)
     {
-
+        Debug.Log("Text click");
     }
 
     private void OnRegist(GameObject go)
     {
-
+        Debug.Log("Onregist");
     }
 
     private void RefreshUI()

@@ -4,9 +4,14 @@ using System.Collections.Generic;
 
 namespace Network
 {
+    public enum PayMode
+    {
+        WXPay,
+        AliPay
+    };
+
     public class GameBaseInfo:Single<GameBaseInfo>
     {
-
         public int userid{ get; set; }
 
         public string encrypt{ get; set; }
@@ -26,6 +31,8 @@ namespace Network
                 cnt = _cnt;
             }
         };
+
+        public PayMode payMode =PayMode.AliPay;
 
         public List<BuyNode> buy_list = new List<BuyNode>();
 
