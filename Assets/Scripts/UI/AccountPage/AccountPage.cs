@@ -58,7 +58,7 @@ public class AccountPage : View
                 {
                     PlayerPrefs.SetString("userid", m_tel.label.text);
                     Debug.Log("regist use success!");
-                    m_lblRegist.text = "确定";
+                    m_lblRegist.text = "提交订单";
                 }
             });
         } else
@@ -70,7 +70,7 @@ public class AccountPage : View
             },
             (err)=>
             {
-                Debug.LogError("sysnc order data fail!");
+               if(!string.IsNullOrEmpty(err)) Debug.LogError("sysnc order data fail!");
             });
         }
     }
@@ -78,7 +78,7 @@ public class AccountPage : View
     private void RefreshUI()
     {
         Debug.Log("username: " + PlayerPrefs.GetString("userid"));
-        m_lblRegist.text = CheckLocal() ? "确定" : "注册 ";
+        m_lblRegist.text = CheckLocal() ? "提交订单" : "注册 ";
         if (CheckLocal())
         {
             NetCommand.Instance.LoginUser(mUserid, (res) =>

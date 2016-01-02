@@ -41,6 +41,8 @@ public class Home : Single<Home>
             items.Add(node);
         }
 
+        GameBaseInfo.Instance.items=items;
+
     }
 
 

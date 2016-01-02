@@ -31,14 +31,16 @@ namespace GameCore
         {
             StringBuilder builder=new StringBuilder();
             builder.Append('[');
-            bool first = true;
+            int index=0;
             foreach (object obj in anArray) 
             {
-                if (!first) 
+                index++;
+                if (index<anArray.Count) 
                 {
+                    builder.Append(obj);
                     builder.Append(',');
                 }
-                first = false;
+                builder.Append(obj);
             }
             builder.Append(']');
             return builder.ToString();

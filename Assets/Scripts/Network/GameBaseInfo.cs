@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using GameCore;
 
-
+/// <summary>
+/// all local data for app
+/// </summary>
 namespace Network
 {
     public enum PayMode
@@ -21,6 +23,8 @@ namespace Network
     public class GameBaseInfo:Single<GameBaseInfo>
     {
         public NUser user{ get; set; }
+
+        public List<ItemNode> items=new List<ItemNode>();
 
         public string encrypt{ get; set; }
 

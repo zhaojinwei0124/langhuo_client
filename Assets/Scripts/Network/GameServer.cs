@@ -96,8 +96,6 @@ namespace Network
             if (www.error != null)
             {
                 Debug.LogError("net error=> " + www.error);
-                if (msgCallback != null)
-                    msgCallback(null);
                 if (errCallback != null)
                     errCallback(www.error);
             } else
@@ -106,16 +104,12 @@ namespace Network
                 Debug.Log("respond=> " + resp);
                 if (resp.StartsWith("false"))
                 {
-                    if (msgCallback != null)
-                        msgCallback(null);
                     if (errCallback != null)
-                        msgCallback(resp);
+                        errCallback(resp);
                 } else
                 {
                     if (msgCallback != null)
-                        msgCallback(www.text.Trim());
-                    if (errCallback != null)
-                        errCallback(null);
+                        msgCallback(resp);
                 }
             }
             www.Dispose();
@@ -128,8 +122,6 @@ namespace Network
             if (www.error != null)
             {
                 Debug.Log("net error=> " + www.error);
-                if (msgCallback != null)
-                    msgCallback(null);
                 if (errCallback != null)
                     errCallback(www.error);
             } else
@@ -138,16 +130,12 @@ namespace Network
                 Debug.Log("response=> " + resp);
                 if (resp.StartsWith("false"))
                 {
-                    if (msgCallback != null)
-                        msgCallback(null);
                     if (errCallback != null)
-                        msgCallback(resp);
+                        errCallback(resp);
                 } else
                 {
                     if (msgCallback != null)
-                        msgCallback(www.text.Trim());
-                    if (errCallback != null)
-                        errCallback(null);
+                        msgCallback(resp);
                 }
             }
             www.Dispose();
