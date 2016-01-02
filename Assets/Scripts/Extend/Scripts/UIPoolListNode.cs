@@ -63,7 +63,7 @@ public class UIPoolListNode : MonoBehaviour
     }
     protected UIPoolList m_poolList;
     public UIPoolList PoolList { get { if (m_poolList == null) m_poolList = NGUITools.FindInParents<UIPoolList>(gameObject); return m_poolList; } }
-    public List<EventDelegate> m_onClick = new List<EventDelegate>();
+    protected List<EventDelegate> m_onClick = new List<EventDelegate>();
 
     public System.Object m_data;
 

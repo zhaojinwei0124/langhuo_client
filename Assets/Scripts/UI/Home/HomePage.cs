@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Network;
 using GameCore;
 
-public class HomeUI : View
+public class HomePage : View
 {
     public UIPoolList m_pool;
     public UITexture m_txtBanner;
