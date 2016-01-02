@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameCore;
+
 
 namespace Network
 {
@@ -10,19 +12,21 @@ namespace Network
         AliPay =1,
     };
 
+    public enum PayType
+    {
+        LANGJIAN=1,
+        LANGTI=2,
+    };
+
     public class GameBaseInfo:Single<GameBaseInfo>
     {
-        public long userid{ get; set; }
+        public NUser user{ get; set; }
 
         public string encrypt{ get; set; }
 
         public string city{ get; set; }
 
         public string distric{ get; set; }
-
-        public int balance{ get; set; }
-
-        public string addr{ get; set; }
 
         public struct BuyNode
         {
@@ -66,6 +70,16 @@ namespace Network
         {
             city = "上海";
             distric = "五角场提货点";
+        }
+
+        public string GetItems()
+        {
+            return Util.Instance.SerializeArray( buy_list.ConvertAll(x=>x.id));
+        }
+
+        public string GetCnt()
+        {
+            return Util.Instance.SerializeArray(buy_list.ConvertAll(x=>x.cnt));
         }
     }
 

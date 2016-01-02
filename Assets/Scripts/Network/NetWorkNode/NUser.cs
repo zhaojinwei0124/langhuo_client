@@ -22,6 +22,8 @@ namespace Network
         public string addr;
         
         public int balance;
+
+        public int type;
     
     }
 }

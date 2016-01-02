@@ -6,8 +6,8 @@ public class AccountPage : View
 {
     public UITexture m_head;
     public UIInput m_user;
-    public UIInput m_name;
-    public UIInput m_reciver;
+    public UIInput m_type;
+    public UIInput m_receive;
     public UIInput m_address;
     public UIInput m_tel;
     public GameObject m_objRegist;
@@ -20,10 +20,6 @@ public class AccountPage : View
         UIEventListener.Get(m_objRegist).onClick = OnRegist;
         UIEventListener.Get(m_head.gameObject).onClick = OnTextClick;
         RefreshUI();
-    }
-    
-    private void GetLocalInfo()
-    {
     }
 
     private bool CheckLocal()
@@ -49,18 +45,34 @@ public class AccountPage : View
 
     private void OnRegist(GameObject go)
     {
-        Debug.Log("Onregist");
         if (!CheckValid())
             return;
-        NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, m_address.label.text, (res) =>
+
+        if (!CheckLocal())
         {
-            Debug.Log("res: " + res);
-            if (res.Equals("true"))
+            NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, 
+                                           m_address.label.text, PayType.LANGJIAN, (res) =>
             {
-                PlayerPrefs.SetString("userid", m_tel.label.text);
-                Debug.Log("regist use success!");
-            }
-        });
+                Debug.Log("res: " + res);
+                if (res.Equals("true"))
+                {
+                    PlayerPrefs.SetString("userid", m_tel.label.text);
+                    Debug.Log("regist use success!");
+                    m_lblRegist.text = "确定";
+                }
+            });
+        } else
+        {
+            NetCommand.Instance.SysnOrder((msg) =>
+            {
+                Debug.Log("commit order success!");
+                Close();
+            },
+            (err)=>
+            {
+                Debug.LogError("sysnc order data fail!");
+            });
+        }
     }
 
     private void RefreshUI()
@@ -71,16 +83,13 @@ public class AccountPage : View
         {
             NetCommand.Instance.LoginUser(mUserid, (res) =>
             {
-                Debug.Log("res: "+res);
-                NUser nuser=GameCore.Util.Instance.Get<NUser>(res);
-                Debug.Log("name: "+nuser.name+" tel: "+nuser.tel);
-                GameBaseInfo.Instance.userid= nuser.tel;
-                GameBaseInfo.Instance.payMode=(PayMode)nuser.paymode;
-                GameBaseInfo.Instance.balance=nuser.balance;
-                GameBaseInfo.Instance.addr=nuser.addr;
-                m_user.label.text=m_reciver.label.text=m_name.label.text=nuser.name;
-                m_address.label.text=nuser.addr;
-                m_tel.label.text=nuser.tel.ToString();
+                Debug.Log("res: " + res);
+                NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
+                GameBaseInfo.Instance.user = nuser;
+                m_user.label.text = m_receive.label.text = nuser.name;
+                m_type.text = nuser.type == 1 ? "浪尖" : "浪蹄";
+                m_address.label.text = nuser.addr;
+                m_tel.label.text = nuser.tel.ToString();
             });
         }
 

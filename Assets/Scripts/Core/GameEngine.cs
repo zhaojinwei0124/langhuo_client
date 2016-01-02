@@ -34,6 +34,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
         {
             Debug.Log("clean cache");
             Caching.CleanCache();
+            PlayerPrefs.DeleteAll();
         }
 #endif
 
