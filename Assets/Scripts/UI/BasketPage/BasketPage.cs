@@ -56,12 +56,12 @@ public class BasketPage : View
             price+=node.n_item.nprice*item.cnt;
         }
         m_lblAllPrice.text="总计：￥"+price;
+        UIEventListener.Get(m_objGo).onClick=GoBuy;
     }
 
 
     private void GoBuy(GameObject go)
     {
-        Debug.Log("go to");
         UIHandler.Instance.Push(PageID.ACCOUNT);
     }
 }

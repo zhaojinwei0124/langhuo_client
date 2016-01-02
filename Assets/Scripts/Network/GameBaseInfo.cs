@@ -6,19 +6,23 @@ namespace Network
 {
     public enum PayMode
     {
-        WXPay,
-        AliPay
+        WXPay = 0,
+        AliPay =1,
     };
 
     public class GameBaseInfo:Single<GameBaseInfo>
     {
-        public int userid{ get; set; }
+        public long userid{ get; set; }
 
         public string encrypt{ get; set; }
 
         public string city{ get; set; }
 
         public string distric{ get; set; }
+
+        public int balance{ get; set; }
+
+        public string addr{ get; set; }
 
         public struct BuyNode
         {
@@ -32,11 +36,10 @@ namespace Network
             }
         };
 
-        public PayMode payMode =PayMode.AliPay;
-
+        public PayMode payMode = PayMode.AliPay;
         public List<BuyNode> buy_list = new List<BuyNode>();
 
-        public void AddBuyNode(int id,int cnt)
+        public void AddBuyNode(int id, int cnt)
         {
             if (buy_list.ConvertAll(x => x.id).Contains(id))
             {
@@ -44,13 +47,13 @@ namespace Network
                 {
                     if (buy_list [i].id == id)
                     {
-                         buy_list [i]=new BuyNode(id,cnt);
-                         break;
+                        buy_list [i] = new BuyNode(id, cnt);
+                        break;
                     }
                 }
             } else
             {
-                buy_list.Add(new BuyNode(id,cnt));
+                buy_list.Add(new BuyNode(id, cnt));
             }
         }
 

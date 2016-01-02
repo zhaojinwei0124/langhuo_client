@@ -15,10 +15,10 @@ public class HomePage : View
         base.RefreshView();
         RefreshBanner();
         RefreshTitle();
-        NetCommand.Instance.GetItems((w) => 
+        NetCommand.Instance.GetItems((res) => 
         {
             // Debug.Log("w text: " + w.text);
-            Home.Instance.Set(Util.Instance.Get<NItem[]>(w.text));
+            Home.Instance.Set(Util.Instance.Get<NItem[]>(res));
             RefreshList();
         });
     }

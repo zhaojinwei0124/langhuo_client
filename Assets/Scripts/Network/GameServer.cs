@@ -5,16 +5,16 @@ using System.Collections.Generic;
 namespace Network
 {
 
-    public delegate void OnResponse(WWW www);
+    //public delegate void OnResponse(WWW www);
+    public delegate void MsgCallback(string msg);
 
-
+    public delegate void ErrCallback(string msg);
 
     public class GameServer : Single<GameServer>
     {
 
         public const string BASE_URL = "http://192.168.0.103/langhuo/";
-
-        public const string NET_URL = BASE_URL+ "Netframework/";
+        public const string NET_URL = BASE_URL + "Netframework/";
 
         public enum connectStatusType
         {
@@ -29,7 +29,11 @@ namespace Network
         {
             public int code;
             public string message;
-            public bool isValid() { return code == 200; }
+
+            public bool isValid()
+            {
+                return code == 200;
+            }
         }
 
 
@@ -39,13 +43,11 @@ namespace Network
             {
                 Instance.connectStatus = connectStatusType.offline;
                 return false;
-            }
-            else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork)
+            } else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork)
             {
                 Instance.connectStatus = connectStatusType.carrier;
                 return true;
-            }
-            else if (Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
+            } else if (Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
             {
                 Instance.connectStatus = connectStatusType.wifi;
                 return true;
@@ -53,8 +55,7 @@ namespace Network
             return false;
         }
 
-
-        public void HttpPost(string url, Dictionary<string, string> param, OnResponse response = null)
+        public void HttpPost(string url, Dictionary<string, string> param, MsgCallback msgCallback, ErrCallback errCallback)
         {
             if (url != null)
             {
@@ -65,49 +66,90 @@ namespace Network
                     form.AddField(post_arg.Key, post_arg.Value);
                     orign += post_arg.Value;
                 }
-                GameEngine.Instance.StartCoroutine(postConnect(NET_URL + url+".php", form, response));
+                Print(url, param);
+                GameEngine.Instance.StartCoroutine(postConnect(NET_URL + url + ".php", form, msgCallback, errCallback));
             }
         }
 
+        private void Print(string url, Dictionary<string, string> param)
+        {
+            string str = NET_URL + url + ".php?";
+            foreach (var item in param)
+            {
+                str += item.Key + ":" + item.Value + "&";
+            }
+            Debug.Log("request=> " + str.Substring(0, str.Length - 1));
+        }
 
-        public void HttpGet(string url, OnResponse response = null)
+        public void HttpGet(string url, MsgCallback msgCallback, ErrCallback errCallback)
         {
             if (url != null)
             {
-               GameEngine.Instance.StartCoroutine(connect(NET_URL + url, response));
+                GameEngine.Instance.StartCoroutine(connect(NET_URL + url, msgCallback, errCallback));
             }
         }
 
-        IEnumerator postConnect(string url, WWWForm param, OnResponse response = null)
+        IEnumerator postConnect(string url, WWWForm param, MsgCallback msgCallback, ErrCallback errCallback)
         {
-            Debug.Log("post=>" + url);
             WWW www = new WWW(url, param);
             yield return www;
             if (www.error != null)
             {
-                Debug.LogError("WWW Error: " + www.error + " url: " + url);
-            }
-            else
+                Debug.LogError("net error=> " + www.error);
+                if (msgCallback != null)
+                    msgCallback(null);
+                if (errCallback != null)
+                    errCallback(www.error);
+            } else
             {
-                Debug.Log("WWW Ok!: " + www.text);
+                string resp = www.text.Trim();
+                Debug.Log("respond=> " + resp);
+                if (resp.StartsWith("false"))
+                {
+                    if (msgCallback != null)
+                        msgCallback(null);
+                    if (errCallback != null)
+                        msgCallback(resp);
+                } else
+                {
+                    if (msgCallback != null)
+                        msgCallback(www.text.Trim());
+                    if (errCallback != null)
+                        errCallback(null);
+                }
             }
-            if (response != null) response(www);
             www.Dispose();
         }
 
-        IEnumerator connect(string url, OnResponse response = null)
+        IEnumerator connect(string url, MsgCallback msgCallback, ErrCallback errCallback)
         {
             WWW www = new WWW(url);
             yield return www;
             if (www.error != null)
             {
-                Debug.Log("WWW Error: " + www.error);
-            }
-            else
+                Debug.Log("net error=> " + www.error);
+                if (msgCallback != null)
+                    msgCallback(null);
+                if (errCallback != null)
+                    errCallback(www.error);
+            } else
             {
-                Debug.Log("WWW Ok!: " + www.text);
+                string resp = www.text.Trim();
+                Debug.Log("response=> " + resp);
+                if (resp.StartsWith("false"))
+                {
+                    if (msgCallback != null)
+                        msgCallback(null);
+                    if (errCallback != null)
+                        msgCallback(resp);
+                } else
+                {
+                    if (msgCallback != null)
+                        msgCallback(www.text.Trim());
+                    if (errCallback != null)
+                        errCallback(null);
+                }
             }
-            if (response != null) response(www);
             www.Dispose();
         }
 
@@ -120,8 +162,8 @@ namespace Network
         static public RequestResult ParseResult(Dictionary<string, object> result_dic)
         {
             RequestResult res = new RequestResult();
-            res.code = JsonUtil.ParseInt(result_dic["code"]);
-            res.message = result_dic["msg"].ToString();
+            res.code = JsonUtil.ParseInt(result_dic ["code"]);
+            res.message = result_dic ["msg"].ToString();
             return res;
         }
 
