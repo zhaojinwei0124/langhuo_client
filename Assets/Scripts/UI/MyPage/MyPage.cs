@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameCore;
 
 public class MyPage : View 
 {
 
-    [SerializeField]
-    private GameObject[] m_tabpages;
+    public GameObject[] m_tabpages;
 
-    [SerializeField]
-    private UITab[] m_tabs;
+    public UITab[] m_tabs;
+
+    public GameObject m_set;
+
+    public GameObject m_notify;
 
     public override void RefreshView()
     {
@@ -16,8 +19,20 @@ public class MyPage : View
         UIEventListener.Get(m_tabs[0].gameObject).onClick=(go)=>Show(0);
         UIEventListener.Get(m_tabs[1].gameObject).onClick=(go)=>Show(1);
         UIEventListener.Get(m_tabs[2].gameObject).onClick=(go)=>Show(2);
+        UIEventListener.Get(m_set).onClick=OnSetting;
+        UIEventListener.Get(m_notify).onClick=OnNotify;
     }
 
+
+    private void OnSetting(GameObject go)
+    {
+        UIHandler.Instance.Push(PageID.SETTING);
+    }
+
+    private void OnNotify(GameObject go)
+    {
+        Debug.Log("onnotify");
+    }
 
     private void HideAll()
     {

@@ -9,8 +9,6 @@ public abstract class View : MonoBehaviour
 
     private List<int> panelsDepth;
 
-    public object Param { get; set; }
-
     public virtual bool HideBack
     {
         get

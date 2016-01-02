@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Network;
-
+using GameCore;
 
 public class BasketPage : View
 {
@@ -15,6 +15,7 @@ public class BasketPage : View
 
     public UILabel m_lblChange;
 
+    public GameObject m_objGo;
 
     public override void RefreshView()
     {
@@ -55,5 +56,12 @@ public class BasketPage : View
             price+=node.n_item.nprice*item.cnt;
         }
         m_lblAllPrice.text="总计：￥"+price;
+    }
+
+
+    private void GoBuy(GameObject go)
+    {
+        Debug.Log("go to");
+        UIHandler.Instance.Push(PageID.ACCOUNT);
     }
 }
