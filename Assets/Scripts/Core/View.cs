@@ -9,6 +9,14 @@ public abstract class View : MonoBehaviour
 
     private List<int> panelsDepth;
 
+    public UIPanel panel
+    {
+        get
+        {
+            return gameObject.GetComponent<UIPanel>();
+        }
+    }
+
     public virtual bool HideBack
     {
         get
@@ -58,6 +66,12 @@ public abstract class View : MonoBehaviour
     protected virtual void Close()
     {
         UIHandler.Instance.Pop();
+    }
+
+    public void SetDepth(int index)
+    {
+        Debug.Log("index:" +index);
+        panel.depth=10*index;
     }
 
     public void BlockInput()

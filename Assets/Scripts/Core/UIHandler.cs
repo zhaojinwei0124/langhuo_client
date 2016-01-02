@@ -104,6 +104,7 @@ namespace GameCore
             info.view=go.GetComponent<View>();
             if(arg!=null) info.view.Refresh(arg);
             else info.view.RefreshView();
+            info.view.SetDepth(mPageStack.Count);
             mPageStack.Push(info);
             if(!UIManager.Instance.IsFront()) 
             {
