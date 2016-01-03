@@ -50,6 +50,8 @@ public class AccountPage : View
 
         if (!CheckLocal())
         {
+
+            //确定使用上述地址提交订单吗
             NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, 
                                            m_address.label.text, PayType.LANGJIAN, (res) =>
             {
