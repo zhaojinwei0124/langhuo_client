@@ -29,9 +29,9 @@ public class Toast : MonoSingle<Toast>
             if (!offsetObj.activeSelf)
                 offsetObj.SetActive(true);
             contentLabel.text = queue.Peek();
+            offsetObj.transform.localPosition=Vector3.zero;
             blackBg.width = GameCore.Util.Instance.GetLength(queue.Peek()) * 33 + 20;
             tween = TweenPosition.Begin(offsetObj, 0.8f, new Vector3(0, 180, 0));
-            tween.from = Vector3.zero;
             queue.Dequeue();
             EventDelegate.Set(tween.onFinished, () =>
             {
@@ -40,7 +40,9 @@ public class Toast : MonoSingle<Toast>
                     offsetObj.SetActive(false);
                     isPlaying = false;
                 } else
+                {
                     Exec();
+                }
             });
         }
     }

@@ -36,6 +36,12 @@ public sealed class GameEngine : MonoSingle<GameEngine>
             Caching.CleanCache();
             PlayerPrefs.DeleteAll();
         }
+
+#elif UNITY_ANDROID
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            Dialog.Instance.Show("确定要退出吗",(ga)=>{ Application.Quit();});
+        }
 #endif
 
     }

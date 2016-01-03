@@ -5,9 +5,11 @@ public class Loadding : MonoSingle<Loadding>
 
     public UISpriteAnimation loadAnim;
 
+    public GameObject offsetObj;
+
     public void Show(bool show)
     {
-        loadAnim.gameObject.SetActive(show);
+        offsetObj.gameObject.SetActive(show);
 
         if (show)
         {
