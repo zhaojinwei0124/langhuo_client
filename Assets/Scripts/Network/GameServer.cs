@@ -67,6 +67,7 @@ namespace Network
                     orign += post_arg.Value;
                 }
                 Print(url, param);
+                Loadding.Instance.Show(true);
                 GameEngine.Instance.StartCoroutine(postConnect(NET_URL + url + ".php", form, msgCallback, errCallback));
             }
         }
@@ -85,6 +86,7 @@ namespace Network
         {
             if (url != null)
             {
+                Loadding.Instance.Show(true);
                 GameEngine.Instance.StartCoroutine(connect(NET_URL + url, msgCallback, errCallback));
             }
         }
@@ -112,6 +114,7 @@ namespace Network
                         msgCallback(resp);
                 }
             }
+            Loadding.Instance.Show(false);
             www.Dispose();
         }
 
@@ -138,6 +141,7 @@ namespace Network
                         msgCallback(resp);
                 }
             }
+            Loadding.Instance.Show(false);
             www.Dispose();
         }
 
