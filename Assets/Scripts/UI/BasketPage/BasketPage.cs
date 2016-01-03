@@ -15,6 +15,8 @@ public class BasketPage : View
 
     public UILabel m_lblChange;
 
+    public GameObject m_objNotify;
+
     public GameObject m_objGo;
 
     public override void RefreshView()
@@ -27,7 +29,19 @@ public class BasketPage : View
 
     private void RefreshTitle()
     {
+        UIEventListener.Get(m_objNotify).onClick=OnNotify;
+        UIEventListener.Get(m_lblChange.gameObject).onClick=OnChange;
         m_lblLocal.text=GameBaseInfo.Instance.city+"  "+GameBaseInfo.Instance.distric;
+    }
+
+    private void OnChange(GameObject go)
+    {
+        Toast.Instance.Show("暂未实现此功能");
+    }
+
+    private void OnNotify(GameObject go)
+    {
+        Toast.Instance.Show("暂未实现通知功能");
     }
 
     private void RefreshList()
