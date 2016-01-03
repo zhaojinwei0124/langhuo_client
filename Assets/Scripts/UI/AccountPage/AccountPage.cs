@@ -50,10 +50,8 @@ public class AccountPage : View
 
         if (!CheckLocal())
         {
-
-            //确定使用上述地址提交订单吗
             NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, 
-                                           m_address.label.text, PayType.LANGJIAN, (res) =>
+                                               m_address.label.text, PayType.LANGJIAN, (res) =>
             {
                 Debug.Log("res: " + res);
                 if (res.Equals("true"))
@@ -63,18 +61,25 @@ public class AccountPage : View
                     m_lblRegist.text = "提交订单";
                 }
             });
+          
         } else
         {
-            NetCommand.Instance.SysnOrder((msg) =>
+            Dialog.Instance.Show("确定使用上述信息提交订单吗", (g) =>
             {
-                Debug.Log("commit order success!");
-                GameBaseInfo.Instance.buy_list.Clear();
-                Close();
-            },
-            (err)=>
-            {
-               if(!string.IsNullOrEmpty(err)) Debug.LogError("sysnc order data fail!");
+                NetCommand.Instance.SysnOrder((msg) =>
+                {
+                    Debug.Log("commit order success!");
+                    Toast.Instance.Show("下单成功");
+                    GameBaseInfo.Instance.buy_list.Clear();
+                    Close();
+                },
+                (err) =>
+                {
+                    if (!string.IsNullOrEmpty(err))
+                        Debug.LogError("sysnc order data fail!");
+                });
             });
+
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Loadding : MonoSingle<Loadding> 
+public class Loadding : MonoSingle<Loadding>
 {
 
     public UISpriteAnimation loadAnim;
@@ -9,9 +9,10 @@ public class Loadding : MonoSingle<Loadding>
     {
         loadAnim.gameObject.SetActive(show);
 
-        if(show)
+        if (show)
         {
             loadAnim.ResetToBeginning();
         }
     }
 }
+

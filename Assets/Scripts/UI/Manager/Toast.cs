@@ -45,3 +45,4 @@ public class Toast : MonoSingle<Toast>
         }
     }
 }
+
