@@ -64,9 +64,19 @@ public class AccountPage : View
           
         } else
         {
+            int price=0;
+            foreach(var item in GameBaseInfo.Instance.buy_list)
+            {
+                ItemNode node=Home.Instance.items.Find(x=>x.n_item.id==item.id);
+                price+=node.n_item.nprice*item.cnt;
+            }
             if(GameBaseInfo.Instance.buy_list.Count<=0)
             {
                 Toast.Instance.Show("请先选择商品");
+            }
+            else if(GameBaseInfo.Instance.user.balance<price)
+            {
+                Toast.Instance.Show("余额不足,请去充值");
             }
             else
             {

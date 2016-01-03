@@ -75,7 +75,8 @@ public class BasketPage : View
 
 
     private void GoBuy(GameObject go)
-    { if(GameBaseInfo.Instance.buy_list.Count<=0)
+    { 
+        if(GameBaseInfo.Instance.buy_list.Count<=0)
         {
             Toast.Instance.Show("请先选择商品");
         }
