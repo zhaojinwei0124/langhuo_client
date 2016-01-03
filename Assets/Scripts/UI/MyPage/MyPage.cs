@@ -32,24 +32,18 @@ public class MyPage : View
 
     private void RefreshUI()
     {
-        if (GameBaseInfo.Instance.user == null)
+        NetCommand.Instance.LoginUser(PlayerPrefs.GetString("userid"), (string res) =>
         {
-            NetCommand.Instance.LoginUser(PlayerPrefs.GetString("userid"), (string res) =>
-            {
-                NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
-                GameBaseInfo.Instance.user = nuser;
-                RefreshUser();
-            });
-        } else
-        {
+            NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
+            GameBaseInfo.Instance.user = nuser;
             RefreshUser();
-        }
+        });
     }
 
     private void RefreshUser()
     {
         m_lblName.text = GameBaseInfo.Instance.user.name;
-        m_lblBalance.text = "￥" + GameBaseInfo.Instance.user.balance;
+        m_lblBalance.text = "￥" + string.Format("{0:f}", GameBaseInfo.Instance.user.balance);
     }
 
     private void OnSetting(GameObject go)

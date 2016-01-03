@@ -83,7 +83,7 @@ public class AccountPage : View
 
                 Dialog.Instance.Show("确定使用上述信息提交订单吗", (g) =>
                 {
-                    NetCommand.Instance.SysnOrder((msg) =>
+                    NetCommand.Instance.SysnOrder(price,(msg) =>
                     {
                         Debug.Log("commit order success!");
                         Toast.Instance.Show("下单成功");

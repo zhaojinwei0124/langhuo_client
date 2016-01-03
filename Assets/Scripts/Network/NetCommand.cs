@@ -44,7 +44,7 @@ namespace Network
             HttpPost("item/search", param, msgCallback, errCallback);
         }
 
-        public void SysnOrder(MsgCallback msgCallback,ErrCallback errCallback=null)
+        public void SysnOrder(int price, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
@@ -52,6 +52,7 @@ namespace Network
             param.Add("type",((int)GameBaseInfo.Instance.user.type).ToString());
             param.Add("items",GameBaseInfo.Instance.GetItems());
             param.Add("cnt",GameBaseInfo.Instance.GetCnt());
+            param.Add("pri",price.ToString());
             HttpPost("order/add", param, msgCallback, errCallback);
         }
 
