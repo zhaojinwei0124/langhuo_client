@@ -64,22 +64,29 @@ public class AccountPage : View
           
         } else
         {
-            Dialog.Instance.Show("确定使用上述信息提交订单吗", (g) =>
+            if(GameBaseInfo.Instance.buy_list.Count<=0)
             {
-                NetCommand.Instance.SysnOrder((msg) =>
-                {
-                    Debug.Log("commit order success!");
-                    Toast.Instance.Show("下单成功");
-                    GameBaseInfo.Instance.buy_list.Clear();
-                    Close();
-                },
-                (err) =>
-                {
-                    if (!string.IsNullOrEmpty(err))
-                        Debug.LogError("sysnc order data fail!");
-                });
-            });
+                Toast.Instance.Show("请先选择商品");
+            }
+            else
+            {
 
+                Dialog.Instance.Show("确定使用上述信息提交订单吗", (g) =>
+                {
+                    NetCommand.Instance.SysnOrder((msg) =>
+                    {
+                        Debug.Log("commit order success!");
+                        Toast.Instance.Show("下单成功");
+                        GameBaseInfo.Instance.buy_list.Clear();
+                        Close();
+                    },
+                    (err) =>
+                    {
+                        if (!string.IsNullOrEmpty(err))
+                            Debug.LogError("sysnc order data fail!");
+                    });
+                });
+            }
         }
     }
 
@@ -91,7 +98,6 @@ public class AccountPage : View
         {
             NetCommand.Instance.LoginUser(mUserid, (res) =>
             {
-                Debug.Log("res: " + res);
                 NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
                 GameBaseInfo.Instance.user = nuser;
                 m_user.label.text = m_receive.label.text = nuser.name;

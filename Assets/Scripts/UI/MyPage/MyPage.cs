@@ -1,28 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameCore;
+using Network;
 
-public class MyPage : View 
+public class MyPage : View
 {
 
     public GameObject[] m_tabpages;
-
     public UITab[] m_tabs;
-
     public GameObject m_set;
-
     public GameObject m_notify;
+    public UILabel m_lblName;
+    public UILabel m_lblBalance;
 
     public override void RefreshView()
     {
         base.RefreshView();
-        UIEventListener.Get(m_tabs[0].gameObject).onClick=(go)=>Show(0);
-        UIEventListener.Get(m_tabs[1].gameObject).onClick=(go)=>Show(1);
-        UIEventListener.Get(m_tabs[2].gameObject).onClick=(go)=>Show(2);
-        UIEventListener.Get(m_set).onClick=OnSetting;
-        UIEventListener.Get(m_notify).onClick=OnNotify;
+        if (PlayerPrefs.GetString("userid", null).Equals(null))
+        {
+            UIHandler.Instance.Push(PageID.ACCOUNT);
+        } else
+        {
+            UIEventListener.Get(m_tabs [0].gameObject).onClick = (go) => Show(0);
+            UIEventListener.Get(m_tabs [1].gameObject).onClick = (go) => Show(1);
+            UIEventListener.Get(m_tabs [2].gameObject).onClick = (go) => Show(2);
+            UIEventListener.Get(m_set).onClick = OnSetting;
+            UIEventListener.Get(m_notify).onClick = OnNotify;
+            RefreshUI();
+        }
     }
 
+    private void RefreshUI()
+    {
+        if (GameBaseInfo.Instance.user == null)
+        {
+            NetCommand.Instance.LoginUser(PlayerPrefs.GetString("userid"), (string res) =>
+            {
+                NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
+                GameBaseInfo.Instance.user = nuser;
+                RefreshUser();
+            });
+        } else
+        {
+            RefreshUser();
+        }
+    }
+
+    private void RefreshUser()
+    {
+        m_lblName.text = GameBaseInfo.Instance.user.name;
+        m_lblBalance.text = "￥" + GameBaseInfo.Instance.user.balance;
+    }
 
     private void OnSetting(GameObject go)
     {
@@ -36,17 +64,16 @@ public class MyPage : View
 
     private void HideAll()
     {
-        foreach(var ite in m_tabpages)
+        foreach (var ite in m_tabpages)
         {
             ite.gameObject.SetActive(false);
         }
     }
     
-    
     private void Show(int index)
     {
-        Debug.Log("show index: "+index);
+//        Debug.Log("show index: "+index);
         HideAll();
-        m_tabpages[index].gameObject.SetActive(true);
+        m_tabpages [index].gameObject.SetActive(true);
     }
 }

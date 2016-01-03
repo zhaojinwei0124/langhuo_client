@@ -24,7 +24,7 @@ namespace Network
     {
         public NUser user{ get; set; }
 
-        public List<ItemNode> items=new List<ItemNode>();
+        public List<ItemNode> items = new List<ItemNode>();
 
         public string encrypt{ get; set; }
 
@@ -51,12 +51,19 @@ namespace Network
         {
             if (buy_list.ConvertAll(x => x.id).Contains(id))
             {
-                for (int i=0; i<buy_list.Count; i++)
+                if (cnt == 0)
                 {
-                    if (buy_list [i].id == id)
+                    BuyNode node = buy_list.Find(x => x.id == id);
+                    buy_list.Remove(node);
+                } else
+                {
+                    for (int i=0; i<buy_list.Count; i++)
                     {
-                        buy_list [i] = new BuyNode(id, cnt);
-                        break;
+                        if (buy_list [i].id == id)
+                        {
+                            buy_list [i] = new BuyNode(id, cnt);
+                            break;
+                        }
                     }
                 }
             } else
@@ -78,12 +85,12 @@ namespace Network
 
         public string GetItems()
         {
-            return Util.Instance.SerializeArray( buy_list.ConvertAll(x=>x.id));
+            return Util.Instance.SerializeArray(buy_list.ConvertAll(x => x.id));
         }
 
         public string GetCnt()
         {
-            return Util.Instance.SerializeArray(buy_list.ConvertAll(x=>x.cnt));
+            return Util.Instance.SerializeArray(buy_list.ConvertAll(x => x.cnt));
         }
     }
 

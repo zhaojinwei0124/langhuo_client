@@ -61,7 +61,13 @@ public class BasketPage : View
 
 
     private void GoBuy(GameObject go)
-    {
-        UIHandler.Instance.Push(PageID.ACCOUNT);
+    { if(GameBaseInfo.Instance.buy_list.Count<=0)
+        {
+            Toast.Instance.Show("请先选择商品");
+        }
+        else
+        {
+            UIHandler.Instance.Push(PageID.ACCOUNT);
+        }
     }
 }

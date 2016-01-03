@@ -57,7 +57,7 @@ public class ItemDetailPage : View
 
     private void OnReduce(GameObject go)
     {
-        if (m_cnt > 1)
+        if (m_cnt > 0)
             m_cnt--;
         m_lblcnt.text = m_cnt.ToString();
     }
