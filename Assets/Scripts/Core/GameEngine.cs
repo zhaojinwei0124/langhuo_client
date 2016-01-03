@@ -36,7 +36,16 @@ public sealed class GameEngine : MonoSingle<GameEngine>
             Caching.CleanCache();
             PlayerPrefs.DeleteAll();
         }
-
+        if(Input.GetKeyUp(KeyCode.S))
+        {
+           Platform.SimApi.Instance.Sms((res)=>
+            {
+                Debug.Log("sms repd: "+res);
+            },(err)=>
+            {
+                Debug.LogError("sms fail");
+            });
+        }
 #elif UNITY_ANDROID
         if(Input.GetKeyUp(KeyCode.Escape))
         {

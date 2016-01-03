@@ -6,6 +6,7 @@ using Ionic.Zlib;
 using Config;
 using System.Text;
 using UnityEngine;
+using System.Security.Cryptography;
 
 namespace GameCore
 {
@@ -66,21 +67,23 @@ namespace GameCore
             return UnityEngine.Mathf.CeilToInt(length / 2);
         }
 
-        public Color GetColorFrom16(string _str, float _alpha)
-        {
-            if (_str == null || _str.Length < 4)
+        ///   <summary>
+        ///   给一个字符串进行MD5加密
+        ///   </summary>
+        ///   <param   name="strText">待加密字符串</param>
+        ///   <returns>加密后的字符串</returns>
+        public string MD5Encrypt(string  strText)
+        {   
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = System.Text.Encoding.UTF8.GetBytes(strText);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+            
+            for (int i = 0; i < targetData.Length; i++)
             {
-                return Color.white;
+                byte2String += targetData[i].ToString("x2");
             }
-            Color temp_color;
-            temp_color.a = _alpha;
-            string _temp = _str.Substring(0, 2);
-            temp_color.r = System.Convert.ToInt32(_temp, 16) / 255.0f;
-            _temp = _str.Substring(2, 2);
-            temp_color.g = System.Convert.ToInt32(_temp, 16) / 255.0f;
-            _temp = _str.Substring(4, 2);
-            temp_color.b = System.Convert.ToInt32(_temp, 16) / 255.0f;
-            return temp_color;
+            return byte2String;
         }
 
         public Color GetColorFrom255(int _r, int _g, int _b, int _a)
