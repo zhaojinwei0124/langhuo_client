@@ -36,12 +36,12 @@ public class BasketPage : View
 
     private void OnChange(GameObject go)
     {
-        Toast.Instance.Show("暂未实现此功能");
+        Toast.Instance.Show(Localization.Get(10010));
     }
 
     private void OnNotify(GameObject go)
     {
-        Toast.Instance.Show("暂未实现通知功能");
+        Toast.Instance.Show(Localization.Get(10010));
     }
 
     private void RefreshList()
