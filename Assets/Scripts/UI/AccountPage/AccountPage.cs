@@ -58,7 +58,7 @@ public class AccountPage : View
                 {
                     PlayerPrefs.SetString("userid", m_tel.label.text);
                     Debug.Log("regist use success!");
-                    m_lblRegist.text = "提交订单";
+                    m_lblRegist.text = Localization.Get(10001);
                 }
             });
           
@@ -72,21 +72,21 @@ public class AccountPage : View
             }
             if(GameBaseInfo.Instance.buy_list.Count<=0)
             {
-                Toast.Instance.Show("请先选择商品");
+                Toast.Instance.Show(Localization.Get(10002));
             }
             else if(GameBaseInfo.Instance.user.balance<price)
             {
-                Toast.Instance.Show("余额不足,请去充值");
+                Toast.Instance.Show(Localization.Get(10003));
             }
             else
             {
 
-                Dialog.Instance.Show("确定使用上述信息提交订单吗", (g) =>
+                Dialog.Instance.Show(Localization.Get(10004), (g) =>
                 {
                     NetCommand.Instance.SysnOrder(price,(msg) =>
                     {
                         Debug.Log("commit order success!");
-                        Toast.Instance.Show("下单成功");
+                        Toast.Instance.Show(Localization.Get(10005));
                         GameBaseInfo.Instance.buy_list.Clear();
                         Close();
                     },
@@ -103,7 +103,7 @@ public class AccountPage : View
     private void RefreshUI()
     {
         Debug.Log("username: " + PlayerPrefs.GetString("userid"));
-        m_lblRegist.text = CheckLocal() ? "提交订单" : "注册 ";
+        m_lblRegist.text = CheckLocal() ?Localization.Get(10006) : Localization.Get(10007);
         if (CheckLocal())
         {
             NetCommand.Instance.LoginUser(mUserid, (res) =>
@@ -111,7 +111,7 @@ public class AccountPage : View
                 NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
                 GameBaseInfo.Instance.user = nuser;
                 m_user.label.text = m_receive.label.text = nuser.name;
-                m_type.text = nuser.type == 1 ? "浪尖" : "浪蹄";
+                m_type.text = nuser.type == 1 ? Localization.Get(10008) : Localization.Get(10009);
                 m_address.label.text = nuser.addr;
                 m_tel.label.text = nuser.tel.ToString();
             });

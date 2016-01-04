@@ -20,6 +20,7 @@ namespace GameCore
     {
         private Stack<PageInfo> mPageStack = new Stack<PageInfo>();
         private Font mFont;
+        private TextAsset mText;
         private static UIHandler mInstance;
 
         public UIRoot Root{ get { return UIManager.Instance.root; } }
@@ -27,7 +28,9 @@ namespace GameCore
         public override void Init()
         {
             base.Init();
-            mFont = Resources.Load<Font>("Font/msyh");
+            mFont = Resources.Load<Font>("Fonts/msyh");
+            mText=Resources.Load<TextAsset>("Fonts/loc_data");
+            Localization.Load(mText);
         }
 
         public Transform transFront{ get { return UIManager.Instance.front_obj.transform; } }

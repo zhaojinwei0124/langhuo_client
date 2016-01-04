@@ -14,18 +14,18 @@ namespace Platform
         /// <summary>
         /// 测试应用ID
         /// </summary>
-        public const string APP_ID="77b0604af5d0468facd7cc0fb2b79a1f";
+        public const string APP_ID="9236796f1f384dc6aed58ec16fdde713";
 
 
         /// <summary>
         /// 邮件短信模板ID
         /// </summary>
-        public const string MSG_ID="3840228";
+        public const string MSG_ID="18930447";
 
         /// <summary>
         /// 邮件短信模板内容
         /// </summary>
-        public const string MODEL_CONTENT="您测试的验证码为{0}，30分钟输入有效，如果不是本人操作请忽略";
+        public const string MODEL_CONTENT="您测试的验证码为{0}，30分钟输入有效，如果不是本人操作请忽略.";
 
         /// <summary>
         /// Client账号
