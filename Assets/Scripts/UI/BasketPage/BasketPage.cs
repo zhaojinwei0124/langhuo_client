@@ -78,7 +78,7 @@ public class BasketPage : View
     { 
         if(GameBaseInfo.Instance.buy_list.Count<=0)
         {
-            Toast.Instance.Show("请先选择商品");
+            Toast.Instance.Show(Localization.Get(10011));
         }
         else
         {
