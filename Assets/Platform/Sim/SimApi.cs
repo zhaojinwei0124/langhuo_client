@@ -59,7 +59,7 @@ namespace Platform
         }
 
 
-        public void Sms(MsgCallback msgDel,ErrCallback errDel)
+        public void Sms(int code,string phone, MsgCallback msgDel,ErrCallback errDel)
         {
             string url="20150822/SMS/emailSMS";
             string timestamp=string.Format("{0:yyyyMMddHHmmss}", System.DateTime.Now);
@@ -67,8 +67,8 @@ namespace Platform
             form.AddField("accountSid",SimDef.ACCOUNT_SID);
             form.AddField("appId",SimDef.APP_ID);
             form.AddField("emailTemplateId",SimDef.MSG_ID);
-            form.AddField("to",SimDef.CLIENT_NO);
-            form.AddField("param","1008");
+            form.AddField("to",phone);
+            form.AddField("param",code.ToString());
             form.AddField("timestamp",timestamp);
             form.AddField("sig",GameCore.Util.Instance.MD5Encrypt(SimDef.ACCOUNT_SID+SimDef.AUTH_TOKEN+timestamp));
             HttpPost(url,form,msgDel,errDel);

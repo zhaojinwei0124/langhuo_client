@@ -9,6 +9,11 @@ public class Toast : MonoSingle<Toast>
     public GameObject offsetObj;
     private Queue<string> queue = new Queue<string>();
 
+    public void Show(int local)
+    {
+        Show(Localization.Get(local));
+    }
+
     public void Show(string str)
     {
         queue.Enqueue(str);

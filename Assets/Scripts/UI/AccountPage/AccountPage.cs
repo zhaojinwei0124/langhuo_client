@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using Network;
+using GameCore;
+
 
 public class AccountPage : View
 {
     public UITexture m_head;
     public UIInput m_user;
-    public UIInput m_type;
+    public UILabel m_type;
+    public UIPopupList m_poplist;
     public UIInput m_receive;
     public UIInput m_address;
     public UIInput m_tel;
@@ -14,12 +17,22 @@ public class AccountPage : View
     public UILabel m_lblRegist;
     private string mUserid;
 
+
+    private PayType payType=PayType.LANGJIAN;
     public override void RefreshView()
     {
         base.RefreshView();
         UIEventListener.Get(m_objRegist).onClick = OnRegist;
         UIEventListener.Get(m_head.gameObject).onClick = OnTextClick;
         RefreshUI();
+    }
+
+
+    public void OnPopChange()
+    {
+        m_type.text=m_poplist.GetSelect();
+        payType=(PayType)(m_poplist.GetIndex()+1);
+      //  Debug.Log("index: "+m_poplist.GetIndex()+" type: "+payType);
     }
 
     private bool CheckLocal()
@@ -51,7 +64,7 @@ public class AccountPage : View
         if (!CheckLocal())
         {
             NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, 
-                                               m_address.label.text, PayType.LANGJIAN, (res) =>
+                                               m_address.label.text, payType, (res) =>
             {
                 Debug.Log("res: " + res);
                 if (res.Equals("true"))
@@ -102,8 +115,8 @@ public class AccountPage : View
 
     private void RefreshUI()
     {
-        Debug.Log("username: " + PlayerPrefs.GetString("userid"));
-        m_lblRegist.text = CheckLocal() ?Localization.Get(10006) : Localization.Get(10007);
+        //Debug.Log("username: " + PlayerPrefs.GetString("userid"));
+        m_lblRegist.text = Localization.Get(10006);
         if (CheckLocal())
         {
             NetCommand.Instance.LoginUser(mUserid, (res) =>
@@ -115,6 +128,10 @@ public class AccountPage : View
                 m_address.label.text = nuser.addr;
                 m_tel.label.text = nuser.tel.ToString();
             });
+        }
+        else
+        {
+            UIHandler.Instance.Push(PageID.LOGIN);
         }
 
     }

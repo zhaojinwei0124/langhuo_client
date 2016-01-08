@@ -38,7 +38,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
         }
         if(Input.GetKeyUp(KeyCode.S))
         {
-           Platform.SimApi.Instance.Sms((res)=>
+           Platform.SimApi.Instance.Sms(1234,"15216768456",(res)=>
             {
                 Debug.Log("sms repd: "+res);
             },(err)=>

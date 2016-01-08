@@ -272,6 +272,11 @@ public class UIPopupList : UIWidgetContainer
 		}
 	}
 
+    public int GetIndex()
+    {
+        return items.IndexOf(mSelectedItem);
+    }
+
 	/// <summary>
 	/// Whether the popup list is actually usable.
 	/// </summary>
@@ -346,6 +351,11 @@ public class UIPopupList : UIWidgetContainer
 			current = old;
 		}
 	}
+
+    public string GetSelect()
+    {
+        return mSelectedItem;
+    }
 
 	/// <summary>
 	/// Remove legacy functionality.

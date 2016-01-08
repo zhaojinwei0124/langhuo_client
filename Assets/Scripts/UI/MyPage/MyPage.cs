@@ -18,7 +18,7 @@ public class MyPage : View
         base.RefreshView();
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("userid", null)))
         {
-            UIHandler.Instance.Push(PageID.ACCOUNT);
+            UIHandler.Instance.Push(PageID.LOGIN);
         } else
         {
             UIEventListener.Get(m_tabs [0].gameObject).onClick = (go) => Show(0);
