@@ -105,10 +105,10 @@ namespace GameCore
             info.arg = obj;
             info.onPageClosed=onClose;
             info.view=go.GetComponent<View>();
+            mPageStack.Push(info);
+            info.view.SetDepth(mPageStack.Count);
             if(arg!=null) info.view.Refresh(arg);
             else info.view.RefreshView();
-            info.view.SetDepth(mPageStack.Count);
-            mPageStack.Push(info);
             if(!UIManager.Instance.IsFront()) 
             {
                 UIManager.Instance.ShowFront(true);

@@ -22,7 +22,7 @@ public class AccountPage : View
     public override void RefreshView()
     {
         base.RefreshView();
-        UIEventListener.Get(m_objRegist).onClick = OnRegist;
+        UIEventListener.Get(m_objRegist).onClick = OnCommit;
         UIEventListener.Get(m_head.gameObject).onClick = OnTextClick;
         RefreshUI();
     }
@@ -56,24 +56,14 @@ public class AccountPage : View
         Debug.Log("Text click");
     }
 
-    private void OnRegist(GameObject go)
+    private void OnCommit(GameObject go)
     {
         if (!CheckValid())
             return;
 
         if (!CheckLocal())
         {
-            NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, 
-                                               m_address.label.text, payType, (res) =>
-            {
-                Debug.Log("res: " + res);
-                if (res.Equals("true"))
-                {
-                    PlayerPrefs.SetString("userid", m_tel.label.text);
-                    Debug.Log("regist use success!");
-                    m_lblRegist.text = Localization.Get(10001);
-                }
-            });
+            Toast.Instance.Show(10018);
           
         } else
         {

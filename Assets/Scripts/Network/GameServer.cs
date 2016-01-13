@@ -14,7 +14,7 @@ namespace Network
     {
 
         public const string BASE_URL =// "http://146577.vhost151.cloudvhost.cn/langhuo/";
-                                    "http://192.168.0.103/langhuo/";
+                                    "http://192.168.0.106/langhuo/";
         public const string NET_URL = BASE_URL + "Netframework/";
 
         public enum connectStatusType
