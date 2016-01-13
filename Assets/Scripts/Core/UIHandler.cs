@@ -123,10 +123,17 @@ namespace GameCore
             if(info.onPageClosed!=null)info.onPageClosed();
             GameObject.Destroy(info.go);
             mPageStack.Pop();
-
+//            Debug.LogError("stask count: "+mPageStack.Count);
             if(mPageStack.Count<=0)
             {
                 UIManager.Instance.ShowFront(false);
+            }
+            else
+            {
+                info=mPageStack.Peek();
+//                Debug.Log("page name: "+info.name+" arg: "+(info.arg==null));
+                if(info.arg==null) info.view.RefreshView();
+                else info.view.Refresh(info.arg);
             }
         }
 

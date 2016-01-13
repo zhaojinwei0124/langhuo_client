@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Network;
 using GameCore;
-
+using ResourceLoad;
 
 public class AccountPage : View
 {
@@ -16,9 +16,8 @@ public class AccountPage : View
     public GameObject m_objRegist;
     public UILabel m_lblRegist;
     private string mUserid;
+    private PayType payType = PayType.LANGJIAN;
 
-
-    private PayType payType=PayType.LANGJIAN;
     public override void RefreshView()
     {
         base.RefreshView();
@@ -27,12 +26,11 @@ public class AccountPage : View
         RefreshUI();
     }
 
-
     public void OnPopChange()
     {
-        m_type.text=m_poplist.GetSelect();
-        payType=(PayType)(m_poplist.GetIndex()+1);
-      //  Debug.Log("index: "+m_poplist.GetIndex()+" type: "+payType);
+        m_type.text = m_poplist.GetSelect();
+        payType = (PayType)(m_poplist.GetIndex() + 1);
+        //  Debug.Log("index: "+m_poplist.GetIndex()+" type: "+payType);
     }
 
     private bool CheckLocal()
@@ -54,6 +52,7 @@ public class AccountPage : View
     private void OnTextClick(GameObject go)
     {
         Debug.Log("Text click");
+        UIHandler.Instance.Push(PageID.HEADICON);
     }
 
     private void OnCommit(GameObject go)
@@ -67,26 +66,24 @@ public class AccountPage : View
           
         } else
         {
-            int price=0;
-            foreach(var item in GameBaseInfo.Instance.buy_list)
+            int price = 0;
+            foreach (var item in GameBaseInfo.Instance.buy_list)
             {
-                ItemNode node=Home.Instance.items.Find(x=>x.n_item.id==item.id);
-                price+=node.n_item.nprice*item.cnt;
+                ItemNode node = Home.Instance.items.Find(x => x.n_item.id == item.id);
+                price += node.n_item.nprice * item.cnt;
             }
-            if(GameBaseInfo.Instance.buy_list.Count<=0)
+            if (GameBaseInfo.Instance.buy_list.Count <= 0)
             {
                 Toast.Instance.Show(Localization.Get(10002));
-            }
-            else if(GameBaseInfo.Instance.user.balance<price)
+            } else if (GameBaseInfo.Instance.user.balance < price)
             {
                 Toast.Instance.Show(Localization.Get(10003));
-            }
-            else
+            } else
             {
 
                 Dialog.Instance.Show(Localization.Get(10004), (g) =>
                 {
-                    NetCommand.Instance.SysnOrder(price,(msg) =>
+                    NetCommand.Instance.SysnOrder(price, (msg) =>
                     {
                         Debug.Log("commit order success!");
                         Toast.Instance.Show(Localization.Get(10005));
@@ -105,7 +102,7 @@ public class AccountPage : View
 
     private void RefreshUI()
     {
-        //Debug.Log("username: " + PlayerPrefs.GetString("userid"));
+        Debug.Log("refresh ui");
         m_lblRegist.text = Localization.Get(10006);
         if (CheckLocal())
         {
@@ -117,9 +114,13 @@ public class AccountPage : View
                 m_type.text = nuser.type == 1 ? Localization.Get(10008) : Localization.Get(10009);
                 m_address.label.text = nuser.addr;
                 m_tel.label.text = nuser.tel.ToString();
+                TextureHandler.Instance.LoadHeadTexture(PlayerPrefs.GetString("headicon", "010"),
+                (txt) =>
+                {
+                    m_head.mainTexture=txt as Texture2D;
+                });
             });
-        }
-        else
+        } else
         {
             UIHandler.Instance.Push(PageID.LOGIN);
         }

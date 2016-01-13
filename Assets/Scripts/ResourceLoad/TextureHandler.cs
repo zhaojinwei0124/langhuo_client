@@ -34,6 +34,13 @@ namespace ResourceLoad
             LoadTexture(directory + _name, _loadedCB);
         }
 
+        public void LoadHeadTexture(string _name, LoadedCallBack _loadedCB)
+        {
+            string directory = "Head/";
+            LoadTexture(directory + _name, _loadedCB);
+        }
+
+
         /// <summary>
         /// Load Asset check path local first and remote then
         /// </summary>

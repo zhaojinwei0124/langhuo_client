@@ -16,6 +16,7 @@ namespace GameCore
         public static string FRIEND      =  "FriendPage";
         public static string BALANCE     =  "BalancePage";
         public static string LOGIN       =  "LoginPage";
+        public static string HEADICON    =  "HeadIconPage";
         //add other page id here....
 
     
