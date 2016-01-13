@@ -29,10 +29,12 @@ public class BalancePage : View
     private void OnRecharge(GameObject go)
     {
         Debug.Log("Onrecharge");
+        Toast.Instance.Show(10010);
     }
 
     private void OnTake(GameObject go)
     {
         Debug.Log("Ontake");
+        Toast.Instance.Show(10010);
     }
 }
