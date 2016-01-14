@@ -28,11 +28,7 @@ namespace Network
 
         public string encrypt{ get; set; }
 
-        public string province { get; set; }
-
-        public string city{ get; set; }
-
-        public string distric{ get; set; }
+        public Address address;
 
         public struct BuyNode
         {
@@ -79,11 +75,6 @@ namespace Network
             buy_list.Clear();
         }
 
-        public void InitLocal()
-        {
-            city = "上海";
-            distric = "五角场提货点";
-        }
 
         public string GetItems()
         {

@@ -31,7 +31,7 @@ public class BasketPage : View
     {
         UIEventListener.Get(m_objNotify).onClick=OnNotify;
         UIEventListener.Get(m_lblChange.gameObject).onClick=OnChange;
-        m_lblLocal.text=GameBaseInfo.Instance.city+"  "+GameBaseInfo.Instance.distric;
+        m_lblLocal.text=GameBaseInfo.Instance.address.city+"  "+GameBaseInfo.Instance.address.district;
     }
 
     private void OnChange(GameObject go)

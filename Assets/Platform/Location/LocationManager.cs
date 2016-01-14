@@ -23,6 +23,10 @@ namespace Platform
             GetGPS.Instance.Start((_code, _lng, _lat) =>
             {
                 stat = ParseCode(_code);
+                if(_code!=200)
+                {
+                    Toast.Instance.Show(stat);
+                }
                 lng = _lng;
                 lat = _lat;
                 Stop();

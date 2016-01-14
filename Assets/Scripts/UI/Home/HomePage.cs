@@ -26,8 +26,8 @@ public class HomePage : View
 
     public void RefreshTitle()
     {
-        m_lblCity.text=GameBaseInfo.Instance.city;
-        m_lbllDistric.text=GameBaseInfo.Instance.distric;
+        m_lblCity.text=GameBaseInfo.Instance.address.city;
+        m_lbllDistric.text=GameBaseInfo.Instance.address.district;
     }
 
     private void RefreshList()

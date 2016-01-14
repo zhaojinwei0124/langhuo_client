@@ -12,7 +12,7 @@ using System;
 namespace Network
 {
 
-    public class Adress
+    public class Address
     {
         public string nation;
         public string province;
@@ -28,7 +28,7 @@ namespace Network
         public object location;
         public string address;
         public object formatted_address;
-        public Adress address_component;
+        public Address address_component;
         public object ad_info;
         public object address_reference;
     }
