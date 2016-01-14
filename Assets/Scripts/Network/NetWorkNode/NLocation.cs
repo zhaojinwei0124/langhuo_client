@@ -14,9 +14,10 @@ namespace Network
 
     public class Adress
     {
+        public string nation;
+        public string province;
         public string city;
         public string district;
-        public string province;
         public string street;
         public string street_number;
     }
@@ -25,27 +26,21 @@ namespace Network
     public class Result
     {
         public object location;
-        public string formatted_address;
-        public string business;
-        public Adress addressComponent;
-        public int cityCode;
-    }
-
-
-    public class Row
-    {
-        public string status;
-        public Result location;
+        public string address;
+        public object formatted_address;
+        public Adress address_component;
+        public object ad_info;
+        public object address_reference;
     }
 
 
     public class NLocation
     {
 
-        public string resultcode;
+        public string status;
 
-        public string resultinfo;
+        public string message;
 
-        public Row row;
+        public Result result;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GameCore;
 using Config;
 using Network;
+using Platform;
 
 public sealed class GameEngine : MonoSingle<GameEngine>
 {
@@ -22,6 +23,8 @@ public sealed class GameEngine : MonoSingle<GameEngine>
         UIManager.Instance.Init();
 
         Tables.Instance.InitAll();
+
+        LocationManager.Instance.Test();
 
     }
 
