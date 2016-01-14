@@ -28,6 +28,8 @@ namespace Network
 
         public string encrypt{ get; set; }
 
+        public string province { get; set; }
+
         public string city{ get; set; }
 
         public string distric{ get; set; }
