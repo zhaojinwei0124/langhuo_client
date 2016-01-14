@@ -22,7 +22,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
 
         Tables.Instance.InitAll();
 
-        LocationManager.Instance.Test();
+        LocationManager.Instance.Init();
 
     }
 

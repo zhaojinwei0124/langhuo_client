@@ -16,11 +16,15 @@ namespace Platform
         private float lng, lat;
         private string stat;
 
-        public void Test()
+        public void Init()
         {
+#if UNITY_EDITOR
             lat = 31.2918f;
             lng = 121.5318f;
             GameEngine.Instance.StartCoroutine(UpdateLocation());
+#else
+            Start();
+#endif
         }
 
         public void Start()
@@ -35,6 +39,7 @@ namespace Platform
                 lng = _lng;
                 lat = _lat;
                 Stop();
+                GameEngine.Instance.StartCoroutine(UpdateLocation());
             });
         }
 
@@ -52,8 +57,8 @@ namespace Platform
                 NLocation loc = GameCore.Util.Instance.Get<NLocation>(www.text.Trim());
                 GameBaseInfo.Instance.address=loc.result.address_component;
                 locationHandler();
-                Debug.Log("location: " + www.text.Trim());
-                Debug.Log("city: " + loc.result.address + " nation: " + loc.result.address_component.nation + " pro: " + loc.result.address_component.province);
+                Debug.Log("city: " + loc.result.address);
+                Toast.Instance.Show(10023);
             } else
             {
                 Toast.Instance.Show(10023);
