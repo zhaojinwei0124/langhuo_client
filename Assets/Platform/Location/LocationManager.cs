@@ -58,7 +58,6 @@ namespace Platform
                 GameBaseInfo.Instance.address=loc.result.address_component;
                 locationHandler();
                 Debug.Log("city: " + loc.result.address);
-                Toast.Instance.Show(10023);
             } else
             {
                 Toast.Instance.Show(10023);
