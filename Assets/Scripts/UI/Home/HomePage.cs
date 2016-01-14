@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Network;
 using GameCore;
+using Platform;
+
 
 public class HomePage : View
 {
@@ -14,7 +16,8 @@ public class HomePage : View
     {
         base.RefreshView();
         RefreshBanner();
-        RefreshTitle();
+       // RefreshTitle();
+        LocationManager.Instance.locationHandler+=RefreshTitle;
         NetCommand.Instance.GetItems((res) => 
         {
             // Debug.Log("w text: " + w.text);
@@ -23,6 +26,12 @@ public class HomePage : View
         });
     }
 
+
+    protected override void Close()
+    {
+        LocationManager.Instance.locationHandler-=RefreshTitle;
+        base.Close();
+    }
 
     public void RefreshTitle()
     {
