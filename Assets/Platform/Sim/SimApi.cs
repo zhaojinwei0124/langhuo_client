@@ -6,9 +6,13 @@ using Network;
 
 namespace Platform
 {
+
+    /// <summary>
+    /// 利用轻码云的api http://www.qingmayun.com/
+    /// 实现发送短信的功能
+    /// </summary>
     public class SimApi :Single<SimApi>
     {
-
 
         public void HttpPost(string url, WWWForm param, MsgCallback msgCallback, ErrCallback errCallback)
         {

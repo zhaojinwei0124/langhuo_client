@@ -13,19 +13,25 @@ namespace Config
     using System;
     
     
-    public struct TActivity
+    public struct TBases
     {
         
-        // id
+        // 分店编码
+        public int id;
+        
+        // 分点名
         public string name;
         
-        // 评分
-        public string score;
-        
-        // 类型
-        public int price;
+        // 城市
+        public string city;
         
         // 区域
-        public string description;
+        public string district;
+        
+        // 纬度
+        public float lat;
+        
+        // 经度
+        public float lng;
     }
 }

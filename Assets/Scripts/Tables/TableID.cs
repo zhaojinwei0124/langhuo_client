@@ -4,7 +4,7 @@ using System.Collections;
 public struct TableID 
 {
 
-    public static string ITEMS = "items";
+    public static string ITEMS = "item";
     
     public static string ACTIVITY = "activity";
 

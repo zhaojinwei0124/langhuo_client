@@ -5,7 +5,7 @@ namespace Platform
     public delegate void DispacherLocation(int code, float lng, float lag);
 
 
-    public class GetGPS : Single<GetGPS>
+    public class GPS : Single<GPS>
     {
 
         public string gps_info = "";
