@@ -19,6 +19,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
         Debug.Log("Game engine start.");
         TableID.Init();
         Tables.Instance.InitAll();
+        GameBaseInfo.Instance.Init();
         UIHandler.Instance.Init();
         UIManager.Instance.Init();
         LocationManager.Instance.Init();

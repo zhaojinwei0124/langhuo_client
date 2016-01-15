@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Network;
 using GameCore;
+using Platform;
+
 
 public class BasketPage : View
 {
@@ -27,11 +29,24 @@ public class BasketPage : View
         RefreshAccount();
     }
 
+    protected override void Close()
+    {
+        LocationManager.Instance.locationHandler-=RefreshLocal;
+        base.Close();
+    }
+
     private void RefreshTitle()
     {
+        LocationManager.Instance.locationHandler+=RefreshLocal;
         UIEventListener.Get(m_objNotify).onClick=OnNotify;
         UIEventListener.Get(m_lblChange.gameObject).onClick=OnChange;
-        m_lblLocal.text=GameBaseInfo.Instance.address.city+"  "+GameBaseInfo.Instance.address.district;
+        RefreshLocal();
+    }
+
+
+    private void RefreshLocal()
+    {
+        m_lblLocal.text=GameBaseInfo.Instance.address.city+" "+GameBaseInfo.Instance.address.district+Localization.Get(10024);
     }
 
     private void OnChange(GameObject go)

@@ -20,7 +20,7 @@ public class HeadIconPage : View
     private void SaveIcon(string name)
     {
         Debug.Log("name: "+name);
-        PlayerPrefs.SetString("headicon", name);
+        PlayerPrefs.SetString(GameCore.PlayerprefID.HEADICO, name);
         Close();
     }
 

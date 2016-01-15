@@ -36,7 +36,7 @@ public class AccountPage : View
 
     private bool CheckLocal()
     {
-        mUserid = PlayerPrefs.GetString("userid", null);
+        mUserid = PlayerPrefs.GetString(PlayerprefID.USERID, null);
         return !string.IsNullOrEmpty(mUserid);
     }
 
@@ -88,7 +88,7 @@ public class AccountPage : View
                     {
                         Debug.Log("commit order success!");
                         Toast.Instance.Show(Localization.Get(10005));
-                        GameBaseInfo.Instance.buy_list.Clear();
+                        GameBaseInfo.Instance.ClearBuy();
                         Close();
                     },
                     (err) =>
@@ -115,7 +115,7 @@ public class AccountPage : View
                 m_type.text = nuser.type == 1 ? Localization.Get(10008) : Localization.Get(10009);
                 m_address.label.text = nuser.addr;
                 m_tel.label.text = nuser.tel.ToString();
-                TextureHandler.Instance.LoadHeadTexture(PlayerPrefs.GetString("headicon", "010"),
+                TextureHandler.Instance.LoadHeadTexture(PlayerPrefs.GetString(PlayerprefID.HEADICO, "010"),
                 (txt) =>
                 {
                     m_head.mainTexture=txt as Texture2D;

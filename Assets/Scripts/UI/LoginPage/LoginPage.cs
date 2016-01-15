@@ -119,7 +119,7 @@ public class LoginPage : View
             Debug.Log("res: " + res);
             if (res.Equals("true"))
             {
-                PlayerPrefs.SetString("userid", m_tel.label.text);
+                PlayerPrefs.SetString(PlayerprefID.USERID, m_tel.label.text);
                 Debug.Log("regist use success!");
                 Close();
             }

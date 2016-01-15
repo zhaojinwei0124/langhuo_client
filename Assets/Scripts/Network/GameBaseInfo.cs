@@ -45,6 +45,16 @@ namespace Network
         public PayMode payMode = PayMode.AliPay;
         public List<BuyNode> buy_list = new List<BuyNode>();
 
+        public void Init()
+        {
+            base.Init();
+            string buys=PlayerPrefs.GetString(PlayerprefID.BUYLIST);
+            if(!string.IsNullOrEmpty(buys))
+            {
+                buy_list=Util.Instance.Get<List<BuyNode>>(buys);
+            }
+        }
+
         public void AddBuyNode(int id, int cnt)
         {
             if (buy_list.ConvertAll(x => x.id).Contains(id))
@@ -68,11 +78,13 @@ namespace Network
             {
                 buy_list.Add(new BuyNode(id, cnt));
             }
+            PlayerPrefs.SetString(PlayerprefID.BUYLIST,DeJson.Serializer.Serialize(buy_list.ToArray()));
         }
 
         public void ClearBuy()
         {
             buy_list.Clear();
+            PlayerPrefs.SetString(PlayerprefID.BUYLIST,DeJson.Serializer.Serialize(buy_list.ToArray()));
         }
 
 

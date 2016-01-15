@@ -16,7 +16,7 @@ public class MyPage : View
     public override void RefreshView()
     {
         base.RefreshView();
-        if (string.IsNullOrEmpty(PlayerPrefs.GetString("userid", null)))
+        if (string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerprefID.USERID, null)))
         {
             UIHandler.Instance.Push(PageID.LOGIN);
         } else

@@ -27,6 +27,7 @@ namespace Config
                 return _deserial;
             }
         }
+       
 
         string[] tables;
 

@@ -28,6 +28,8 @@ namespace GameCore
             return Tables.Instance.deserial.Deserialize<T>(str);
         }
 
+       
+
         /// <summary>
         /// make array or list to json string
         /// </summary>
