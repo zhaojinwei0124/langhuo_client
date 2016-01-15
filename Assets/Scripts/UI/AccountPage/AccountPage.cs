@@ -21,6 +21,7 @@ public class AccountPage : View
     public override void RefreshView()
     {
         base.RefreshView();
+        Debug.Log("refresh..");
         UIEventListener.Get(m_objRegist).onClick = OnCommit;
         UIEventListener.Get(m_head.gameObject).onClick = OnTextClick;
         RefreshUI();

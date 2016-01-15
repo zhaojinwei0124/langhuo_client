@@ -21,6 +21,7 @@ public class HeadIconPage : View
     {
         Debug.Log("name: "+name);
         PlayerPrefs.SetString("headicon", name);
+        Close();
     }
 
 }

@@ -58,11 +58,11 @@ public class UIButtonScale : MonoBehaviour
 
 	void OnHover (bool isOver)
 	{
-		if (enabled)
-		{
-			if (!mStarted) Start();
-			TweenScale.Begin(tweenTarget.gameObject, duration, isOver ? Vector3.Scale(mScale, hover) : mScale).method = UITweener.Method.EaseInOut;
-		}
+//		if (enabled)
+//		{
+//			if (!mStarted) Start();
+//			TweenScale.Begin(tweenTarget.gameObject, duration, isOver ? Vector3.Scale(mScale, hover) : mScale).method = UITweener.Method.EaseInOut;
+//		}
 	}
 
 	void OnSelect (bool isSelected)

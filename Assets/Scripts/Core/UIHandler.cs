@@ -102,7 +102,7 @@ namespace GameCore
             PageInfo info = new PageInfo();
             info.go = go;
             info.name = id;
-            info.arg = obj;
+            info.arg = arg;
             info.onPageClosed=onClose;
             info.view=go.GetComponent<View>();
             mPageStack.Push(info);
@@ -131,7 +131,7 @@ namespace GameCore
             else
             {
                 info=mPageStack.Peek();
-//                Debug.Log("page name: "+info.name+" arg: "+(info.arg==null));
+          //      Debug.Log("page name: "+info.name+" arg: "+(info.arg.ToString()));
                 if(info.arg==null) info.view.RefreshView();
                 else info.view.Refresh(info.arg);
             }
