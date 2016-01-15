@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Reflection;
+using System;
+using System.Collections.Generic;
 
 public struct TableID 
 {
@@ -8,21 +11,32 @@ public struct TableID
     
     public static string ACTIVITY = "activity";
 
+   // public static string BASE="base";
+
     //add other table id here....
 
+    public static string[] ids;
 
-
-
-
-    public static string[] ids=new string[]
+    public static void Init()
     {
-        ITEMS,
-        ACTIVITY,
-        //dd other table id here....
-    };
-
-
-
+        List<string> list=new List<string>();
+        foreach (FieldInfo field in typeof(TableID).GetFields())
+        {
+            try
+            {
+                if(field.Name!="ids")
+                {
+                   // Debug.Log("field: "+(field.GetValue(null) as string));
+                    list.Add(field.GetValue(null) as string);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
+        }
+        ids=list.ToArray();
+    }
 
     private string V;
     

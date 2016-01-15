@@ -40,7 +40,7 @@ namespace Config
             for (int i=0; i<tables.Length; i++)
             {
                 TextAsset txt = Resources.Load<TextAsset>("Tables/" + tables [i]);
-                //  Debug.Log("add: "+txt.text);
+//                Debug.Log("id:"+tables[i]+" txt: "+txt.text);
                 dicTables.Add(tables[i], txt.text);
             }
         }
