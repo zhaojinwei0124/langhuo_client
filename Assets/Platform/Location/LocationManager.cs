@@ -56,7 +56,7 @@ namespace Platform
             {
                 NLocation loc = GameCore.Util.Instance.Get<NLocation>(www.text.Trim());
                 GameBaseInfo.Instance.address=loc.result.address_component;
-                locationHandler();
+                if(locationHandler!=null)  locationHandler();
                 Debug.Log("city: " + loc.result.address);
             } else
             {
