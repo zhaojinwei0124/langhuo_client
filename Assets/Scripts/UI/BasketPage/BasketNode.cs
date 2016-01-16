@@ -29,7 +29,6 @@ public class BasketNode : UIPoolListNode
         get{ return m_data as BasketItem;}
     }
 
-
     private ItemNode mItemNode;
 
     public override void Refresh()
@@ -44,7 +43,6 @@ public class BasketNode : UIPoolListNode
         {
             m_txtIcon.mainTexture = obj as Texture;
         });
-
     }
 
 

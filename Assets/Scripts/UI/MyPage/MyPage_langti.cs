@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MyPage_langti : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+public class MyPage_langti : MonoSingle<MyPage_langti> 
+{
+    public UIPoolList m_pool;
+
+    public void Refresh()
+    {
+    }
 }

@@ -28,7 +28,21 @@ namespace GameCore
             return Tables.Instance.deserial.Deserialize<T>(str);
         }
 
-       
+        public List<FriendItem> ParseContacts(string msg)
+        {
+            List<FriendItem> lt = new List<FriendItem>();
+            string[] nodes = msg.Split(',');
+            foreach (var item in nodes)
+            {
+                string[] n = item.Split(':');
+                FriendItem node=new FriendItem();
+                node.phone = n [1];
+                node.name = n [0];
+                lt.Add(node);
+            }
+            return lt;
+        }
+
 
         /// <summary>
         /// make array or list to json string
@@ -83,7 +97,7 @@ namespace GameCore
             
             for (int i = 0; i < targetData.Length; i++)
             {
-                byte2String += targetData[i].ToString("x2");
+                byte2String += targetData [i].ToString("x2");
             }
             return byte2String;
         }

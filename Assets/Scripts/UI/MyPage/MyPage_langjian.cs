@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MyPage_langjian : MonoBehaviour {
-
-
+public class MyPage_langjian : MonoSingle<MyPage_langjian>
+{
+   
     public UIPoolList m_pool;
 
     public GameObject m_objAccnt;
