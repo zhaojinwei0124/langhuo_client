@@ -36,7 +36,7 @@ public class HomeScrollNode : UIPoolListNode
         base.Refresh();
 
         HomeScrollData data = Data;
-        TextureHandler.Instance.LoadTexture("Item/" + Data.item1.t_item.img, (obj) =>
+        TextureHandler.Instance.LoadItemTexture(Data.item1.t_item.img, (obj) =>
         {
             m_textures [0].mainTexture = obj as Texture;
         });
@@ -48,7 +48,7 @@ public class HomeScrollNode : UIPoolListNode
         if (data != null)
         {
             m_textures[1].transform.parent.gameObject.SetActive(true);
-            TextureHandler.Instance.LoadTexture("Item/" + data.item2.t_item.img, (obj) =>
+            TextureHandler.Instance.LoadItemTexture(data.item2.t_item.img, (obj) =>
             {
                 m_textures [1].mainTexture = obj as Texture;
             });

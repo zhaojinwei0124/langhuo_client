@@ -40,6 +40,11 @@ namespace ResourceLoad
             LoadTexture(directory + _name, _loadedCB);
         }
 
+        public void LoadItemTexture(string _name, LoadedCallBack _loadedCB)
+        {
+            string directory = "Item/";
+            LoadTexture(directory + _name, _loadedCB);
+        }
 
         /// <summary>
         /// Load Asset check path local first and remote then

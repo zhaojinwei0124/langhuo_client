@@ -78,13 +78,7 @@ public class BasketPage : View
 
     private void RefreshAccount()
     {
-        int price=0;
-        foreach(var item in GameBaseInfo.Instance.buy_list)
-        {
-            ItemNode node=Home.Instance.items.Find(x=>x.n_item.id==item.id);
-            price+=node.n_item.nprice*item.cnt;
-        }
-        m_lblAllPrice.text="总计：￥"+price;
+        m_lblAllPrice.text="总计：￥"+GameBaseInfo.Instance.GetPaycnt();
         UIEventListener.Get(m_objGo).onClick=GoBuy;
     }
 

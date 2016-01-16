@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GameCore;
 using Network;
 
@@ -26,17 +27,34 @@ public class MyPage : View
             UIEventListener.Get(m_tabs [2].gameObject).onClick = (go) => Show(2);
             UIEventListener.Get(m_set).onClick = OnSetting;
             UIEventListener.Get(m_notify).onClick = OnNotify;
-            RefreshUI();
+            RefreshAccount();
         }
     }
 
-    private void RefreshUI()
+    private void RefreshAccount()
     {
         NetCommand.Instance.LoginUser(PlayerPrefs.GetString("userid"), (string res) =>
         {
-            NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
+            NUser nuser = Util.Instance.Get<NUser>(res);
             GameBaseInfo.Instance.user = nuser;
             RefreshUser();
+            RefreshOrders();
+        });
+    }
+
+    private void RefreshOrders()
+    {
+        NetCommand.Instance.GetOders(GameBaseInfo.Instance.user.tel, (string res) =>
+        {
+            GameBaseInfo.Instance.orders=Util.Instance.Get<List<NOrder>>(res);
+            Debug.Log("order cnt: "+GameBaseInfo.Instance.orders.Count);
+//            foreach(var item in GameBaseInfo.Instance.orders[0].GetItems())
+//            {
+//                Debug.Log("item id: "+item);
+//            }
+        }, (string err) =>
+        {
+            Toast.Instance.Show(10026);
         });
     }
 

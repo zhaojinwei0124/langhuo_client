@@ -10,6 +10,7 @@ namespace GameCore
         public static string BASKET      =  "BasketPage";
         public static string MYPAGE      =  "MyPage";
         public static string ITEMSDETAIL =  "ItemDetailPage";
+        public static string ITEMSMODIFY =  "ItemModifyPage";
         public static string SETTING     =  "SettingPage";
         public static string ACCOUNT     =  "AccountPage";
         public static string ORDER       =  "OrderPage";

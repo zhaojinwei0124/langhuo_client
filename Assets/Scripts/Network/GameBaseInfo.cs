@@ -26,6 +26,8 @@ namespace Network
 
         public List<ItemNode> items = new List<ItemNode>();
 
+        public List<NOrder> orders=new List<NOrder>();
+
         public string encrypt{ get; set; }
 
         public Address address;
@@ -79,6 +81,18 @@ namespace Network
                 buy_list.Add(new BuyNode(id, cnt));
             }
             PlayerPrefs.SetString(PlayerprefID.BUYLIST,DeJson.Serializer.Serialize(buy_list.ToArray()));
+        }
+
+
+        public int GetPaycnt()
+        {
+            int price=0;
+            foreach(var item in GameBaseInfo.Instance.buy_list)
+            {
+                ItemNode node=Home.Instance.items.Find(x=>x.n_item.id==item.id);
+                price+=node.n_item.nprice*item.cnt;
+            }
+            return price;
         }
 
         public void ClearBuy()

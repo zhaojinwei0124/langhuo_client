@@ -50,6 +50,6 @@ public class BasketNode : UIPoolListNode
 
     private void OnModify(GameObject go)
     {
-        UIHandler.Instance.Push(PageID.ITEMSDETAIL,mItemNode);
+        UIHandler.Instance.Push(PageID.ITEMSMODIFY,mItemNode);
     }
 }

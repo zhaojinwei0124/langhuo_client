@@ -3,7 +3,8 @@ using System.Collections;
 using ResourceLoad;
 using Network;
 
-public class ItemDetailPage : View
+
+public class ItemModifyPage : View
 {
     public UITexture m_texture;
     public UILabel m_lblName;
@@ -14,6 +15,7 @@ public class ItemDetailPage : View
     public UISprite m_sprAdd;
     public UISprite m_sprReduce;
     public GameObject m_objBuy;
+    public GameObject m_objDel;
     ItemNode m_item;
     int m_cnt;
 
@@ -25,9 +27,10 @@ public class ItemDetailPage : View
         UIEventListener.Get(m_sprAdd.gameObject).onClick = OnAdd;
         UIEventListener.Get(m_sprReduce.gameObject).onClick = OnReduce;
         UIEventListener.Get(m_objBuy).onClick = GoBuy;
+        UIEventListener.Get(m_objDel).onClick= OnDelete;
         RefreshUI();
     }
-
+    
     private int GetCnt()
     {
         GameBaseInfo.BuyNode node = GameBaseInfo.Instance.buy_list.Find(x => x.id == m_item.n_item.id);
@@ -35,11 +38,11 @@ public class ItemDetailPage : View
             return 1;
         return node.cnt;
     }
-
+    
     private void RefreshUI()
     {
         TextureHandler.Instance.LoadTexture("Item/" + m_item.t_item.img, (obj) =>
-        {
+                                            {
             m_texture.mainTexture = obj as Texture;
         });
         m_lbldesc.text = "[ff0000]" + m_item.t_item.name + "[-] " + m_item.t_item.description;
@@ -48,13 +51,13 @@ public class ItemDetailPage : View
         m_lblcnt.text = m_cnt.ToString();
         m_lblName.text = m_item.t_item.name;
     }
-
+    
     private void OnAdd(GameObject go)
     {
         m_cnt++;
         m_lblcnt.text = m_cnt.ToString();
     }
-
+    
     private void OnReduce(GameObject go)
     {
         if (m_cnt > 1)
@@ -62,13 +65,18 @@ public class ItemDetailPage : View
         m_lblcnt.text = m_cnt.ToString();
     }
 
+    public void OnDelete(GameObject go)
+    {
+        m_cnt=0;
+        m_lblcnt.text="0";
+        GoBuy(m_objBuy);
+    }
+    
     private void GoBuy(GameObject go)
     {
-//        Debug.Log("add card list");
+        //        Debug.Log("add card list");
         GameBaseInfo.Instance.AddBuyNode(m_item.n_item.id, m_cnt);
         Close();
         // UIManager.Instance.ShowHomeView(1);
     }
-
-  
 }

@@ -13,6 +13,8 @@ public class AccountPage : View
     public UIInput m_receive;
     public UIInput m_address;
     public UIInput m_tel;
+    public UILabel m_balance;
+    public UILabel m_paycnt;
     public GameObject m_objRegist;
     public UILabel m_lblRegist;
     private string mUserid;
@@ -115,10 +117,12 @@ public class AccountPage : View
                 m_type.text = nuser.type == 1 ? Localization.Get(10008) : Localization.Get(10009);
                 m_address.label.text = nuser.addr;
                 m_tel.label.text = nuser.tel.ToString();
+                m_balance.text = Localization.Get(10031) + string.Format("{0:f}", GameBaseInfo.Instance.user.balance);
+                m_paycnt.text = Localization.Get(10031) + string.Format("{0:f}", GameBaseInfo.Instance.GetPaycnt());
                 TextureHandler.Instance.LoadHeadTexture(PlayerPrefs.GetString(PlayerprefID.HEADICO, "010"),
                 (txt) =>
                 {
-                    m_head.mainTexture=txt as Texture2D;
+                    m_head.mainTexture = txt as Texture2D;
                 });
             });
         } else

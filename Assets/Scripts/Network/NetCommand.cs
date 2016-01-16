@@ -37,6 +37,7 @@ namespace Network
             HttpPost("user/login", param, msgCallback, errCallback);
         }
   
+        //get all items
         public void GetItems(MsgCallback msgCallback, ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
@@ -44,6 +45,7 @@ namespace Network
             HttpPost("item/search", param, msgCallback, errCallback);
         }
 
+        //add new order
         public void SysnOrder(int price, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
@@ -54,6 +56,22 @@ namespace Network
             param.Add("cnt",GameBaseInfo.Instance.GetCnt());
             param.Add("pri",price.ToString());
             HttpPost("order/add", param, msgCallback, errCallback);
+        }
+
+        //confirm order state
+        public void UpdateOder(int orderid, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("orderid", orderid.ToString());
+            HttpPost("order/confirm", param, msgCallback, errCallback);
+        }
+
+        //get all orders
+        public void GetOders(long tel, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("tel", tel.ToString());
+            HttpPost("order/search", param, msgCallback, errCallback);
         }
 
     }
