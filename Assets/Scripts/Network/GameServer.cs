@@ -13,9 +13,19 @@ namespace Network
     public class GameServer : Single<GameServer>
     {
 
-        public const string BASE_URL =// "http://146577.vhost151.cloudvhost.cn/langhuo/";
-                                    "http://192.168.0.106/langhuo/";
-        public const string NET_URL = BASE_URL + "Netframework/";
+        public static string BASE_URL 
+        {
+            get
+            {
+#if LOCAL
+                return "http://192.168.0.106/langhuo/";
+#else
+                return "http://146577.vhost151.cloudvhost.cn/langhuo/";
+#endif
+            }
+        }
+           
+        public static string NET_URL = BASE_URL + "Netframework/";
 
         public enum connectStatusType
         {
@@ -25,6 +35,7 @@ namespace Network
         }
 
         public connectStatusType connectStatus = connectStatusType.offline;
+
 
         public struct RequestResult
         {
