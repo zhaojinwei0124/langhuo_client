@@ -4,6 +4,14 @@ using Network;
 using GameCore;
 using ResourceLoad;
 
+public enum PickType
+{
+    SELF = 0,
+    FRIEND,
+    TIMER
+};
+
+
 public class AccountPage : View
 {
     public UITexture m_head;
@@ -18,7 +26,7 @@ public class AccountPage : View
     public GameObject m_objRegist;
     public UILabel m_lblRegist;
     private string mUserid;
-    private PayType payType = PayType.LANGJIAN;
+    private PickType pickType = PickType.SELF;
 
     public override void RefreshView()
     {
@@ -29,12 +37,14 @@ public class AccountPage : View
         RefreshUI();
     }
 
+
     public void OnPopChange()
     {
         m_type.text = m_poplist.GetSelect();
-        payType = (PayType)(m_poplist.GetIndex() + 1);
-        //  Debug.Log("index: "+m_poplist.GetIndex()+" type: "+payType);
+        pickType = (PickType)m_poplist.GetIndex();
     }
+
+
 
     private bool CheckLocal()
     {
@@ -86,7 +96,7 @@ public class AccountPage : View
 
                 Dialog.Instance.Show(Localization.Get(10004), (g) =>
                 {
-                    NetCommand.Instance.SysnOrder(price, (msg) =>
+                    NetCommand.Instance.SysnOrder(price,(int)pickType, (msg) =>
                     {
                         Debug.Log("commit order success!");
                         Toast.Instance.Show(Localization.Get(10005));
@@ -114,7 +124,7 @@ public class AccountPage : View
                 NUser nuser = GameCore.Util.Instance.Get<NUser>(res);
                 GameBaseInfo.Instance.user = nuser;
                 m_user.label.text = m_receive.label.text = nuser.name;
-                m_type.text = nuser.type == 1 ? Localization.Get(10008) : Localization.Get(10009);
+               // m_type.text = nuser.type == 1 ? Localization.Get(10008) : Localization.Get(10009);
                 m_address.label.text = nuser.addr;
                 m_tel.label.text = nuser.tel.ToString();
                 m_balance.text = Localization.Get(10031) + string.Format("{0:f}", GameBaseInfo.Instance.user.balance);
@@ -127,7 +137,7 @@ public class AccountPage : View
             });
         } else
         {
-            UIHandler.Instance.Push(PageID.LOGIN);
+            UIHandler.Instance.Push(PageID.Regist);
         }
 
     }

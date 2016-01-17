@@ -46,12 +46,12 @@ namespace Network
         }
 
         //add new order
-        public void SysnOrder(int price, MsgCallback msgCallback,ErrCallback errCallback=null)
+        public void SysnOrder(int price,int type, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
             param.Add("addr",GameBaseInfo.Instance.user.addr);
-            param.Add("type",((int)GameBaseInfo.Instance.user.type).ToString());
+            param.Add("type",type.ToString());
             param.Add("items",GameBaseInfo.Instance.GetItems());
             param.Add("cnt",GameBaseInfo.Instance.GetCnt());
             param.Add("pri",price.ToString());
@@ -66,12 +66,20 @@ namespace Network
             HttpPost("order/confirm", param, msgCallback, errCallback);
         }
 
-        //get all orders
-        public void GetOders(long tel, MsgCallback msgCallback,ErrCallback errCallback=null)
+        //get all orders for self
+        public void SearchOders(long tel, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("tel", tel.ToString());
             HttpPost("order/search", param, msgCallback, errCallback);
+        }
+
+        //get all orders for langjian langti
+        public void GetOders(long tel, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("tel", tel.ToString());
+            HttpPost("order/get", param, msgCallback, errCallback);
         }
 
     }

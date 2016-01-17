@@ -6,7 +6,7 @@ namespace Network
     {
         public int id;
 
-        public string timestap;
+        public int state;
 
         public string items;
 

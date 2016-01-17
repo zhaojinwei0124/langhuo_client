@@ -5,7 +5,8 @@ using GameCore;
 
 public class OrderItem
 {
-    public int itemid;
+    public int[] itemids;
+    public int[] cnts;
 
     //0代表未付款 >0表示已付款是orderid
     public int orderid;  
@@ -15,7 +16,9 @@ public class OrderNode : UIPoolListNode
 {
     public UILabel m_lblDesc;
     public UILabel m_lblCnt;
-    public GameObject m_objCertain;
+    public UILabel m_lblOK;
+    public UIPopupList m_poplist;
+    private PickType pickType = PickType.SELF;
 
     public OrderItem Data
     {
@@ -29,14 +32,34 @@ public class OrderNode : UIPoolListNode
     {
         base.Refresh();
 
-        UIEventListener.Get(m_objCertain).onClick = OnCertainClick;
+        UIEventListener.Get(m_lblOK.gameObject).onClick = OnCertainClick;
 
-        ItemNode item = GameBaseInfo.Instance.items.Find(x => x.n_item.id == Data.itemid);
+        m_lblDesc.text = GetDesc();
 
-        m_lblDesc.text = item.t_item.description;
+        m_lblOK.text = Data.orderid <= 0 ? Localization.Get(10033) +"      ": Localization.Get(10034) +"      ";
+    }
 
-        m_lblCnt.text = string.Format(Localization.Get(10032), item.n_item.cnt);
+    private string GetDesc()
+    {
+        string str = null;
+        for (int i=0; i<Data.itemids.Length; i++)
+        {
+            ItemNode item = GameBaseInfo.Instance.items.Find(x => x.n_item.id == Data.itemids [i]);
+            string name = item.t_item.name;
+            str += name + " X" + Data.cnts [i];
+            if (i < Data.itemids.Length - 1)
+                str += "\n";
+        }
+        return str;
+    }
 
+    public void OnPopChange()
+    {
+        if (Data.orderid > 0)
+        {
+            m_lblOK.text = m_poplist.GetSelect();
+            pickType = (PickType)m_poplist.GetIndex();
+        }
     }
 
     private void OnCertainClick(GameObject go)
@@ -46,14 +69,15 @@ public class OrderNode : UIPoolListNode
             UIHandler.Instance.Push(PageID.ACCOUNT);
         } else
         {
-            NetCommand.Instance.UpdateOder(Data.orderid, (sr) => 
-            {
-                Toast.Instance.Show(10035);
-            },
-            (err) => 
-            {
-                Toast.Instance.Show(err);
-            });
+            m_poplist.SendMessage("OnClick");
+//            NetCommand.Instance.UpdateOder(Data.orderid, (sr) => 
+//            {
+//                Toast.Instance.Show(10035);
+//            },
+//            (err) => 
+//            {
+//                Toast.Instance.Show(err);
+//            });
         }
     }
 }

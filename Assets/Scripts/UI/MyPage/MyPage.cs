@@ -19,7 +19,7 @@ public class MyPage : View
         base.RefreshView();
         if (string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerprefID.USERID, null)))
         {
-            UIHandler.Instance.Push(PageID.LOGIN);
+            UIHandler.Instance.Push(PageID.Regist);
         } else
         {
             UIEventListener.Get(m_tabs [0].gameObject).onClick = (go) => Show(0);
@@ -33,7 +33,7 @@ public class MyPage : View
 
     private void RefreshAccount()
     {
-        NetCommand.Instance.LoginUser(PlayerPrefs.GetString("userid"), (string res) =>
+        NetCommand.Instance.LoginUser(PlayerPrefs.GetString(PlayerprefID.USERID), (string res) =>
         {
             NUser nuser = Util.Instance.Get<NUser>(res);
             GameBaseInfo.Instance.user = nuser;
@@ -44,10 +44,10 @@ public class MyPage : View
 
     private void RefreshOrders()
     {
-        NetCommand.Instance.GetOders(GameBaseInfo.Instance.user.tel, (string res) =>
+        NetCommand.Instance.SearchOders(GameBaseInfo.Instance.user.tel, (string res) =>
         {
-            GameBaseInfo.Instance.orders=Util.Instance.Get<List<NOrder>>(res);
-            Debug.Log("order cnt: "+GameBaseInfo.Instance.orders.Count);
+            GameBaseInfo.Instance.orders = Util.Instance.Get<List<NOrder>>(res);
+            Debug.Log("order cnt: " + GameBaseInfo.Instance.orders.Count);
 //            foreach(var item in GameBaseInfo.Instance.orders[0].GetItems())
 //            {
 //                Debug.Log("item id: "+item);

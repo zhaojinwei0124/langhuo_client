@@ -17,8 +17,16 @@ public class MyPage_langjian : MonoSingle<MyPage_langjian>
         UIEventListener.Get(m_objOK).onClick=OnConfirm;
 
         UIEventListener.Get(m_objAccnt).onClick=OnAccnt;
+
+        RefreshList();
     }
 
+
+
+    private void RefreshList()
+    {
+
+    }
 
 
     private void OnAccnt(GameObject go)
