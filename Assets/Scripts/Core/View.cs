@@ -70,7 +70,7 @@ public abstract class View : MonoBehaviour
 
     public void SetDepth(int index)
     {
-        Debug.Log("index:" +index);
+       // Debug.Log("index:" +index);
         panel.depth=10*index;
     }
 

@@ -14,8 +14,11 @@ namespace Network
 
         public int type;
 
-       // public string addr;
+        public string name;
 
+        public string addr;
+
+        public Int64 accept;
 
         public int[] GetItems()
         {

@@ -28,7 +28,7 @@ public class OrderPage : View
     private void RefreshList()
     {
         List<OrderItem> items=new List<OrderItem>();
-        List<NOrder> orders=GameBaseInfo.Instance.orders.FindAll(x=>x.state==0);
+        List<NOrder> orders=GameBaseInfo.Instance.myOrders.FindAll(x=>x.state==0);
         for(int i=0;i<orders.Count;i++)
         {
             OrderItem item =new OrderItem();

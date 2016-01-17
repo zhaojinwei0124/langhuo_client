@@ -46,8 +46,8 @@ public class MyPage : View
     {
         NetCommand.Instance.SearchOders(GameBaseInfo.Instance.user.tel, (string res) =>
         {
-            GameBaseInfo.Instance.orders = Util.Instance.Get<List<NOrder>>(res);
-            Debug.Log("order cnt: " + GameBaseInfo.Instance.orders.Count);
+            GameBaseInfo.Instance.myOrders = Util.Instance.Get<List<NOrder>>(res);
+//            Debug.Log("order cnt: " + GameBaseInfo.Instance.myOrders.Count);
 //            foreach(var item in GameBaseInfo.Instance.orders[0].GetItems())
 //            {
 //                Debug.Log("item id: "+item);
@@ -88,5 +88,13 @@ public class MyPage : View
 //        Debug.Log("show index: "+index);
         HideAll();
         m_tabpages [index].gameObject.SetActive(true);
+        if(index==1)
+        {
+            MyPage_langjian.Instance.Refresh();
+        }
+        else if(index==2)
+        {
+            MyPage_langti.Instance.Refresh();
+        }
     }
 }

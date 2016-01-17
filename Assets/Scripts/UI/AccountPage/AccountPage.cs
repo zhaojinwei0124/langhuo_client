@@ -96,7 +96,7 @@ public class AccountPage : View
 
                 Dialog.Instance.Show(Localization.Get(10004), (g) =>
                 {
-                    NetCommand.Instance.SysnOrder(price,(int)pickType, (msg) =>
+                    NetCommand.Instance.SysnOrder(price,m_receive.label.text, (int)pickType, (msg) =>
                     {
                         Debug.Log("commit order success!");
                         Toast.Instance.Show(Localization.Get(10005));

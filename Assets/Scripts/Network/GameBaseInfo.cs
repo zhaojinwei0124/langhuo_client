@@ -26,7 +26,9 @@ namespace Network
 
         public List<ItemNode> items = new List<ItemNode>();
 
-        public List<NOrder> orders=new List<NOrder>();
+        public List<NOrder> myOrders=new List<NOrder>();
+
+        public List<NOrder> othOrders=new List<NOrder>();
 
         public string encrypt{ get; set; }
 

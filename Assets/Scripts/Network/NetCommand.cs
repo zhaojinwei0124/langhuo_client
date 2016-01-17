@@ -46,11 +46,12 @@ namespace Network
         }
 
         //add new order
-        public void SysnOrder(int price,int type, MsgCallback msgCallback,ErrCallback errCallback=null)
+        public void SysnOrder(int price,string name,int type, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
             param.Add("addr",GameBaseInfo.Instance.user.addr);
+            param.Add("name",name);
             param.Add("type",type.ToString());
             param.Add("items",GameBaseInfo.Instance.GetItems());
             param.Add("cnt",GameBaseInfo.Instance.GetCnt());
@@ -59,10 +60,11 @@ namespace Network
         }
 
         //confirm order state
-        public void UpdateOder(int orderid, MsgCallback msgCallback,ErrCallback errCallback=null)
+        public void UpdateOder(int orderid, long accept, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("orderid", orderid.ToString());
+            param.Add("accept", accept.ToString());
             HttpPost("order/confirm", param, msgCallback, errCallback);
         }
 
