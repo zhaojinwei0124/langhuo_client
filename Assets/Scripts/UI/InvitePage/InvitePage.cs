@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using GameCore;
 
-public class FriendPage : View
+public class InvitePage : View
 {
 
     public UIPoolList m_pool;
     string msg = string.Empty;
-
+    
     public override void RefreshView()
     {
         base.RefreshView();
@@ -22,5 +22,4 @@ public class FriendPage : View
             }
         }
     }
-
 }

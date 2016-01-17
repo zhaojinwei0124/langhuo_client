@@ -68,6 +68,14 @@ namespace Network
             HttpPost("order/confirm", param, msgCallback, errCallback);
         }
 
+
+        public void CompleteOrder(int orderid, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("orderid", orderid.ToString());
+            HttpPost("order/complete", param, msgCallback, errCallback);
+        }
+
         //get all orders for self
         public void SearchOders(long tel, MsgCallback msgCallback,ErrCallback errCallback=null)
         {

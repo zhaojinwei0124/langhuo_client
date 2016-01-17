@@ -19,6 +19,9 @@ namespace GameCore
         public static string Regist      =  "RegistPage";
         public static string Login       =  "LoginPage";
         public static string HEADICON    =  "HeadIconPage";
+        public static string LANGTI      =  "AppLangtiPage";
+        public static string LANGJIAN    =  "AppLangjianPage";
+        public static string INVITE      =  "InvitePage";
         //add other page id here....
 
     

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using GameCore;
+
 
 public class SettingPage : View
 {
@@ -25,11 +27,16 @@ public class SettingPage : View
     private void OnLogout(GameObject go)
     {
         Debug.Log("logout");
+        Caching.CleanCache();
+        PlayerPrefs.DeleteAll();
+        Toast.Instance.Show(10049);
+        Close();
     }
 
     private void OnClickItem0(GameObject go)
     {
         Debug.Log("user account");
+        UIHandler.Instance.Push(PageID.ACCOUNT);
     }
 
     private void OnClickItem1(GameObject go)
@@ -39,26 +46,26 @@ public class SettingPage : View
 
     private void OnClickItem2(GameObject go)
     { 
-        Debug.Log("langjian get");
+        UIHandler.Instance.Push(PageID.LANGJIAN);
     }
 
     private void OnClickItem3(GameObject go)
     {
-        Debug.Log("langti get");
+        UIHandler.Instance.Push(PageID.LANGTI);
     }
 
     private void OnClickItem4(GameObject go)
     {
-        Debug.Log("friend invite");
+        UIHandler.Instance.Push(PageID.INVITE);
     }
 
     private void OnClickItem5(GameObject go)
     {
-        Debug.Log("help");
+       Toast.Instance.Show("help page");
     }
 
     private void OnClickItem6(GameObject go)
     {
-        Debug.Log("version");
+        Toast.Instance.Show("version page");
     }
 }
