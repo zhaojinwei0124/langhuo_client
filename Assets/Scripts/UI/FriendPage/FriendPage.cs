@@ -13,8 +13,8 @@ public class FriendPage : View
         base.RefreshView();
         if (string.IsNullOrEmpty(msg))
         {
-            msg = SDKManager.Instance.Contacts(null);
-            Debug.Log("RefreshView msg:  " + msg);
+            msg = SDKManager.Instance.Contacts("");
+            Debug.Log("unity RefreshView msg:  " + msg);
             if (!string.IsNullOrEmpty(msg))
             {
                 List<FriendItem> items = Util.Instance.ParseContacts(msg);

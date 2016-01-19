@@ -13,7 +13,7 @@ public class InvitePage : View
         base.RefreshView();
         if (string.IsNullOrEmpty(msg))
         {
-            msg = SDKManager.Instance.Contacts(null);
+            msg = SDKManager.Instance.Contacts("");
             Debug.Log("RefreshView msg:  " + msg);
             if (!string.IsNullOrEmpty(msg))
             {
