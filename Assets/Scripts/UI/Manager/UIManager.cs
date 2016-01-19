@@ -53,6 +53,12 @@ public class UIManager : MonoSingle<UIManager>
         }
     }
    
+    public void ResetIndex()
+    {
+        mIndex=0;
+        home_tabs[0].Set(true);
+    }
+
     public void ShowHomeView(int index)
     {
         mIndex=index;

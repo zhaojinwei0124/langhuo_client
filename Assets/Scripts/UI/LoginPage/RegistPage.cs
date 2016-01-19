@@ -17,6 +17,8 @@ public class RegistPage : View
     public UILabel m_lblLogin;
     private PayType payType = PayType.LANGJIAN;
 
+    private PickType pickType = PickType.SELF;
+
     public override void RefreshView()
     {
         base.RefreshView();
@@ -36,10 +38,18 @@ public class RegistPage : View
 
     protected override void Close()
     {
+        Debug.Log("close..");
         m_lblMsg.text = Localization.Get(10015);
         TimerManager.Instance.RemoveTimer(timerSeq);
         base.Close();
     }
+
+    public void OnPopChange()
+    {
+        m_type.text = m_poplist.GetSelect();
+        pickType = (PickType)m_poplist.GetIndex();
+    }
+
 
     private void OnMsgClick(GameObject go)
     {
@@ -78,6 +88,7 @@ public class RegistPage : View
             Toast.Instance.Show(Localization.Get(100002));
         }
     }
+
 
     private bool CheckValid()
     {

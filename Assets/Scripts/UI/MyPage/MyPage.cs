@@ -19,7 +19,13 @@ public class MyPage : View
         base.RefreshView();
         if (string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerprefID.USERID, null)))
         {
-            UIHandler.Instance.Push(PageID.Regist);
+            UIHandler.Instance.Push(PageID.Regist, () =>
+            {
+                if(string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerprefID.USERID)))
+                {
+                    UIManager.Instance.ResetIndex();
+                }
+            });
         } else
         {
             UIEventListener.Get(m_tabs [0].gameObject).onClick = (go) => Show(0);
@@ -88,11 +94,10 @@ public class MyPage : View
 //        Debug.Log("show index: "+index);
         HideAll();
         m_tabpages [index].gameObject.SetActive(true);
-        if(index==1)
+        if (index == 1)
         {
             MyPage_langjian.Instance.Refresh();
-        }
-        else if(index==2)
+        } else if (index == 2)
         {
             MyPage_langti.Instance.Refresh();
         }
