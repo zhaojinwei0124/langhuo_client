@@ -30,7 +30,6 @@ public class FriendNode : UIPoolListNode
         base.Refresh();
         m_lblName.text=Data.name;
         m_lblTel.text=Data.phone;
-
         UIEventListener.Get(m_objGo).onClick=Show;
     }
 

@@ -70,14 +70,6 @@ public class OrderNode : UIPoolListNode
         } else
         {
             m_poplist.SendMessage("OnClick");
-//            NetCommand.Instance.UpdateOder(Data.orderid, (sr) => 
-//            {
-//                Toast.Instance.Show(10035);
-//            },
-//            (err) => 
-//            {
-//                Toast.Instance.Show(err);
-//            });
         }
     }
 }

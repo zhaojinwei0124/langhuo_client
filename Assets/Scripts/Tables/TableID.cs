@@ -4,14 +4,12 @@ using System.Reflection;
 using System;
 using System.Collections.Generic;
 
-public struct TableID 
+public struct TableID
 {
 
     public static string ITEMS = "item";
-    
     public static string ACTIVITY = "activity";
-
-   // public static string BASE="base";
+    public static string TYPE = "type";
 
     //add other table id here....
 
@@ -19,29 +17,30 @@ public struct TableID
 
     public static void Init()
     {
-        List<string> list=new List<string>();
+        List<string> list = new List<string>();
         foreach (FieldInfo field in typeof(TableID).GetFields())
         {
             try
             {
-                if(field.Name!="ids")
+                if (field.Name != "ids")
                 {
-                   // Debug.Log("field: "+(field.GetValue(null) as string));
+                    // Debug.Log("field: "+(field.GetValue(null) as string));
                     list.Add(field.GetValue(null) as string);
                 }
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
             }
         }
-        ids=list.ToArray();
+        ids = list.ToArray();
     }
 
     private string V;
     
-    public TableID(string aa) { V = aa; }
-    
+    public TableID(string aa)
+    {
+        V = aa;
+    }
     
     public static implicit operator string(TableID id)
     {

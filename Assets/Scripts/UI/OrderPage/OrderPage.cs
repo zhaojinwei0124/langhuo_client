@@ -2,7 +2,7 @@
 using System.Collections;
 using Network;
 using System.Collections.Generic;
-
+using GameCore;
 
 public class OrderPage : View
 {
@@ -12,6 +12,7 @@ public class OrderPage : View
 
     public GameObject m_objCount;
 
+    private List<OrderItem> items=new List<OrderItem>();
 
     public override void RefreshView()
     {
@@ -27,7 +28,7 @@ public class OrderPage : View
 
     private void RefreshList()
     {
-        List<OrderItem> items=new List<OrderItem>();
+        if(items!=null) items.Clear();
         List<NOrder> orders=GameBaseInfo.Instance.myOrders.FindAll(x=>x.state==0);
         for(int i=0;i<orders.Count;i++)
         {
@@ -58,9 +59,33 @@ public class OrderPage : View
     }
 
 
-
     private void OnAccount(GameObject go)
     {
-        Toast.Instance.Show(10010);
+        //Toast.Instance.Show(10010);
+        List<NItem> nitems=new List<NItem>();
+        for(int i=0;i<items.Count;i++)
+        {
+            for(int j=0;j<items[i].cnts.Length;j++)
+            {
+                NItem n=new NItem();
+                n.id=items[i].itemids[j];
+                n.cnt=items[i].cnts[j];
+                NItem y=nitems.Find(x=>x.id==n.id);
+                if(y!=null)
+                {
+                    y.cnt+=n.cnt;
+                }
+                else
+                {
+                    nitems.Add(n);
+                }
+            }
+        }
+        string content=string.Empty;
+        for(int i=0;i<nitems.Count;i++)
+        {
+            content+=GameBaseInfo.Instance.items.Find(x=>x.n_item.id==nitems[i].id).t_item.name+" X"+nitems[i].cnt+"\n";
+        }
+        UIHandler.Instance.Push(PageID.TEXT,new StrText(10057,string.Format(Localization.Get(10058),content)));
     }
 }

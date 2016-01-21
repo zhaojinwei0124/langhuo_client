@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameCore;
 
 public class AppLangjianPage : View {
 
@@ -19,6 +20,11 @@ public class AppLangjianPage : View {
 
     private void OnApply(GameObject go)
     {
+        if(!Util.Instance.CheckIDValid(m_id.label.text.Trim()))
+        {
+            Toast.Instance.Show(10052);
+            return;
+        }
         Toast.Instance.Show(10050);
         Close();
     }

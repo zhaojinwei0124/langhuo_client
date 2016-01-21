@@ -7,6 +7,8 @@ using Config;
 using System.Text;
 using UnityEngine;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+
 
 namespace GameCore
 {
@@ -43,6 +45,11 @@ namespace GameCore
             return lt;
         }
 
+
+        public bool CheckIDValid(string msg)
+        {
+            return Regex.IsMatch(msg, @"^\d{15}|\d{18}$",RegexOptions.IgnoreCase);
+        }
 
         /// <summary>
         /// make array or list to json string

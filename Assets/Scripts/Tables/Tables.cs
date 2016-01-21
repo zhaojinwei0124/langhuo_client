@@ -35,6 +35,7 @@ namespace Config
         public void InitAll()
         {
             if(tables==null) tables=TableID.ids;
+            Debug.Log("table ids cnt: "+tables.Length);
             if (dicTables == null) 
                 dicTables = new Dictionary<string, string>();
             dicTables.Clear();

@@ -22,6 +22,8 @@ namespace GameCore
         public static string LANGTI      =  "AppLangtiPage";
         public static string LANGJIAN    =  "AppLangjianPage";
         public static string INVITE      =  "InvitePage";
+        public static string TEXT        =  "TextPage";
+        public static string TYPE        =  "TypePage";
         //add other page id here....
 
     

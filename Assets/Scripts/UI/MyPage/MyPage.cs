@@ -77,8 +77,7 @@ public class MyPage : View
 
     private void OnNotify(GameObject go)
     {
-        Debug.Log("onnotify");
-        Toast.Instance.Show("暂未实现通知功能");
+        Toast.Instance.Show(10053);
     }
 
     private void HideAll()

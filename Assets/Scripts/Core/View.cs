@@ -7,8 +7,6 @@ using GameCore;
 public abstract class View : MonoBehaviour
 {
 
-    private List<int> panelsDepth;
-
     public UIPanel panel
     {
         get
@@ -23,6 +21,11 @@ public abstract class View : MonoBehaviour
         {
             return false;
         }
+    }
+
+    private void Init()
+    {
+
     }
 
     public virtual void RefreshView()
@@ -71,6 +74,11 @@ public abstract class View : MonoBehaviour
     public void SetDepth(int index)
     {
        // Debug.Log("index:" +index);
+        UIPanel[] panels = gameObject.GetComponentsInChildren<UIPanel>(true);
+        for(int i=0;i<panels.Length;i++)
+        {
+            panels[i].depth=panels[i].depth+10*index;
+        }
         panel.depth=10*index;
     }
 

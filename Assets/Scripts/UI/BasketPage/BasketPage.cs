@@ -56,7 +56,7 @@ public class BasketPage : View
 
     private void OnNotify(GameObject go)
     {
-        Toast.Instance.Show(Localization.Get(10010));
+        Toast.Instance.Show(Localization.Get(10053));
     }
 
     private void RefreshList()

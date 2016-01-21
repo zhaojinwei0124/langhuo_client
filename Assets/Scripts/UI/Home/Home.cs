@@ -46,4 +46,20 @@ public class Home : Single<Home>
     }
 
 
+
+
+    public bool Compare(List<HomeScrollData> item1,List<HomeScrollData> item2)
+    {
+        if(item1.Count!=item2.Count) return false;
+        for(int i=0;i<item1.Count;i++)
+        {
+            if(item1[i].item1.n_item.id!=item2[i].item1.n_item.id)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }

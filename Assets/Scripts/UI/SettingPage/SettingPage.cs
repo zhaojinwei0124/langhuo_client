@@ -41,7 +41,7 @@ public class SettingPage : View
 
     private void OnClickItem1(GameObject go)
     {
-        Debug.Log("user account");
+        Toast.Instance.Show(10010);
     }
 
     private void OnClickItem2(GameObject go)
@@ -61,11 +61,11 @@ public class SettingPage : View
 
     private void OnClickItem5(GameObject go)
     {
-       Toast.Instance.Show("help page");
+        UIHandler.Instance.Push(PageID.TEXT,new StrText(10054,10055));
     }
 
     private void OnClickItem6(GameObject go)
     {
-        Toast.Instance.Show("version page");
+        UIHandler.Instance.Push(PageID.TEXT,new StrText(10056,10057));
     }
 }
