@@ -5,13 +5,16 @@ using Config;
 public class TypeNode : MonoBehaviour
 {
     private int mIndex;
-    public UILabel m_label;
+	private int mType;
+
+	public UILabel m_label;
 
 
     public void Refresh(int index,TType type)
     {
         TType[] types = Tables.Instance.GetTable<TType[]>(TableID.TYPE);
         mIndex = index;
+		mType = type.type;
         if (m_label != null)
         {
             m_label.text = type.name;

@@ -71,6 +71,14 @@ public static class MonoUtil
         }
     }
 
+
+	public static void SetChild(this Transform transform,int count,Transform child)
+	{
+		child.gameObject.SetActive (true);
+		SetChildCount (transform, count, child);
+		child.gameObject.SetActive (false);
+	}
+
     public static void SetChild<T>(this Transform transform, int count, Transform child, System.Action<int, T> onRefreshChild) where T : Component
     {
         if (transform != null && child != null)
@@ -84,9 +92,15 @@ public static class MonoUtil
                 for (int i = 0; i < count; i++)
                 {
                     child = transform.GetChild(i);
-                    if (child != null)
-                        tchild = child.GetComponent<T>();
-                    onRefreshChild(i, tchild);
+                    if (child != null) 
+					{
+						tchild = child.GetComponent<T>();
+						if(tchild==null)
+						{
+							tchild.gameObject.AddComponent<T>();
+						}
+						onRefreshChild(i, tchild);
+					}
                 }
             }
         }

@@ -4,17 +4,26 @@ using Config;
 
 public class TypePage : View
 {
+	public Transform m_child;
 
-    public TypeNode[] m_types;
+	public Transform m_parent;
+
+	public UIGrid m_grid;
+
 
     public override void RefreshView()
     {
         base.RefreshView();
         TType[] types = Tables.Instance.GetTable<TType[]>(TableID.TYPE);
-        for(int i=0;i<m_types.Length;i++)
-        {
-            m_types[i].Refresh(i,types[i]);
-        }
+
+		m_parent.SetChild(types.Length,m_child);
+
+		m_parent.SetChild<TypeNode> (types.Length, m_child, (index,node) =>
+		{
+			node.Refresh(index,types[index]);
+		});
+
+		m_grid.repositionNow = true;
     }
 
     public void OnItemClick(int index)
