@@ -103,7 +103,11 @@ namespace ResourceLoad
             dicLoadingReq.Add(name, www);
             while (www.isDone == false)
                 yield return null;
-
+            if(!string.IsNullOrEmpty(www.error))
+            {
+                Debug.Log("www error: "+name);
+                yield break;
+            }
             AssetBundleRequest req = www.assetBundle.LoadAsync(GetAssetName(name), type);
             while (req.isDone == false) yield return null;
 

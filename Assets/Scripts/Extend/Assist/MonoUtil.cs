@@ -92,6 +92,7 @@ public static class MonoUtil
                 for (int i = 0; i < count; i++)
                 {
                     child = transform.GetChild(i);
+                    child.name="item"+i;
                     if (child != null) 
 					{
 						tchild = child.GetComponent<T>();
