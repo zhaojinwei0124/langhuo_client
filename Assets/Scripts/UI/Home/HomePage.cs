@@ -44,16 +44,17 @@ public class HomePage : View
     {
         List<ItemNode> items = Home.Instance.items;
         List<HomeScrollData> datas = new List<HomeScrollData>();
+
+        int filter=Home.Instance.type;
+        if(filter>0)
+            items=items.FindAll(x=>x.t_item.type==filter);
+
         for (int i=0; i<items.Count/2; i++)
         {
             HomeScrollData data = new HomeScrollData(items [2 * i], items.Count - 1 >= 2 * i + 1 ? items [2 * i + 1] : null);
             datas.Add(data);
         }
-        for (int i=0; i<2; i++)
-        {
-            HomeScrollData data = new HomeScrollData(items [0], items [1]);
-            datas.Add(data);
-        }
+    
         if (datas != null && datas.Count > 0)
         {
             if (last_data == null || !Home.Instance.Compare(last_data, datas))

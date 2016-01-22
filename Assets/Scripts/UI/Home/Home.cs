@@ -24,6 +24,9 @@ public class Home : Single<Home>
 
     public List<ItemNode> items;
 
+
+    public int type = 0;
+
     public void Set(NItem[] _items)
     {
         if (_items == null)

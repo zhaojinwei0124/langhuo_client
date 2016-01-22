@@ -26,9 +26,10 @@ public class TypePage : View
 		m_grid.repositionNow = true;
     }
 
-    public void OnItemClick(int index)
+    public void OnItemClick(int type)
     {
-        Debug.Log("index: " + index);
+        Debug.Log("index: " + type);
+        Home.Instance.type=type;
         Close();
     }
 
