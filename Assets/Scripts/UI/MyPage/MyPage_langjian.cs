@@ -9,7 +9,6 @@ public class MyPage_langjian : MonoSingle<MyPage_langjian>
     public UIPoolList m_pool;
     public GameObject m_objAccnt;
     public GameObject m_objOK;
-
     private  List<LangtiItem> langjis = new List<LangtiItem>();
 
     public void Refresh()
@@ -36,7 +35,7 @@ public class MyPage_langjian : MonoSingle<MyPage_langjian>
                     it.addr = item.addr;
                     it.name = item.name;
                     it.state = item.state;
-                    it.val=item.val;
+                    it.val = item.val;
                     it.select = false;
                     langjis.Add(it);
                 }
@@ -52,37 +51,35 @@ public class MyPage_langjian : MonoSingle<MyPage_langjian>
 
     private void OnAccnt(GameObject go)
     {
-        if (GameBaseInfo.Instance.othOrders != null && GameBaseInfo.Instance.othOrders.Count>0)
+        if (GameBaseInfo.Instance.othOrders != null && GameBaseInfo.Instance.othOrders.Count > 0)
         {
             List<NItem> list = new List<NItem>();
-            foreach(var it in GameBaseInfo.Instance.othOrders)
+            foreach (var it in GameBaseInfo.Instance.othOrders)
             {
-                int[] items=it.GetItems();
-                int[] cnts=it.GetCnts();
-                for(int i=0;i<items.Length;i++)
+                int[] items = it.GetItems();
+                int[] cnts = it.GetCnts();
+                for (int i=0; i<items.Length; i++)
                 {
-                    NItem ni=new NItem();
-                    ni.id=items[i];
-                    ni.cnt=cnts[i];
-                    NItem y=list.Find(x=>x.id==ni.id);
-                    if(y!=null)
+                    NItem ni = new NItem();
+                    ni.id = items [i];
+                    ni.cnt = cnts [i];
+                    NItem y = list.Find(x => x.id == ni.id);
+                    if (y != null)
                     {
-                        y.cnt+=ni.cnt;
-                    }
-                    else
+                        y.cnt += ni.cnt;
+                    } else
                     {
                         list.Add(ni);
                     }
                 }
             }
-            string content=string.Empty;
-            for(int i=0;i<list.Count;i++)
+            string content = string.Empty;
+            for (int i=0; i<list.Count; i++)
             {
-                content+=GameBaseInfo.Instance.items.Find(x=>x.n_item.id==list[i].id).t_item.name+" X"+list[i].cnt+"\n";
+                content += GameBaseInfo.Instance.items.Find(x => x.n_item.id == list [i].id).t_item.name + " X" + list [i].cnt + "\n";
             }
-            UIHandler.Instance.Push(PageID.TEXT,new StrText(10057,string.Format(Localization.Get(10058),content)));
-        }
-        else
+            UIHandler.Instance.Push(PageID.TEXT, new StrText(10057, string.Format(Localization.Get(10058), content)));
+        } else
         {
             Toast.Instance.Show(10059);
         }
@@ -90,6 +87,21 @@ public class MyPage_langjian : MonoSingle<MyPage_langjian>
 
     private void OnConfirm(GameObject go)
     {
-        Toast.Instance.Show(10010);
+        List<LangtiItem> items = langjis.FindAll(x => x.select == true);
+        if (items != null && items.Count > 0)
+        {
+            NetCommand.Instance.CompleteOrders(items.ConvertAll(x=>x.orderid).ToArray(), (res) =>
+            {
+                Debug.Log(res);
+                Toast.Instance.Show(10046);
+                RefreshList();
+            });
+        } else
+        {
+            Debug.Log("items is null: " + (items == null));
+            if (items != null)
+                Debug.Log("select cnt: " + items.Count);
+            Toast.Instance.Show(10062);
+        }
     }
 }

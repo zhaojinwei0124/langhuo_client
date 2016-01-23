@@ -59,7 +59,7 @@ public class LangtiNode : UIPoolListNode
             Toast.Instance.Show(10042);
         else
         {
-            NetCommand.Instance.UpdateOder(Data.orderid, GameBaseInfo.Instance.user.tel, (res) =>
+            NetCommand.Instance.UpdateOder(new int[]{ Data.orderid}, GameBaseInfo.Instance.user.tel, (res) =>
             {
                 Toast.Instance.Show(10043);
                 NGUITools.FindInParents<MyPage_langti>(gameObject).Refresh();

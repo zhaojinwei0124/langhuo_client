@@ -60,10 +60,10 @@ namespace Network
         }
 
         //confirm order state
-        public void UpdateOder(int orderid, long accept, MsgCallback msgCallback,ErrCallback errCallback=null)
+        public void UpdateOder(int[] orderids, long accept, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("orderid", orderid.ToString());
+            param.Add("orderids", GameCore.Util.Instance.SerializeArray(orderids));
             param.Add("accept", accept.ToString());
             HttpPost("order/confirm", param, msgCallback, errCallback);
         }
@@ -74,6 +74,14 @@ namespace Network
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("orderid", orderid.ToString());
             HttpPost("order/complete", param, msgCallback, errCallback);
+        }
+
+        public void CompleteOrders(int[] orderids, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            string ids=GameCore.Util.Instance.SerializeArray(orderids);
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("orderids", ids);
+            HttpPost("order/completes", param, msgCallback, errCallback);
         }
 
         //get all orders for self
