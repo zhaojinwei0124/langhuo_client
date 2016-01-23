@@ -8,6 +8,8 @@ namespace Network
 
         public int state;
 
+        public int val;
+
         public string items;
 
         public string cnt;

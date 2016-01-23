@@ -66,6 +66,6 @@ public class SettingPage : View
 
     private void OnClickItem6(GameObject go)
     {
-        UIHandler.Instance.Push(PageID.TEXT,new StrText(10056,10057));
+        UIHandler.Instance.Push(PageID.TEXT,new StrText(10056,10060));
     }
 }

@@ -24,10 +24,13 @@ namespace Network
     {
         public NUser user{ get; set; }
 
+        //home
         public List<ItemNode> items = new List<ItemNode>();
 
+        //self
         public List<NOrder> myOrders=new List<NOrder>();
 
+        //langjian langti
         public List<NOrder> othOrders=new List<NOrder>();
 
         public string encrypt{ get; set; }

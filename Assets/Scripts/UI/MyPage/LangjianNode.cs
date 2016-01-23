@@ -10,8 +10,9 @@ public class LangjianNode : UIPoolListNode
 
     public UILabel m_lblTime;
 
-    public GameObject m_objOK;
+    public UILabel m_lblOK;
 
+    private bool m_selected=false;
 
     public LangtiItem Data
     {
@@ -21,12 +22,27 @@ public class LangjianNode : UIPoolListNode
         }
     }
 
+    public void SetSelect(bool select)
+    {
+        m_selected=select;
+        m_lblName.color = select ? Color.red : Color.black;
+        m_lblOK.color = select ? Color.red : Color.black;
+        m_lblTime.color = select ? Color.red : Color.black;
+    }
+
+    void OnClick()
+    {
+        Data.select=!m_selected;
+        SetSelect(!m_selected);
+    }
 
     public override void Refresh()
     {
         base.Refresh();
 
-        UIEventListener.Get(m_objOK).onClick=OnCertain;
+        SetSelect(Data.select);
+
+        UIEventListener.Get(m_lblOK.gameObject).onClick=OnCertain;
 
         m_lblName.text=Data.name;
 

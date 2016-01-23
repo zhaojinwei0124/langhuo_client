@@ -92,5 +92,12 @@ namespace Network
             HttpPost("order/get", param, msgCallback, errCallback);
         }
 
+        public void SortOders(string orderid, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("orderid", orderid.ToString());
+            HttpPost("order/sort", param, msgCallback, errCallback);
+        }
+
     }
 }
