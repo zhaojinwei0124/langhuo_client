@@ -70,7 +70,19 @@ public static class MonoUtil
             }
         }
     }
-
+    public static List<Transform> SetChildrenGet(this Transform transform, int count, Transform child, System.Action<int, Transform> onRefreshChild)
+    {
+        List<Transform> children = new List<Transform>();
+        if (transform != null && child != null)
+        {
+            transform.SetChild<Transform>(count, child, (idx, childTransform) =>
+            {
+                children.Add(transform.GetChild(idx));
+                if (onRefreshChild != null) onRefreshChild(idx, childTransform);
+            });
+        }
+        return children;
+    }
 
 	public static void SetChild(this Transform transform,int count,Transform child)
 	{
@@ -79,8 +91,9 @@ public static class MonoUtil
 		child.gameObject.SetActive (false);
 	}
 
-    public static void SetChild<T>(this Transform transform, int count, Transform child, System.Action<int, T> onRefreshChild) where T : Component
+    public static List<T> SetChild<T>(this Transform transform, int count, Transform child, System.Action<int, T> onRefreshChild) where T : Component
     {
+        List<T> ts = new List<T>();
         if (transform != null && child != null)
         {
             child.gameObject.SetActive(true);
@@ -92,20 +105,20 @@ public static class MonoUtil
                 for (int i = 0; i < count; i++)
                 {
                     child = transform.GetChild(i);
-                    child.name="item"+i;
-                    if (child != null) 
-					{
-						tchild = child.GetComponent<T>();
-						if(tchild==null)
-						{
-							tchild.gameObject.AddComponent<T>();
-						}
-						onRefreshChild(i, tchild);
-					}
+                    if (child != null)
+                    {
+                        tchild = child.GetComponent<T>();
+                        if (tchild != null) ts.Add(tchild);
+                    }
+                    onRefreshChild(i, tchild);
+                    tchild = null;
                 }
             }
         }
+        return ts;
     }
+
+
 
     public static void SetChildColor(this Transform transform, Color color)
     {
