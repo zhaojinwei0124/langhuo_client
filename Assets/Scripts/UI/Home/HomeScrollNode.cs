@@ -41,24 +41,27 @@ public class HomeScrollNode : UIPoolListNode
             m_textures [0].mainTexture = obj as Texture;
         });
         m_lbldesc [0].text = "[ff0000]"+data.item1.t_item.name+"[-] "+ data.item1.t_item.description;
-        m_lblpprice [0].text = "￥" + data.item1.n_item.pprice;
-        m_lblnprice [0].text = "￥" + data.item1.n_item.nprice + "元/份";
+        m_lblpprice [0].text = string.Format(Localization.Get(10063), data.item1.n_item.pprice);
+        m_lblnprice [0].text =  string.Format(Localization.Get(10064), data.item1.n_item.nprice);
         UIEventListener.Get(m_textures [0].gameObject).onClick = OnItem1Click;
 
-        if (data != null)
+        if (data.item2 != null)
         {
-            m_textures[1].transform.parent.gameObject.SetActive(true);
             TextureHandler.Instance.LoadItemTexture(data.item2.t_item.img, (obj) =>
             {
                 m_textures [1].mainTexture = obj as Texture;
             });
             m_lbldesc [1].text = "[ff0000]"+data.item2.t_item.name+"[-] "+ data.item2.t_item.description;
-            m_lblpprice [1].text = "￥" + data.item2.n_item.pprice;
-            m_lblnprice [1].text = "￥" + data.item2.n_item.nprice + "元/份";
+            m_lblpprice [1].text = string.Format(Localization.Get(10063), data.item2.n_item.pprice);
+            m_lblnprice [1].text = string.Format(Localization.Get(10064), data.item2.n_item.nprice);
             UIEventListener.Get(m_textures [1].gameObject).onClick = OnItem2Click;
         } else
         {
-            m_textures[1].transform.gameObject.SetActive(false);
+            m_textures[1].mainTexture=null;
+            m_lbldesc [1].text = string.Empty;
+            m_lblpprice [1].text = string.Empty;
+            m_lblnprice [1].text =  string.Empty;
+            UIEventListener.Get(m_textures [1].gameObject).onClick = null;
         }
     }
 

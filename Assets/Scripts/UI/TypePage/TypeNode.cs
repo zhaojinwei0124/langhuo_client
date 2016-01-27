@@ -26,7 +26,6 @@ public class TypeNode : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("index: " + mIndex);
         TypePage page = NGUITools.FindInParents<TypePage>(gameObject);
         page.OnItemClick(mType);
     }

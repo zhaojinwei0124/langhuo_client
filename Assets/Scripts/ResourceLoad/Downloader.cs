@@ -93,11 +93,11 @@ namespace ResourceLoad
         private IEnumerator AsyncLoadCoroutine(string name, System.Type type)
         {
             string url = ASSET_URL + name + ".assetbundle";
-            int verNum = 3;
+            int verNum = Config.Tables.Instance.CheckVersion(name);
 
-         //   Debug.Log("WWW AsyncLoad name =" + name + " versionNum = " + verNum);
+           // Debug.Log("AsyncLoad " + name + " versionNum = " + verNum);
             if (Caching.IsVersionCached(url, verNum) == false)
-                Debug.Log("Version Is not Cached, which will download from net!");
+                Debug.Log("AsyncLoad Is not Cached, "+name+" will download from net!");
 
             WWW www = WWW.LoadFromCacheOrDownload(url, verNum);
             dicLoadingReq.Add(name, www);

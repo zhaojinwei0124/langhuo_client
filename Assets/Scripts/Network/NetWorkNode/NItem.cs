@@ -14,9 +14,7 @@ namespace Network
     public class NItem
     {
         public int id;
-        
-        public int type;
-        
+
         public int pprice;
         
         public int cnt;

@@ -49,7 +49,7 @@ public class HomePage : View
         if(filter>0)
             items=items.FindAll(x=>x.t_item.type==filter);
 
-        for (int i=0; i<items.Count/2; i++)
+        for (int i=0; i<(items.Count+1)/2; i++)
         {
             HomeScrollData data = new HomeScrollData(items [2 * i], items.Count - 1 >= 2 * i + 1 ? items [2 * i + 1] : null);
             datas.Add(data);
@@ -64,6 +64,7 @@ public class HomePage : View
             }
         } else
         {
+            Toast.Instance.Show(10065);
             Debug.LogError("datas is null!");
         }
     }

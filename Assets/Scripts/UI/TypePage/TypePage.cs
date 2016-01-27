@@ -28,7 +28,7 @@ public class TypePage : View
 
     public void OnItemClick(int type)
     {
-        Debug.Log("index: " + type);
+     //   Debug.Log("index: " + type);
         Home.Instance.type=type;
         Close();
     }
