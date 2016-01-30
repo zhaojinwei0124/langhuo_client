@@ -25,7 +25,13 @@ public class BasePage : View
         if (GameBaseInfo.Instance.user != null)
         {
             RefreshUI();
-        } else
+        } 
+        else if(!PlayerPrefs.HasKey(PlayerprefID.USERID))
+        {
+            Close();
+            UIHandler.Instance.Push(PageID.Regist);
+        }
+        else
         {
             NetCommand.Instance.LoginUser(PlayerPrefs.GetString(PlayerprefID.USERID), (string res) =>
             {

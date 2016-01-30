@@ -53,11 +53,6 @@ public class MyPage : View
         NetCommand.Instance.SearchOders(GameBaseInfo.Instance.user.tel, (string res) =>
         {
             GameBaseInfo.Instance.myOrders = Util.Instance.Get<List<NOrder>>(res);
-//            Debug.Log("order cnt: " + GameBaseInfo.Instance.myOrders.Count);
-//            foreach(var item in GameBaseInfo.Instance.orders[0].GetItems())
-//            {
-//                Debug.Log("item id: "+item);
-//            }
         }, (string err) =>
         {
             Toast.Instance.Show(10026);

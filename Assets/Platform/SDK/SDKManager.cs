@@ -9,13 +9,13 @@ public class SDKManager:Single<SDKManager>
     public string Contacts(string msg)
     {
 #if UNITY_EDITOR
-        return "Test1:123456789,Test1:15216768456,Test3:13166370786";
+        return "Test1:15565757878,Test1:15216768456,Test3:13166370786";
 #endif
 
 #if UNITY_ANDROID
-      return  SDKAndroid.Contacts(msg);
+        return  SDKAndroid.Contacts(msg).Replace("-","");
 #elif UNITY_IPHONE
-       return SDKIOS.Contacts(msg);
+        return SDKIOS.Contacts(msg).Replace("-","");
 #endif
     }
 

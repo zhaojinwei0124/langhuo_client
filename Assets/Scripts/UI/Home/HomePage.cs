@@ -38,11 +38,10 @@ public class HomePage : View
 
     private void RefreshGPS()
     {
-        int m_base = PlayerPrefs.GetInt(PlayerprefID.BASE, BASECODE);
-        if (m_base == BASECODE)
+        if (!PlayerPrefs.HasKey(PlayerprefID.BASE))
         {
             m_lblCity.text=GameBaseInfo.Instance.address.city;
-            m_lbllDistric.text = GameBaseInfo.Instance.address.district + Localization.Get(10024);
+            m_lbllDistric.text = string.Format(Localization.Get(10024),GameBaseInfo.Instance.address.district);
         }
     }
 
@@ -57,7 +56,7 @@ public class HomePage : View
             m_base = GameBaseInfo.Instance.user.bases;
             PlayerPrefs.SetInt(PlayerprefID.BASE,m_base);
         }
-        if(m_base!=BASECODE)
+        if(m_base != BASECODE)
         {
             TBases _base = Tables.Instance.GetTable<List<TBases>>(TableID.BASE).Find(x => x.id == m_base);
             m_lbllDistric.text = _base.district + _base.name;

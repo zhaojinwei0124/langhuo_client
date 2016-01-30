@@ -45,14 +45,14 @@ public class BasketPage : View
         UIEventListener.Get(m_objNotify).onClick=OnNotify;
         UIEventListener.Get(m_lblChange.gameObject).onClick=OnChange;
         RefreshLocal();
+        RefreshGPS();
     }
 
     private void RefreshGPS()
     {
-        int m_base = PlayerPrefs.GetInt(PlayerprefID.BASE, BASECODE);
-        if (m_base == BASECODE)
+        if (!PlayerPrefs.HasKey(PlayerprefID.BASE))
         {
-            m_lblLocal.text =GameBaseInfo.Instance.address.city+" "+ GameBaseInfo.Instance.address.district + Localization.Get(10024);
+            m_lblLocal.text =GameBaseInfo.Instance.address.city+" "+ GameBaseInfo.Instance.address.district;
         }
     }
 

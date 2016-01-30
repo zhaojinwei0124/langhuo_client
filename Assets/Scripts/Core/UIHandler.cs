@@ -97,6 +97,7 @@ namespace GameCore
 
         public PageInfo Push(PageID id, object arg,System.Action onClose)
         {
+            Debug.Log("push: "+id);
             Object obj = Resources.Load("Prefabs/GamePage/" + id);
             GameObject go = Instantiate(obj);
             PageInfo info = new PageInfo();
@@ -113,6 +114,7 @@ namespace GameCore
             {
                 UIManager.Instance.ShowFront(true);
             }
+            obj=null;
             return info;
         }
 

@@ -11,6 +11,14 @@ using System.Text.RegularExpressions;
 
 namespace GameCore
 {
+
+    public class CallBackItem
+    {
+        public string key;
+        public string value;
+    }
+
+
     class Util:Single<Util>
     {
         /// <summary>
@@ -39,6 +47,22 @@ namespace GameCore
                 FriendItem node=new FriendItem();
                 node.phone = n [1];
                 node.name = n [0];
+                node.orderid= "0";
+                lt.Add(node);
+            }
+            return lt;
+        }
+
+        public List<CallBackItem> ParseCallback(string msg)
+        {
+            List<CallBackItem> lt = new List<CallBackItem>();
+            string[] nodes = msg.Split(',');
+            foreach (var item in nodes)
+            {
+                string[] n = item.Split(':');
+                CallBackItem node=new CallBackItem();
+                node.value = n [1];
+                node.key = n [0];
                 lt.Add(node);
             }
             return lt;
@@ -126,8 +150,6 @@ namespace GameCore
                 SetLayer(child, layerName);
             }
         }
-
-
 
     }
 }
