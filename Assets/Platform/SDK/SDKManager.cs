@@ -23,6 +23,7 @@ public class SDKManager:Single<SDKManager>
     {
 #if UNITY_EDITOR
         Debug.Log("SDK WeixinMessageShare Called!");
+        return;
 #endif
 
 #if UNITY_ANDROID
@@ -33,5 +34,18 @@ public class SDKManager:Single<SDKManager>
     }
 
 
+    public void WeixinWebShare(string msg)
+    {
+        #if UNITY_EDITOR
+        Debug.Log("SDK WeixinWebShare Called!");
+        return;
+        #endif
+        
+        #if UNITY_ANDROID
+        SDKAndroid.WeiXinWebShare(msg);
+        #elif UNITY_IPHONE
+        SDKIOS.WeiXinShare(msg);
+        #endif
+    }
 
 }

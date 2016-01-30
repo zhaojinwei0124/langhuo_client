@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameCore;
+using Network;
+
 
 public abstract class View : MonoBehaviour
 {
@@ -30,10 +32,18 @@ public abstract class View : MonoBehaviour
 
     public virtual void RefreshView()
     {
+        if(!GameServer.CheckConnection()) 
+        {
+            Toast.Instance.Show(10067);
+        }
     }
 
     public virtual void Refresh(object data)
     {
+        if(!GameServer.CheckConnection()) 
+        {
+            Toast.Instance.Show(10067);
+        }
     }
 
     UIPanel CreateFullScreenCollider()

@@ -28,6 +28,10 @@ public class AccountPage : View
     private string mUserid;
     private PickType pickType = PickType.SELF;
 
+
+    public static bool showOrderBtn=true;
+
+
     public override void RefreshView()
     {
         base.RefreshView();
@@ -35,8 +39,15 @@ public class AccountPage : View
         UIEventListener.Get(m_objRegist).onClick = OnCommit;
         UIEventListener.Get(m_head.gameObject).onClick = OnTextClick;
         RefreshUI();
+        ChangeAccountMode();
     }
 
+
+    private void ChangeAccountMode()
+    {
+        m_objRegist.SetActive(showOrderBtn);
+        m_paycnt.transform.parent.gameObject.SetActive(showOrderBtn);
+    }
 
     public void OnPopChange()
     {

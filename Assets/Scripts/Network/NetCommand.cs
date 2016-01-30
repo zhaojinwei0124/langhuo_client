@@ -36,6 +36,14 @@ namespace Network
             param.Add("tel", userid);
             HttpPost("user/login", param, msgCallback, errCallback);
         }
+
+        
+        public void SelectFriends(List<string> friends, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("friends", GameCore.Util.Instance.SerializeArray(friends));
+            HttpPost("user/friend", param, msgCallback, errCallback);
+        }
   
         //get all items
         public void GetItems(MsgCallback msgCallback, ErrCallback errCallback=null)
@@ -106,6 +114,8 @@ namespace Network
             param.Add("orderid", orderid.ToString());
             HttpPost("order/sort", param, msgCallback, errCallback);
         }
+
+
 
     }
 }

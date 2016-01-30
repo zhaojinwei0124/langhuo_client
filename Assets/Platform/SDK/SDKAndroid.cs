@@ -10,7 +10,18 @@ public class SDKAndroid
         {
             using (AndroidJavaObject curActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
             {
-                curActivity.Call("WeixinMessageShare", "");
+                curActivity.Call("WeixinMessageShare", message);
+            }
+        }
+    }
+
+    public static void WeiXinWebShare(string message)
+    {
+        using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        {
+            using (AndroidJavaObject curActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+            {
+                curActivity.Call("WeixinShareWebPageToFriend", message);
             }
         }
     }

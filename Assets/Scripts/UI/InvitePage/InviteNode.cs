@@ -30,6 +30,7 @@ public class InviteNode : UIPoolListNode
     
     private void Show(GameObject go)
     {
-        Toast.Instance.Show(10051);
+       // Toast.Instance.Show(10051);
+        SDKManager.Instance.WeixinMessageShare("");
     }
 }

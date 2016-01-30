@@ -66,6 +66,7 @@ public class OrderNode : UIPoolListNode
     {
         if (Data.orderid == 0)
         {
+            AccountPage.showOrderBtn=true;
             UIHandler.Instance.Push(PageID.ACCOUNT);
         } else
         {

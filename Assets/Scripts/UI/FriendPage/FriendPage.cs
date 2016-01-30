@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using GameCore;
+using Network;
 
 public class FriendPage : View
 {
@@ -18,9 +19,26 @@ public class FriendPage : View
             if (!string.IsNullOrEmpty(msg))
             {
                 List<FriendItem> items = Util.Instance.ParseContacts(msg);
-                m_pool.Initialize(items.ToArray());
+                CulPriends(items);
             }
         }
+    }
+
+    private void CulPriends(List<FriendItem> items)
+    {
+        List<string> friends = items.ConvertAll<string>(x => x.phone);
+        NetCommand.Instance.SelectFriends(friends, (str) =>
+        {
+            if (!string.IsNullOrEmpty(str))
+            {
+                List<FriendItem> rps = Util.Instance.ParseContacts(str);
+                m_pool.Initialize(rps.ToArray());
+            }
+            else
+            {
+                Toast.Instance.Show(10066);
+            }
+        });
     }
 
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+
 
 namespace Network
 {
@@ -24,6 +26,7 @@ namespace Network
 
         public int[] GetItems()
         {
+            Debug.Log("items: "+items);
             return GameCore.Util.Instance.Get<int[]>(items);
         }
 

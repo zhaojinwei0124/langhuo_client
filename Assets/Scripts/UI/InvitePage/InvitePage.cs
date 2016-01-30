@@ -5,7 +5,9 @@ using GameCore;
 public class InvitePage : View
 {
 
-    public UIPoolList m_pool;
+    public UILabel m_lblInvit;
+    public UILabel m_lblShare;
+
     string msg = string.Empty;
     
     public override void RefreshView()
@@ -15,11 +17,24 @@ public class InvitePage : View
         {
             msg = SDKManager.Instance.Contacts("");
             Debug.Log("RefreshView msg:  " + msg);
-            if (!string.IsNullOrEmpty(msg))
-            {
-                List<FriendItem> items = Util.Instance.ParseContacts(msg);
-                m_pool.Initialize(items.ToArray());
-            }
+
         }
+
+        UIEventListener.Get(m_lblInvit.gameObject).onClick=OnInvite;
+        UIEventListener.Get(m_lblShare.gameObject).onClick=OnShare;
+    }
+
+
+
+
+    private void OnInvite(GameObject go)
+    {
+        SDKManager.Instance.WeixinMessageShare("");
+    }
+
+
+    private void OnShare(GameObject go)
+    {
+        SDKManager.Instance.WeixinWebShare("");
     }
 }

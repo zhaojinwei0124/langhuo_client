@@ -17,6 +17,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     void Start()
     {
         Debug.Log("Game engine start.");
+        if(!Check()) return;
         TableID.Init(); 
         GameBaseInfo.Instance.Init();
         UIHandler.Instance.Init();
@@ -26,6 +27,17 @@ public sealed class GameEngine : MonoSingle<GameEngine>
             LocationManager.Instance.Init();
         });
        
+    }
+
+
+    bool Check()
+    {
+        if(!GameServer.CheckConnection()) 
+        {
+            Toast.Instance.Show(10067);
+            return false;
+        }
+        return true;
     }
 
     void Update()

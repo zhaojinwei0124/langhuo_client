@@ -91,6 +91,7 @@ public class BasketPage : View
         }
         else
         {
+            AccountPage.showOrderBtn=true;
             UIHandler.Instance.Push(PageID.ACCOUNT);
         }
     }

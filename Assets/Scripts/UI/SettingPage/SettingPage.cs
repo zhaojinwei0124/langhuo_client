@@ -36,6 +36,7 @@ public class SettingPage : View
     private void OnClickItem0(GameObject go)
     {
         Debug.Log("user account");
+        AccountPage.showOrderBtn=false;
         UIHandler.Instance.Push(PageID.ACCOUNT);
     }
 
