@@ -13,6 +13,10 @@ public class SDKIOS
     public static extern void WeiXinShare(string message);
 
     [DllImport("__Internal")]
+    public static extern void WeiXinShareToFriend(string message);
+
+
+    [DllImport("__Internal")]
     public static extern string Contacts(string message);
 
 

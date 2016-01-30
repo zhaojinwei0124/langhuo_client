@@ -9,7 +9,7 @@ public class SDKManager:Single<SDKManager>
     public string Contacts(string msg)
     {
 #if UNITY_EDITOR
-        return "SDK Contacts:123456789";
+        return "Test1:123456789,Test1:15216768456,Test3:13166370786";
 #endif
 
 #if UNITY_ANDROID
@@ -44,7 +44,7 @@ public class SDKManager:Single<SDKManager>
         #if UNITY_ANDROID
         SDKAndroid.WeiXinWebShare(msg);
         #elif UNITY_IPHONE
-        SDKIOS.WeiXinShare(msg);
+        SDKIOS.WeiXinShareToFriend(msg);
         #endif
     }
 
