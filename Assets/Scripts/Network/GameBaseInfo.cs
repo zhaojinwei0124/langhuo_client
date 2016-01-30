@@ -35,7 +35,9 @@ namespace Network
 
         public string encrypt{ get; set; }
 
+        //gps localization
         public Address address;
+
 
         public struct BuyNode
         {

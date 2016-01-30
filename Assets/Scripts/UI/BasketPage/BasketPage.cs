@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Network;
 using GameCore;
 using Platform;
-
+using Config;
 
 public class BasketPage : View
 {
@@ -21,37 +21,63 @@ public class BasketPage : View
 
     public GameObject m_objGo;
 
+    const int BASECODE = 20000;
+
+
     public override void RefreshView()
     {
         base.RefreshView();
         RefreshTitle();
         RefreshList();
         RefreshAccount();
+        RefreshLocal();
     }
 
     protected override void Close()
     {
-        LocationManager.Instance.locationHandler-=RefreshLocal;
+        LocationManager.Instance.locationHandler-=RefreshGPS;
         base.Close();
     }
 
     private void RefreshTitle()
     {
-        LocationManager.Instance.locationHandler+=RefreshLocal;
+        LocationManager.Instance.locationHandler+=RefreshGPS;
         UIEventListener.Get(m_objNotify).onClick=OnNotify;
         UIEventListener.Get(m_lblChange.gameObject).onClick=OnChange;
         RefreshLocal();
     }
 
+    private void RefreshGPS()
+    {
+        int m_base = PlayerPrefs.GetInt(PlayerprefID.BASE, BASECODE);
+        if (m_base == BASECODE)
+        {
+            m_lblLocal.text =GameBaseInfo.Instance.address.city+" "+ GameBaseInfo.Instance.address.district + Localization.Get(10024);
+        }
+    }
 
     private void RefreshLocal()
     {
-        m_lblLocal.text=GameBaseInfo.Instance.address.city+" "+GameBaseInfo.Instance.address.district+Localization.Get(10024);
+        int m_base =BASECODE;
+        if (GameBaseInfo.Instance.user == null)
+        {
+            m_base = PlayerPrefs.GetInt(PlayerprefID.BASE, BASECODE);
+        } else
+        {
+            m_base = GameBaseInfo.Instance.user.bases;
+            PlayerPrefs.SetInt(PlayerprefID.BASE,m_base);
+        }
+        if(m_base!=BASECODE)
+        {
+            TBases _base = Tables.Instance.GetTable<List<TBases>>(TableID.BASE).Find(x => x.id == m_base);
+            m_lblLocal.text = _base.district + _base.name;
+        }
     }
 
     private void OnChange(GameObject go)
     {
-        Toast.Instance.Show(Localization.Get(10010));
+       // Toast.Instance.Show(Localization.Get(10010));
+        UIHandler.Instance.Push(PageID.BASE);
     }
 
     private void OnNotify(GameObject go)

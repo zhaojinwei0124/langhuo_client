@@ -9,7 +9,6 @@ using UnityEngine;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
-
 namespace GameCore
 {
     class Util:Single<Util>
@@ -127,6 +126,8 @@ namespace GameCore
                 SetLayer(child, layerName);
             }
         }
+
+
 
     }
 }

@@ -55,7 +55,7 @@ namespace Platform
                 yield break;
             }
             // LocationService.Start() 启动位置服务的更新,最后一个位置坐标会被使用
-            Input.location.Start(10.0f, 10.0f);
+            Input.location.Start(50.0f, 50.0f);
 
             int maxWait = 20;
             while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)

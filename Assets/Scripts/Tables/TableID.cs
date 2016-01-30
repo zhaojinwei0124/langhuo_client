@@ -7,9 +7,10 @@ using System.Collections.Generic;
 public struct TableID
 {
 
-    public static string ITEMS = "item";
+    public static string ITEMS    = "item";
     public static string ACTIVITY = "activity";
-    public static string TYPE = "type";
+    public static string TYPE     = "type";
+    public static string BASE     = "bases";
 
     //add other table id here....
 

@@ -24,6 +24,8 @@ namespace Network
         public int balance;
 
         public int type;
+
+        public int bases;
     
     }
 }

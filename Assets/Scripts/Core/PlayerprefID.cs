@@ -8,6 +8,7 @@ namespace GameCore
         public static string USERID      =  "userid";
         public static string BUYLIST     =  "buylist";
         public static string HEADICO     =  "headicon";
+        public static string BASE        =  "basecode";
         //add other page id here....
         
         

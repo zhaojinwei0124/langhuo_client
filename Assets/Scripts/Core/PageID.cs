@@ -24,6 +24,7 @@ namespace GameCore
         public static string INVITE      =  "InvitePage";
         public static string TEXT        =  "TextPage";
         public static string TYPE        =  "TypePage";
+        public static string BASE        =  "BasePage";
         //add other page id here....
 
     

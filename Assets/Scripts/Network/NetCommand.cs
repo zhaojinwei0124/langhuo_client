@@ -44,6 +44,14 @@ namespace Network
             param.Add("friends", GameCore.Util.Instance.SerializeArray(friends));
             HttpPost("user/friend", param, msgCallback, errCallback);
         }
+
+        public void UpdateBase(int bases, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
+            param.Add("ba", bases.ToString());
+            HttpPost("user/base", param, msgCallback, errCallback);
+        }
   
         //get all items
         public void GetItems(MsgCallback msgCallback, ErrCallback errCallback=null)
