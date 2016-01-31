@@ -77,6 +77,5 @@ public class FriendNode : UIPoolListNode
                 Toast.Instance.Show(10051);
             });
         } 
-            }
     }
 }
