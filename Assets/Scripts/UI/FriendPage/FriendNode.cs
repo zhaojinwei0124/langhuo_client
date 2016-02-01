@@ -86,10 +86,10 @@ public class FriendNode : UIPoolListNode
         if (Data.statecode=="2")
         {
             // 替好友接单
-            NetCommand.Instance.ReceiveFriend(Data.orderid, (str) =>
+            NetCommand.Instance.ReceiveFriend(Data.phone, (str) =>
             {
                 Toast.Instance.Show(10072);
-                m_lblGo.text= hasOrder?Localization.Get(10071): string.Empty;
+                m_lblGo.text= string.Empty;
                 NGUITools.FindInParents<FriendPage>(gameObject).RefreshView();
             }, (err) => Toast.Instance.Show(10073));
         }
@@ -102,7 +102,7 @@ public class FriendNode : UIPoolListNode
             else
             {
                 //发送代提请求
-                NetCommand.Instance.SendFriend(orderId, Data.phone, (str) => 
+                NetCommand.Instance.SendFriend(Data.phone, (str) => 
                 {
                     m_lblGo.text=string.Empty;
                     Toast.Instance.Show(10051);
