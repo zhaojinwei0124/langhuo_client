@@ -29,6 +29,7 @@ public class BasePage : View
         else if(!PlayerPrefs.HasKey(PlayerprefID.USERID))
         {
             Close();
+            Toast.Instance.Show(10075);
             UIHandler.Instance.Push(PageID.Regist);
         }
         else
@@ -65,7 +66,6 @@ public class BasePage : View
             Debug.LogError("not such base");
             return;
         }
-
         m_poplist.items = m_bases.ConvertAll<string>(x => x.district + " " + x.name);
      
     }

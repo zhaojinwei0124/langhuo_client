@@ -37,6 +37,14 @@ namespace Network
             HttpPost("user/login", param, msgCallback, errCallback);
         }
 
+
+        public void UpdateUserCode(int code, MsgCallback msgCallback, ErrCallback errCallback=null)
+        {
+            Dictionary<string,string> param = new Dictionary<string, string>();
+            param.Add("code", code.ToString());
+            param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
+            HttpPost("user/code", param, msgCallback, errCallback);
+        }
         
         public void SelectFriends(List<string> friends, MsgCallback msgCallback,ErrCallback errCallback=null)
         {
@@ -123,6 +131,12 @@ namespace Network
             HttpPost("order/sort", param, msgCallback, errCallback);
         }
 
+        public void FriendState(List<string> friends,MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("friends", GameCore.Util.Instance.SerializeArray(friends));
+            HttpPost("friend/state", param, msgCallback, errCallback);
+        }
 
 
         public void SearchFriends(List<string> friends,MsgCallback msgCallback,ErrCallback errCallback=null)
@@ -133,6 +147,13 @@ namespace Network
             HttpPost("friend/friends", param, msgCallback, errCallback);
         }
 
+
+        public void SearchFriendBase(string phone,MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("tel", phone);
+            HttpPost("friend/base", param, msgCallback, errCallback);
+        }
 
         public void SendFriend(int orderid,string other,MsgCallback msgCallback,ErrCallback errCallback=null)
         {

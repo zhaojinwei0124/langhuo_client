@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Network;
 using System;
+using Config;
+using GameCore;
 
 public class LangjianNode : UIPoolListNode
 {
@@ -35,6 +37,34 @@ public class LangjianNode : UIPoolListNode
         Data.select=!m_selected;
         SetSelect(!m_selected);
     }
+
+
+    void OnDoubleClick()
+    {
+
+        NOrder order=GameBaseInfo.Instance.othOrders.Find(x=>x.id==Data.orderid);
+        if(order!=null)
+        {
+            string str="";
+            int[] cnts =order.GetCnts();
+            int[] ids =order.GetItems();
+            for(int i=0;i<ids.Length;i++)
+            {
+                TItem item=Tables.Instance.GetTable<List<TItem>>(TableID.ITEMS).Find(x=>x.id==ids[i]);
+                str+=item.name +"   X"+cnts[i]+"\n";
+            }
+            if(!string.IsNullOrEmpty(str))
+            {
+                StrText txt=new StrText(10074,str);
+                UIHandler.Instance.Push(PageID.TEXT,txt);
+            }
+        }
+        else
+        {
+            Debug.Log("order is null!");
+        }
+    }
+
 
     public override void Refresh()
     {
