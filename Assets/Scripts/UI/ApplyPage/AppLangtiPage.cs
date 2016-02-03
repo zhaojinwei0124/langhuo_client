@@ -26,8 +26,7 @@ public class AppLangtiPage : View {
             Toast.Instance.Show(10052);
             return;
         }
+        NetCommand.Instance.Apply(2,(str)=> {Toast.Instance.Show(10050);Close();});
 
-        Toast.Instance.Show(10050);
-        Close();
     }
 }

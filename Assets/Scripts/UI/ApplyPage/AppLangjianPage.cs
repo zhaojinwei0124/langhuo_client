@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameCore;
+using Network;
+
 
 public class AppLangjianPage : View {
 
@@ -25,8 +27,9 @@ public class AppLangjianPage : View {
             Toast.Instance.Show(10052);
             return;
         }
-        Toast.Instance.Show(10050);
-        Close();
+       
+        NetCommand.Instance.Apply(1,(str)=> {Toast.Instance.Show(10050); Close();});
+       
     }
 
 

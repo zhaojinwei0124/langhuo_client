@@ -41,6 +41,18 @@ public class LoginPage : View
             Toast.Instance.Show(10014);
             return;
         } 
+        int code = 1000;
+        if (!int.TryParse(m_code.label.text.Trim(), out code))
+        {
+            Debug.LogError("msg: " + m_code.label.text + " code: " + code);
+        }
+#if !SMS
+        if (randCode != code)
+        {
+            Toast.Instance.Show(10016);
+            return;
+        }
+#endif
         NetCommand.Instance.LoginUser(m_tel.label.text, (res) =>
         {
             PlayerPrefs.SetString(PlayerprefID.USERID, m_tel.label.text);

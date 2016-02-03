@@ -123,12 +123,13 @@ public class RegistPage : View
         {
             Debug.LogError("msg: " + m_code.label.text + " code: " + code);
         }
-
+#if !SMS
         if (randCode != code)
         {
             Toast.Instance.Show(10016);
             return;
         }
+#endif
         Debug.Log("regist msg success");
         NetCommand.Instance.RegistUser(m_user.label.text, m_tel.label.text, (int)GameBaseInfo.Instance.payMode, 
                                            m_address.label.text, payType, (res) =>

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using GameCore;
-
+using Network;
 
 public class SettingPage : View
 {
@@ -47,12 +47,26 @@ public class SettingPage : View
 
     private void OnClickItem2(GameObject go)
     { 
-        UIHandler.Instance.Push(PageID.LANGJIAN);
+        if(GameBaseInfo.Instance.user.type==1 || GameBaseInfo.Instance.user.type==3)
+        {
+            Toast.Instance.Show(10082);
+        }
+        else
+        {
+            UIHandler.Instance.Push(PageID.LANGJIAN);
+        }
     }
 
     private void OnClickItem3(GameObject go)
     {
-        UIHandler.Instance.Push(PageID.LANGTI);
+        if(GameBaseInfo.Instance.user.type==1 || GameBaseInfo.Instance.user.type==3)
+        {
+            Toast.Instance.Show(10083);
+        }
+        else
+        {
+            UIHandler.Instance.Push(PageID.LANGTI);
+        }
     }
 
     private void OnClickItem4(GameObject go)

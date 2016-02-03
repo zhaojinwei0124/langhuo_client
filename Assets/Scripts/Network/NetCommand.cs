@@ -173,5 +173,13 @@ namespace Network
             HttpPost("friend/receive", param, msgCallback, errCallback);
         }
 
+        public void Apply(int type,MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("type", type.ToString());
+            param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
+            HttpPost("apply/apply", param, msgCallback, errCallback);
+        }
+
     }
 }

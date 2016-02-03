@@ -17,22 +17,19 @@ public sealed class GameEngine : MonoSingle<GameEngine>
     void Start()
     {
         Debug.Log("Game engine start.");
-        if(!Check()) return;
+        if (!Check())
+            return;
         TableID.Init(); 
         GameBaseInfo.Instance.Init();
         UIHandler.Instance.Init();
-        Tables.Instance.InitAll(() =>
-        {
-            UIManager.Instance.Init();
-            LocationManager.Instance.Init();
-        });
-       
+        Tables.Instance.InitAll();
+        UIManager.Instance.Init();
+        LocationManager.Instance.Init();
     }
-
 
     bool Check()
     {
-        if(!GameServer.CheckConnection()) 
+        if (!GameServer.CheckConnection())
         {
             Toast.Instance.Show(10067);
             return false;
@@ -50,16 +47,6 @@ public sealed class GameEngine : MonoSingle<GameEngine>
             Debug.Log("clean cache");
             Caching.CleanCache();
             PlayerPrefs.DeleteAll();
-        }
-        if(Input.GetKeyUp(KeyCode.S))
-        {
-           Platform.SimApi.Instance.Sms(1234,"15216768456",(res)=>
-            {
-                Debug.Log("sms repd: "+res);
-            },(err)=>
-            {
-                Debug.LogError("sms fail");
-            });
         }
 #elif UNITY_ANDROID
         if(Input.GetKeyUp(KeyCode.Escape))

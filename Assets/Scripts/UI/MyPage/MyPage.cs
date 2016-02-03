@@ -21,7 +21,7 @@ public class MyPage : View
         {
             UIHandler.Instance.Push(PageID.Regist, () =>
             {
-                if(string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerprefID.USERID)))
+                if (string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerprefID.USERID)))
                 {
                     UIManager.Instance.ResetIndex();
                 }
@@ -34,8 +34,11 @@ public class MyPage : View
             UIEventListener.Get(m_set).onClick = OnSetting;
             UIEventListener.Get(m_notify).onClick = OnNotify;
             RefreshAccount();
+           
         }
     }
+
+
 
     private void RefreshAccount()
     {
@@ -45,8 +48,18 @@ public class MyPage : View
             GameBaseInfo.Instance.user = nuser;
             RefreshUser();
             RefreshOrders();
+            RefreshTab();
         });
     }
+    private void RefreshTab()
+    {
+        int type = GameBaseInfo.Instance.user.type;
+        m_tabs [1].gameObject.SetActive(type == 1 || type == 3);
+        m_tabs [2].gameObject.SetActive(type == 2 || type == 3);
+        if(type==2) m_tabs[2].transform.localPosition=Vector3.zero;
+        else if(type==1||type==3) m_tabs[2].transform.localPosition=new Vector3(200,0,0);
+    }
+
 
     private void RefreshOrders()
     {
