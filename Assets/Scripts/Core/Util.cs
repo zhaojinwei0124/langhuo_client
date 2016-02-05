@@ -47,7 +47,6 @@ namespace GameCore
                 FriendItem node=new FriendItem();
                 node.phone = n [1];
                 node.name = n [0];
-                node.orderid= "0";
                 lt.Add(node);
             }
             return lt;

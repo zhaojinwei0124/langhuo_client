@@ -7,7 +7,6 @@ public class FriendItem
 {
     public string name;
     public string phone;
-    public string orderid;
     public string statecode;
 }
 
@@ -82,7 +81,6 @@ public class FriendNode : UIPoolListNode
     private void Show(GameObject go)
     {
        // Toast.Instance.Show(10036);
-        Debug.Log("has: "+hasOrder+" orderid: "+(Data.orderid != "0"));
         if (Data.statecode=="2")
         {
             // 替好友接单
