@@ -36,6 +36,7 @@ public class MyPage_langjian : MonoSingle<MyPage_langjian>
                     it.name = item.name;
                     it.state = item.state;
                     it.val = item.val;
+                    it.time=item.rcvTime;
                     it.select = false;
                     langjis.Add(it);
                 }

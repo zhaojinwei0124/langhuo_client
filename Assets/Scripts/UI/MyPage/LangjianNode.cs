@@ -76,7 +76,7 @@ public class LangjianNode : UIPoolListNode
 
         m_lblName.text=Data.name;
 
-        m_lblTime.text=string.Format(Localization.Get(10044),(DateTime.Now-new TimeSpan(UnityEngine.Random.Range(20,36000))).ToString());
+        m_lblTime.text= Data.state>0? string.Format(Localization.Get(10044),Data.time):Localization.Get(10084);
     }
 
 

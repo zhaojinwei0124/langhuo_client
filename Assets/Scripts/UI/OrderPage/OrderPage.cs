@@ -26,7 +26,7 @@ public class OrderPage : View
     }
 
 
-    private void RefreshList()
+    public void RefreshList()
     {
         if(items!=null) items.Clear();
         List<NOrder> orders=GameBaseInfo.Instance.myOrders.FindAll(x=>x.state==0);
@@ -36,6 +36,7 @@ public class OrderPage : View
             item.cnts=orders[i].GetCnts();
             item.itemids=orders[i].GetItems();
             item.orderid=orders[i].id;
+            item.state=orders[i].state;
             items.Add(item);
         }
 

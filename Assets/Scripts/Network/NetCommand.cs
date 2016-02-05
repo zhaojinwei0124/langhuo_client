@@ -131,6 +131,14 @@ namespace Network
             HttpPost("order/sort", param, msgCallback, errCallback);
         }
 
+        public void StateOder(string orderid,int state, MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("orderid", orderid.ToString());
+            param.Add("state",state.ToString());
+            HttpPost("order/state", param, msgCallback, errCallback);
+        }
+
         public void FriendState(List<string> friends,MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();

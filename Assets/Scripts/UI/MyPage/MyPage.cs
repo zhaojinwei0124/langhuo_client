@@ -47,7 +47,7 @@ public class MyPage : View
             NUser nuser = Util.Instance.Get<NUser>(res);
             GameBaseInfo.Instance.user = nuser;
             RefreshUser();
-            RefreshOrders();
+            GameBaseInfo.Instance.UpdateOrders(null);
             RefreshTab();
         });
     }
@@ -60,17 +60,6 @@ public class MyPage : View
         else if(type==1||type==3) m_tabs[2].transform.localPosition=new Vector3(200,0,0);
     }
 
-
-    private void RefreshOrders()
-    {
-        NetCommand.Instance.SearchOders(GameBaseInfo.Instance.user.tel, (string res) =>
-        {
-            GameBaseInfo.Instance.myOrders = Util.Instance.Get<List<NOrder>>(res);
-        }, (string err) =>
-        {
-            Toast.Instance.Show(10026);
-        });
-    }
 
     private void RefreshUser()
     {

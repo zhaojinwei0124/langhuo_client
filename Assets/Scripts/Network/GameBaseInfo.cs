@@ -108,6 +108,18 @@ namespace Network
             PlayerPrefs.SetString(PlayerprefID.BUYLIST,DeJson.Serializer.Serialize(buy_list.ToArray()));
         }
 
+        public void UpdateOrders(DelManager.BoolDelegate del)
+        {
+            NetCommand.Instance.SearchOders(GameBaseInfo.Instance.user.tel, (string res) =>
+                                            {
+                GameBaseInfo.Instance.myOrders = Util.Instance.Get<List<NOrder>>(res);
+               if(del!=null) del(true);
+            }, (string err) =>
+            {
+                if(del!=null) del(false);
+                Toast.Instance.Show(10026);
+            });
+        }
 
         public string GetItems()
         {
@@ -118,6 +130,8 @@ namespace Network
         {
             return Util.Instance.SerializeArray(buy_list.ConvertAll(x => x.cnt));
         }
+
+
     }
 
 }

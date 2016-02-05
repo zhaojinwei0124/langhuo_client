@@ -8,7 +8,8 @@ public enum PickType
 {
     SELF = 0,
     FRIEND,
-    TIMER
+    TIMER,
+    CANCEL
 };
 
 
@@ -105,7 +106,7 @@ public class AccountPage : View
             } else
             {
 
-                Dialog.Instance.Show(Localization.Get(10004), (g) =>
+                Dialog.Instance.Show(Localization.Get(10004), () =>
                 {
                     NetCommand.Instance.SysnOrder(price,m_receive.label.text, (int)pickType, (msg) =>
                     {

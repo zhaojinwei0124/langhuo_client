@@ -35,6 +35,7 @@ public class MyPage_langti : MonoSingle<MyPage_langti>
                     it.name = item.name;
                     it.state = item.state;
                     it.val = item.val;
+                    it.time=item.rcvTime;
                     it.select = false;
                     langtis.Add(it);
                 }
@@ -99,7 +100,6 @@ public class MyPage_langti : MonoSingle<MyPage_langti>
             NetCommand.Instance.UpdateOder(items.ConvertAll(x => x.orderid).ToArray(), GameBaseInfo.Instance.user.tel,
                (res) =>
             {
-                Debug.Log(res);
                 Toast.Instance.Show(10043);
                 RefreshList();
             });
@@ -120,7 +120,6 @@ public class MyPage_langti : MonoSingle<MyPage_langti>
             string orderid = Util.Instance.SerializeArray(items.ConvertAll(x => x.orderid));
             NetCommand.Instance.SortOders(orderid, (res) =>
             {
-                Debug.Log(res);
                 Toast.Instance.Show(10061);
                 RefreshList();
             });

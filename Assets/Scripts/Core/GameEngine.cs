@@ -22,7 +22,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
         TableID.Init(); 
         GameBaseInfo.Instance.Init();
         UIHandler.Instance.Init();
-        Tables.Instance.InitAll();
+        Tables.Instance.InitAll(null);
         UIManager.Instance.Init();
         LocationManager.Instance.Init();
     }

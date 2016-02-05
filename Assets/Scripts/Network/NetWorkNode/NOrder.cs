@@ -24,6 +24,24 @@ namespace Network
 
         public Int64 accept;
 
+        public string timestap;
+
+        public DateTime time
+        {
+            get
+            {
+                return Convert.ToDateTime(timestap);
+            }
+        }
+
+        public DateTime rcvTime
+        {
+            get
+            {
+                return time+new TimeSpan(24,0,0);
+            }
+        }
+
         public int[] GetItems()
         {
             Debug.Log("items: "+items);

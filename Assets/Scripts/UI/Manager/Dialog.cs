@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using GameCore;
 
 public class Dialog : MonoSingle<Dialog>
 {
@@ -17,38 +18,38 @@ public class Dialog : MonoSingle<Dialog>
         Show(str, null);
     }
 
-    public void Show(int local,UIEventListener.VoidDelegate okDel)
+    public void Show(int local,DelManager.VoidDelegate okDel)
     {
         Show(Localization.Get(local), okDel, null);
     }
 
-    public void Show(string str, UIEventListener.VoidDelegate okDel)
+    public void Show(string str, DelManager.VoidDelegate okDel)
     {
         Show(str, okDel, null);
     }
 
 
-    public void Show(int local, UIEventListener.VoidDelegate okDel, UIEventListener.VoidDelegate cancelDel)
+    public void Show(int local, DelManager.VoidDelegate okDel, DelManager.VoidDelegate cancelDel)
     {
         Show(Localization.Get(local),okDel,cancelDel);
     }
 
-    public void Show(string str, UIEventListener.VoidDelegate okDel, UIEventListener.VoidDelegate cancelDel)
+    public void Show(string str, DelManager.VoidDelegate okDel, DelManager.VoidDelegate cancelDel)
     {
         offsetObj.SetActive(true);
         contentLabel.text = str;
 
-        UIEventListener.Get(okBtn).onClick = (go) =>
+        UIEventListener.Get(okBtn).onClick = (g) =>
         {
             if (okDel != null)
-                okDel(go);
+                okDel();
             offsetObj.SetActive(false);
         };
 
-        UIEventListener.Get(cancelBtn).onClick = (go) =>
+        UIEventListener.Get(cancelBtn).onClick = (g) =>
         {
             if (cancelDel != null)
-                cancelDel(go);
+                cancelDel();
             offsetObj.SetActive(false);
         };
     }

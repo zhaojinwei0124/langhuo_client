@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Network;
 using GameCore;
 
@@ -7,7 +7,7 @@ public class OrderItem
 {
     public int[] itemids;
     public int[] cnts;
-
+    public int state;
     //0代表未付款 >0表示已付款是orderid
     public int orderid;  
 }
@@ -33,10 +33,11 @@ public class OrderNode : UIPoolListNode
         base.Refresh();
 
         UIEventListener.Get(m_lblOK.gameObject).onClick = OnCertainClick;
-
+      
         m_lblDesc.text = GetDesc();
 
-        m_lblOK.text = Data.orderid <= 0 ? Localization.Get(10033) +"      ": Localization.Get(10034) +"      ";
+        m_lblOK.text = Data.orderid <= 0 ? Localization.Get(10033) + "      " : Localization.Get(10034) + "      ";
+
     }
 
     private string GetDesc()
@@ -59,6 +60,28 @@ public class OrderNode : UIPoolListNode
         {
             m_lblOK.text = m_poplist.GetSelect();
             pickType = (PickType)m_poplist.GetIndex();
+
+            Debug.Log("pickType: " + pickType);
+
+          //  if (PickType.CANCEL == pickType)
+            {
+                Dialog.Instance.Show(10085, () =>
+                {
+                    NetCommand.Instance.StateOder(Data.orderid.ToString(), 5, (str) =>
+                    {
+                        if (pickType == PickType.CANCEL)
+                            Toast.Instance.Show(10086);
+                        else
+                            Toast.Instance.Show(10087);
+                        GameBaseInfo.Instance.UpdateOrders((success) =>
+                                                           NGUITools.FindInParents<OrderPage>(gameObject).RefreshList());
+                    });
+                }, () =>
+                {
+                    m_lblOK.text = m_poplist.items [0];
+                    pickType = PickType.SELF;
+                });
+            }
         }
     }
 
@@ -66,7 +89,7 @@ public class OrderNode : UIPoolListNode
     {
         if (Data.orderid == 0)
         {
-            AccountPage.showOrderBtn=true;
+            AccountPage.showOrderBtn = true;
             UIHandler.Instance.Push(PageID.ACCOUNT);
         } else
         {

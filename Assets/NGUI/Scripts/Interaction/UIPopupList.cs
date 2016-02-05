@@ -465,9 +465,9 @@ public class UIPopupList : UIWidgetContainer
 			}
 			else
 			{
-				string s = mSelectedItem;
-				mSelectedItem = null;
-				value = s;
+//				string s = mSelectedItem;
+//				mSelectedItem = null;
+//				value = s;
 			}
 		}
 	}
