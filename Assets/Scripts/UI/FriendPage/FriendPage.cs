@@ -48,7 +48,7 @@ public class FriendPage : View
         return true;
     }
 
-
+    //goto langjian
     private void OnLeft(GameObject go)
     {
         if(Check())
@@ -58,7 +58,7 @@ public class FriendPage : View
     }
 
 
-
+    //daiti
     private void OnRight(GameObject go)
     {
         if(Check())
