@@ -7,7 +7,8 @@ public class FriendItem
 {
     public string name;
     public string phone;
-    public string statecode;
+    public int code;
+    public int bases;
 }
 
 public class FriendNode : UIPoolListNode
@@ -32,21 +33,21 @@ public class FriendNode : UIPoolListNode
     {
         base.Refresh();
         m_lblName.text = Data.name;
-        if(Data.statecode=="1")
+        if(Data.code==2) //好友发状态 求代提 
         {
-            m_lblTel.text=Localization.Get(10078);
-            m_lblGo.text = Localization.Get(10071);
-            RefreshBase();
+            m_lblTel.text = Localization.Get(10077); //求带领
+            m_lblGo.text = Localization.Get(10039);  //接单
         }
-        else if(Data.statecode=="2")
+        else if(Data.code==1) //好友要去浪尖
         {
-            m_lblTel.text=Localization.Get(10077);
-            m_lblGo.text = Localization.Get(10039);
+            TBases tbase=Tables.Instance.GetTable<List<TBases>>(TableID.BASE).Find(x=>x.id==Data.bases);
+            m_lblTel.text= string.Format(Localization.Get(10078),tbase.district+tbase.name);   //我要去浪尖
+            m_lblGo.text = Localization.Get(10071);  //发送代提请求
         }
         else
         {
-            m_lblTel.text = Localization.Get(10079);
-            m_lblGo.text = string.Empty;
+            m_lblTel.text = Localization.Get(10079); //该好友暂时没有状态更新
+            m_lblGo.text =  Localization.Get(10071); //发送代提请求
         }
 
         List<NOrder> orders = GameBaseInfo.Instance.myOrders.FindAll(x => x.state == 0);
@@ -57,18 +58,6 @@ public class FriendNode : UIPoolListNode
         UIEventListener.Get(m_lblGo.gameObject).onClick = Show;
     }
 
-    private void RefreshBase()
-    {
-        if(Data.statecode=="1")
-        {
-            NetCommand.Instance.SearchFriendBase(Data.phone, (str) =>
-            {
-                if(str.Trim()=="20000") return;
-                TBases tbase=Tables.Instance.GetTable<List<TBases>>(TableID.BASE).Find(x=>x.id.ToString()==str.Trim());
-                 m_lblTel.text=string.Format(Localization.Get(10078),tbase.district+tbase.name);
-            });
-        }
-    }
 
 
     private void SetSelect(bool select)
@@ -81,7 +70,7 @@ public class FriendNode : UIPoolListNode
     private void Show(GameObject go)
     {
        // Toast.Instance.Show(10036);
-        if (Data.statecode=="2")
+        if (Data.code==2)
         {
             // 替好友接单
             NetCommand.Instance.ReceiveFriend(Data.phone, (str) =>
@@ -91,7 +80,7 @@ public class FriendNode : UIPoolListNode
                 NGUITools.FindInParents<FriendPage>(gameObject).RefreshView();
             }, (err) => Toast.Instance.Show(10073));
         }
-        else if (Data.statecode=="1")
+        else if (Data.code==1)
         {
             if(!hasOrder)
             {

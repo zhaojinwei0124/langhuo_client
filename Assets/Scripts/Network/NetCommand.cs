@@ -167,7 +167,7 @@ namespace Network
         public void ReceiveFriend(string orderid,MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("other", orderid);
+            param.Add("orderid", orderid);
             param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
             HttpPost("friend/receive", param, msgCallback, errCallback);
         }

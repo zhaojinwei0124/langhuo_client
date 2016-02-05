@@ -26,6 +26,19 @@ namespace Network
         public int type;
 
         public int bases;
+
+        public int code;
+
+        public string time;
+
+
+        public DateTime timestamp
+        {
+            get
+            {
+                return Convert.ToDateTime(time);
+            }
+        }
     
     }
 }

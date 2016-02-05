@@ -42,13 +42,14 @@ public class MyPage : View
 
     private void RefreshAccount()
     {
-        NetCommand.Instance.LoginUser(PlayerPrefs.GetString(PlayerprefID.USERID), (string res) =>
+        GameBaseInfo.Instance.UpdateAccount((suc)=>
         {
-            NUser nuser = Util.Instance.Get<NUser>(res);
-            GameBaseInfo.Instance.user = nuser;
-            RefreshUser();
-            GameBaseInfo.Instance.UpdateOrders(null);
-            RefreshTab();
+            if(suc)
+            {
+                RefreshUser();
+                GameBaseInfo.Instance.UpdateOrders(null);
+                RefreshTab();
+            }
         });
     }
     private void RefreshTab()

@@ -36,7 +36,6 @@ public class FriendPage : View
         }
     }
 
-
     private bool Check()
     {
         if (GameBaseInfo.Instance.user.bases == 20000)
@@ -48,9 +47,12 @@ public class FriendPage : View
         return true;
     }
 
-
     private bool CheckOrder()
     {
+        foreach (var item in GameBaseInfo.Instance.myOrders)
+        {
+            Debug.Log("item code: " + item.state);
+        }
         return GameBaseInfo.Instance.myOrders.Exists(x => x.state <= 1);
     }
 
@@ -67,14 +69,27 @@ public class FriendPage : View
     //qiudaiti
     private void OnRight(GameObject go)
     {
-        if (CheckOrder())
+        if (GameBaseInfo.Instance.user.code == 1)
+        {
+            Dialog.Instance.Show(10091, () =>
+            {
+                NetCommand.Instance.UpdateUserCode(0, (str) => 
+                {
+                    Toast.Instance.Show(10076);
+                    GameBaseInfo.Instance.UpdateAccount();});
+            });
+            return;
+        }
+        if (!CheckOrder())
         {
             Toast.Instance.Show(10090);
             return;
         }
         if (Check())
         {
-            NetCommand.Instance.UpdateUserCode(2, (str) => Toast.Instance.Show(10076));
+            NetCommand.Instance.UpdateUserCode(2, (str) => {
+                Toast.Instance.Show(10076);
+                GameBaseInfo.Instance.UpdateAccount();});
         }
     }
 
@@ -83,21 +98,19 @@ public class FriendPage : View
         List<string> friends = items.ConvertAll<string>(x => x.phone);
         NetCommand.Instance.UserFriends(friends, (str) =>
         {
-            items = Util.Instance.ParseContacts(str);
-            //if (!string.IsNullOrEmpty(nmsg))
-            //{
-            //    List<CallBackItem> cbs = Util.Instance.ParseCallback(nmsg);
-            //    foreach (var item in cbs)
-            //    {
-            //        FriendItem fi = items.Find(x => x.phone == item.key);
-            //        if (fi != null)
-            //        {
-            //            fi.statecode = item.value;
-            //        }
-            //    }
-            //}
-            //items.Sort((x,y)=>int.Parse(y.statecode)-int.Parse(x.statecode));
-            //m_pool.Initialize(items.ToArray());
+            List<NFriend> fds = Util.Instance.Get<List<NFriend>>(str);
+            foreach (var item in items)
+            {
+                NFriend fi = fds.Find(x => x.tel.ToString() == item.phone);
+                if (fi != null)
+                {
+                    item.bases=fi.bases;
+                    item.code = fi.code;
+                }
+            }
+
+            items.Sort((x,y) => y.code - x.code);
+            m_pool.Initialize(items.ToArray());
         });
     }
 

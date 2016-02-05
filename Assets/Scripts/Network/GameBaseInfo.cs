@@ -28,10 +28,10 @@ namespace Network
         public List<ItemNode> items = new List<ItemNode>();
 
         //self
-        public List<NOrder> myOrders=new List<NOrder>();
+        public List<NOrder> myOrders = new List<NOrder>();
 
         //langjian langti
-        public List<NOrder> othOrders=new List<NOrder>();
+        public List<NOrder> othOrders = new List<NOrder>();
 
         public string encrypt{ get; set; }
 
@@ -57,10 +57,10 @@ namespace Network
         public void Init()
         {
             base.Init();
-            string buys=PlayerPrefs.GetString(PlayerprefID.BUYLIST);
-            if(!string.IsNullOrEmpty(buys))
+            string buys = PlayerPrefs.GetString(PlayerprefID.BUYLIST);
+            if (!string.IsNullOrEmpty(buys))
             {
-                buy_list=Util.Instance.Get<List<BuyNode>>(buys);
+                buy_list = Util.Instance.Get<List<BuyNode>>(buys);
             }
         }
 
@@ -87,17 +87,16 @@ namespace Network
             {
                 buy_list.Add(new BuyNode(id, cnt));
             }
-            PlayerPrefs.SetString(PlayerprefID.BUYLIST,DeJson.Serializer.Serialize(buy_list.ToArray()));
+            PlayerPrefs.SetString(PlayerprefID.BUYLIST, DeJson.Serializer.Serialize(buy_list.ToArray()));
         }
-
 
         public int GetPaycnt()
         {
-            int price=0;
-            foreach(var item in GameBaseInfo.Instance.buy_list)
+            int price = 0;
+            foreach (var item in GameBaseInfo.Instance.buy_list)
             {
-                ItemNode node=Home.Instance.items.Find(x=>x.n_item.id==item.id);
-                price+=node.n_item.nprice*item.cnt;
+                ItemNode node = Home.Instance.items.Find(x => x.n_item.id == item.id);
+                price += node.n_item.nprice * item.cnt;
             }
             return price;
         }
@@ -105,20 +104,46 @@ namespace Network
         public void ClearBuy()
         {
             buy_list.Clear();
-            PlayerPrefs.SetString(PlayerprefID.BUYLIST,DeJson.Serializer.Serialize(buy_list.ToArray()));
+            PlayerPrefs.SetString(PlayerprefID.BUYLIST, DeJson.Serializer.Serialize(buy_list.ToArray()));
+        }
+
+        public void UpdateOrders()
+        {
+            UpdateOrders(null);
         }
 
         public void UpdateOrders(DelManager.BoolDelegate del)
         {
             NetCommand.Instance.SearchOders(GameBaseInfo.Instance.user.tel, (string res) =>
-                                            {
+            {
                 GameBaseInfo.Instance.myOrders = Util.Instance.Get<List<NOrder>>(res);
-               if(del!=null) del(true);
+                Debug.Log("cnt: "+GameBaseInfo.Instance.myOrders.Count);
+                if (del != null)
+                    del(true);
             }, (string err) =>
             {
-                if(del!=null) del(false);
+                if (del != null)
+                    del(false);
                 Toast.Instance.Show(10026);
             });
+        }
+
+        public void UpdateAccount()
+        {
+            UpdateAccount(null);
+        }
+
+        public void UpdateAccount(DelManager.BoolDelegate del)
+        {
+            NetCommand.Instance.LoginUser(PlayerPrefs.GetString(PlayerprefID.USERID), (string res) =>
+            {
+                NUser nuser = Util.Instance.Get<NUser>(res);
+                GameBaseInfo.Instance.user = nuser;
+                if (del != null)
+                    del(true);
+            }, (string err) => {
+                if (del != null)
+                    del(false);});
         }
 
         public string GetItems()

@@ -29,7 +29,7 @@ public class OrderPage : View
     public void RefreshList()
     {
         if(items!=null) items.Clear();
-        List<NOrder> orders=GameBaseInfo.Instance.myOrders.FindAll(x=>x.state==0);
+        List<NOrder> orders=GameBaseInfo.Instance.myOrders.FindAll(x=>x.state==0||x.state==1);
         for(int i=0;i<orders.Count;i++)
         {
             OrderItem item =new OrderItem();
