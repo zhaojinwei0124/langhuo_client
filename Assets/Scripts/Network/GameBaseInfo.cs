@@ -146,16 +146,21 @@ namespace Network
                     del(false);});
         }
 
-        public string GetItems()
+        public string GetBuyItems()
         {
             return Util.Instance.SerializeArray(buy_list.ConvertAll(x => x.id));
         }
 
-        public string GetCnt()
+        public string GetBuyCnt()
         {
             return Util.Instance.SerializeArray(buy_list.ConvertAll(x => x.cnt));
         }
 
+
+        public bool CanCancel(NOrder order)
+        {
+            return order.state==0 || (order.state==1 && order.accept==0);
+        }
 
     }
 

@@ -77,8 +77,8 @@ namespace Network
             param.Add("addr",GameBaseInfo.Instance.user.addr);
             param.Add("name",name);
             param.Add("type",type.ToString());
-            param.Add("items",GameBaseInfo.Instance.GetItems());
-            param.Add("cnt",GameBaseInfo.Instance.GetCnt());
+            param.Add("items",GameBaseInfo.Instance.GetBuyItems());
+            param.Add("cnt",GameBaseInfo.Instance.GetBuyCnt());
             param.Add("pri",price.ToString());
             HttpPost("order/add", param, msgCallback, errCallback);
         }
@@ -164,10 +164,10 @@ namespace Network
         }
 
 
-        public void ReceiveFriend(string orderid,MsgCallback msgCallback,ErrCallback errCallback=null)
+        public void ReceiveFriend(string friend,MsgCallback msgCallback,ErrCallback errCallback=null)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("orderid", orderid);
+            param.Add("friend", friend);
             param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
             HttpPost("friend/receive", param, msgCallback, errCallback);
         }

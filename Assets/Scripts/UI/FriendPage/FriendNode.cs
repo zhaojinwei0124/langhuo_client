@@ -33,6 +33,7 @@ public class FriendNode : UIPoolListNode
     {
         base.Refresh();
         m_lblName.text = Data.name;
+        Debug.Log("phone: "+Data.phone+" code: "+Data.code);
         if(Data.code==2) //好友发状态 求代提 
         {
             m_lblTel.text = Localization.Get(10077); //求带领
@@ -46,7 +47,8 @@ public class FriendNode : UIPoolListNode
         }
         else
         {
-            m_lblTel.text = Localization.Get(10079); //该好友暂时没有状态更新
+            //如果好友取消代提请求 或者没有状态
+            m_lblTel.text =  Localization.Get(10079); //该好友暂时没有状态更新
             m_lblGo.text =  Localization.Get(10071); //发送代提请求
         }
 
@@ -75,9 +77,12 @@ public class FriendNode : UIPoolListNode
             // 替好友接单
             NetCommand.Instance.ReceiveFriend(Data.phone, (str) =>
             {
-                Toast.Instance.Show(10072);
-                m_lblGo.text= string.Empty;
-                NGUITools.FindInParents<FriendPage>(gameObject).RefreshView();
+                if(str.Trim().Equals("no_order")) Toast.Instance.Show(10092);
+                else
+                {
+                    Toast.Instance.Show(10072);
+                    NGUITools.FindInParents<FriendPage>(gameObject).SyncFriends();
+                }
             }, (err) => Toast.Instance.Show(10073));
         }
         else if (Data.code==1)
@@ -89,11 +94,7 @@ public class FriendNode : UIPoolListNode
             else
             {
                 //发送代提请求
-                NetCommand.Instance.SendFriend(Data.phone, (str) => 
-                {
-                    m_lblGo.text=string.Empty;
-                    Toast.Instance.Show(10051);
-                });
+                NGUITools.FindInParents<FriendPage>(gameObject).OnRight(gameObject);
             }
         } 
     }

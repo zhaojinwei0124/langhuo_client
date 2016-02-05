@@ -105,7 +105,6 @@ public class AccountPage : View
                 Toast.Instance.Show(Localization.Get(10003));
             } else
             {
-
                 Dialog.Instance.Show(Localization.Get(10004), () =>
                 {
                     NetCommand.Instance.SysnOrder(price,m_receive.label.text, (int)pickType, (msg) =>

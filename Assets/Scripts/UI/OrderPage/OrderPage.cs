@@ -62,7 +62,6 @@ public class OrderPage : View
 
     private void OnAccount(GameObject go)
     {
-        //Toast.Instance.Show(10010);
         List<NItem> nitems=new List<NItem>();
         for(int i=0;i<items.Count;i++)
         {

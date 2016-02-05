@@ -12,6 +12,7 @@ public class LangtiItem
     public DateTime time;
     public string addr;
     public int state;
+    public int type;
     public bool select;
     public int val;
 };
@@ -77,16 +78,18 @@ public class LangtiNode : UIPoolListNode
         UIEventListener.Get(m_lblGo.gameObject).onClick = GoOrder;
         m_lblName.text = string.Format(Localization.Get(10041), Data.name);
         m_lblTime.text = string.Format(Localization.Get(10037), Data.time, Data.addr);
-        m_lblGo.text = Data.state == 0 ? Localization.Get(10039) : Data.state == 5 ? Localization.Get(10088) : Localization.Get(10040);
+        m_lblGo.text = Data.state == 0 ? Localization.Get(10039) : Data.state == 5 || Data.type ==3 ? Localization.Get(10088) : Localization.Get(10040);
     }
 
     private void GoOrder(GameObject go)
     {
         if (Data.state == 1)
+        {
             Toast.Instance.Show(10042);
-        else if(Data.state==5)
+        } else if (Data.type == 3 || Data.state == 5)
+        {
             Toast.Instance.Show(10089);
-        else
+        } else
         {
             NetCommand.Instance.UpdateOder(new int[]{ Data.orderid}, GameBaseInfo.Instance.user.tel, (res) =>
             {

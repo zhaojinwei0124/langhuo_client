@@ -29,6 +29,7 @@ public class MyPage_langti : MonoSingle<MyPage_langti>
             {
                 if (item.state == 0 || item.accept == GameBaseInfo.Instance.user.tel)
                 {
+                    if(item.type <= 1) continue;//friend or self take
                     LangtiItem it = new LangtiItem();
                     it.orderid = item.id;
                     it.addr = item.addr;
@@ -36,6 +37,7 @@ public class MyPage_langti : MonoSingle<MyPage_langti>
                     it.state = item.state;
                     it.val = item.val;
                     it.time=item.rcvTime;
+                    it.type=item.type;
                     it.select = false;
                     langtis.Add(it);
                 }

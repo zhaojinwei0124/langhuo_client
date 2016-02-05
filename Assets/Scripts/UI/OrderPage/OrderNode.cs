@@ -63,25 +63,23 @@ public class OrderNode : UIPoolListNode
 
             Debug.Log("pickType: " + pickType);
 
-          //  if (PickType.CANCEL == pickType)
+            Dialog.Instance.Show(10085, () =>
             {
-                Dialog.Instance.Show(10085, () =>
+                NetCommand.Instance.StateOder(Data.orderid.ToString(), (int)pickType, (str) =>
                 {
-                    NetCommand.Instance.StateOder(Data.orderid.ToString(), 5, (str) =>
-                    {
-                        if (pickType == PickType.CANCEL)
-                            Toast.Instance.Show(10086);
-                        else
-                            Toast.Instance.Show(10087);
-                        GameBaseInfo.Instance.UpdateOrders((success) =>
+                    if (pickType == PickType.CANCEL)
+                        Toast.Instance.Show(10086);
+                    else
+                        Toast.Instance.Show(10087);
+                    GameBaseInfo.Instance.UpdateOrders((success) =>
                                                            NGUITools.FindInParents<OrderPage>(gameObject).RefreshList());
-                    });
-                }, () =>
-                {
-                    m_lblOK.text = m_poplist.items [0];
-                    pickType = PickType.SELF;
                 });
-            }
+            }, () =>
+            {
+                m_lblOK.text = m_poplist.items [0];
+                pickType = PickType.SELF;
+            });
+            
         }
     }
 
