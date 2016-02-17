@@ -9,6 +9,8 @@ public class FriendPage : View
     public UIPoolList m_pool;
     public UILabel m_lblleft;
     public UILabel m_lblright;
+    public UILabel m_lbltel;
+    public UILabel m_lbladd;
     string msg = string.Empty;
     List<FriendItem> items = new List<FriendItem>();
 
@@ -17,6 +19,7 @@ public class FriendPage : View
         base.RefreshView();
         UIEventListener.Get(m_lblleft.gameObject).onClick = OnLeft;
         UIEventListener.Get(m_lblright.gameObject).onClick = OnRight;
+        UIEventListener.Get(m_lbladd.gameObject).onClick=OnAddFriend;
         m_lblright.text = GameBaseInfo.Instance.user.code == 2 ? Localization.Get(10093) : Localization.Get(10094);
         if (string.IsNullOrEmpty(msg))
         {
@@ -31,6 +34,22 @@ public class FriendPage : View
                 SyncFriends(items);
             }
         }
+    }
+
+    private void OnAddFriend(GameObject go)
+    {
+        string phone =m_lbltel.text.Trim();
+        if(!Util.Instance.CheckPhoneValid(phone))
+        {
+            Toast.Instance.Show(10017);
+            return;
+        }
+        NetCommand.Instance.RequestFriend(phone,(str) =>
+        {
+            Toast.Instance.Show(10099);
+            GameBaseInfo.Instance.UpdateAccount();
+            SyncFriends();
+        },(err)=>Toast.Instance.Show(10101));
     }
 
     private bool Check()

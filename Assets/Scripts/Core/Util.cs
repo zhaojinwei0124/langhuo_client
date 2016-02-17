@@ -73,6 +73,11 @@ namespace GameCore
             return Regex.IsMatch(msg, @"^\d{15}|\d{18}$",RegexOptions.IgnoreCase);
         }
 
+        public bool CheckPhoneValid(string msg)
+        {
+            return Regex.IsMatch(msg, @"^[1]+[3,5]+\d{9}");
+        }
+
         /// <summary>
         /// make array or list to json string
         /// </summary>

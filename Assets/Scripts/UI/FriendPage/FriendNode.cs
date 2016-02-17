@@ -27,13 +27,10 @@ public class FriendNode : UIPoolListNode
     }
     
     bool hasOrder;
-    int orderId;
-    
     public override void Refresh()
     {
         base.Refresh();
         m_lblName.text = Data.name;
-        Debug.Log("phone: " + Data.phone + " code: " + Data.code);
         if (Data.code == 2) //好友发状态 求代提
         {
             m_lblTel.text = Localization.Get(10077); //求带领
@@ -59,9 +56,7 @@ public class FriendNode : UIPoolListNode
         }
 
         List<NOrder> orders = GameBaseInfo.Instance.myOrders.FindAll(x => x.state == 0);
-        hasOrder = orders != null && orders.Count > 0;
-        if (hasOrder)
-            orderId = orders [0].id;
+        hasOrder = orders != null && orders.Count > 0 && orders.Exists(x=>x.type==1);
      
         UIEventListener.Get(m_lblGo.gameObject).onClick = Show;
     }
@@ -94,12 +89,16 @@ public class FriendNode : UIPoolListNode
             NetCommand.Instance.RequestFriend(Data.phone,(str) =>
             {
                 Toast.Instance.Show(10099);
+                GameBaseInfo.Instance.UpdateAccount();
+                NGUITools.FindInParents<FriendPage>(gameObject).SyncFriends();
             });
         } else if (Data.code == -2)
         {
             NetCommand.Instance.ConfirmFriend(Data.phone,(str) =>
             {
                 Toast.Instance.Show(10100);
+                GameBaseInfo.Instance.UpdateAccount();
+                NGUITools.FindInParents<FriendPage>(gameObject).SyncFriends();
             });
         } else if (Data.code <= 1)
         {

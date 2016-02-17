@@ -58,7 +58,7 @@ public class RegistPage : View
             Debug.LogError("timer cnt: " + timerCnt);
             return;
         }
-        if (CheckValid())
+        if (Util.Instance.CheckPhoneValid(m_tel.label.text.Trim()))
         {
             m_lblMsg.text = timerCnt.ToString();
             timerSeq = TimerManager.Instance.AddTimer(1000, TIMER, (seq) =>
@@ -90,16 +90,6 @@ public class RegistPage : View
     }
 
 
-    private bool CheckValid()
-    {
-        if (m_tel.label.text.Length != 11)
-        {
-            Debug.LogError("tel is not valid!");
-            return false;
-        }
-        return true;
-    }
-
     private void OnLogin(GameObject go)
     {
         Close();
@@ -108,7 +98,7 @@ public class RegistPage : View
 
     private void OnRegist(GameObject go)
     {
-        if (!CheckValid())
+        if (!Util.Instance.CheckPhoneValid(m_tel.label.text.Trim()))
         {
             Toast.Instance.Show(10017);
             return;
