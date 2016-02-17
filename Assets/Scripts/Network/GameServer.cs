@@ -18,7 +18,7 @@ namespace Network
             get
             {
 #if LOCAL
-                return "http://127.0.0.1/langhuo/";
+                return "http://192.168.0.103/langhuo/";
 #else
                 return "http://146577.vhost151.cloudvhost.cn/langhuo/";
 #endif

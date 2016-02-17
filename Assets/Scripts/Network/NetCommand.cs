@@ -50,6 +50,7 @@ namespace Network
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("friends", GameCore.Util.Instance.SerializeArray(friends));
+            param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
             HttpPost("user/friend", param, msgCallback, errCallback);
         }
 
@@ -171,6 +172,23 @@ namespace Network
             param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
             HttpPost("friend/receive", param, msgCallback, errCallback);
         }
+
+        public void RequestFriend(string friend,MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("fri", friend);
+            param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
+            HttpPost("friend/request", param, msgCallback, errCallback);
+        }
+
+        public void ConfirmFriend(string friend,MsgCallback msgCallback,ErrCallback errCallback=null)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("fri", friend);
+            param.Add("tel", GameBaseInfo.Instance.user.tel.ToString());
+            HttpPost("friend/confirm", param, msgCallback, errCallback);
+        }
+
 
         public void Apply(int type,MsgCallback msgCallback,ErrCallback errCallback=null)
         {

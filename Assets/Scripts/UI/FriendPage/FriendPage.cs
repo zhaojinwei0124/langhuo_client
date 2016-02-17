@@ -17,7 +17,7 @@ public class FriendPage : View
         base.RefreshView();
         UIEventListener.Get(m_lblleft.gameObject).onClick = OnLeft;
         UIEventListener.Get(m_lblright.gameObject).onClick = OnRight;
-        m_lblright.text = GameBaseInfo.Instance.user.code == 2 ? Localization.Get(10093):Localization.Get(10094);
+        m_lblright.text = GameBaseInfo.Instance.user.code == 2 ? Localization.Get(10093) : Localization.Get(10094);
         if (string.IsNullOrEmpty(msg))
         {
             msg = SDKManager.Instance.Contacts("");
@@ -61,7 +61,8 @@ public class FriendPage : View
             NetCommand.Instance.UpdateUserCode(1, (str) =>
             {
                 Toast.Instance.Show(10076);
-                GameBaseInfo.Instance.UpdateAccount((succ)=>{RefreshView();});
+                GameBaseInfo.Instance.UpdateAccount((succ) => {
+                    RefreshView();});
             });
         }
     }
@@ -94,7 +95,8 @@ public class FriendPage : View
             NetCommand.Instance.UpdateUserCode(code, (str) => 
             {
                 Toast.Instance.Show(10076);
-                GameBaseInfo.Instance.UpdateAccount((succ)=>{RefreshView();});
+                GameBaseInfo.Instance.UpdateAccount((succ) => {
+                    RefreshView();});
             });
         }
     }
@@ -108,22 +110,27 @@ public class FriendPage : View
         }
     }
 
-    private void SyncFriends(List<FriendItem> items)
+    private void SyncFriends(List<FriendItem> contacts)
     {
-        List<string> friends = items.ConvertAll<string>(x => x.phone);
-        NetCommand.Instance.UserFriends(friends, (str) =>
+        // List<FriendItem> friends=new List<FriendItem>();
+        NetCommand.Instance.UserFriends(contacts.ConvertAll(x => x.phone), (str) =>
         {
+            items.Clear();
             List<NFriend> fds = Util.Instance.Get<List<NFriend>>(str);
-            foreach (var item in items)
+            foreach (var item in fds)
             {
-                NFriend fi = fds.Find(x => x.tel.ToString() == item.phone);
-                if (fi != null)
+                if (items.Exists(x => x.phone == item.tel))
                 {
-                    item.bases = fi.bases;
-                    item.code = fi.code;
+                    FriendItem fi = items.Find(x => x.phone == item.tel);
+                    fi.code = item.code > fi.code ? item.code : fi.code;
                 } else
                 {
-                    Debug.LogError("phone: " + item.phone);
+                    FriendItem fi = new FriendItem();
+                    fi.bases = item.bases;
+                    fi.code = item.tel.StartsWith("9")?-2: item.code;
+                    fi.name = item.name;
+                    fi.phone = item.tel;
+                    items.Add(fi);
                 }
             }
             items.Sort((x,y) => y.code - x.code);

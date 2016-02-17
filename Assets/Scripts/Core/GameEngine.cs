@@ -51,7 +51,7 @@ public sealed class GameEngine : MonoSingle<GameEngine>
 #elif UNITY_ANDROID
         if(Input.GetKeyUp(KeyCode.Escape))
         {
-            Dialog.Instance.Show("确定要退出吗",(ga)=>{ Application.Quit();});
+            Dialog.Instance.Show("确定要退出吗",()=>{ Application.Quit();});
         }
 #endif
 

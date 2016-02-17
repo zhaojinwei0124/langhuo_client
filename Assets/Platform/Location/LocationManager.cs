@@ -28,7 +28,6 @@ namespace Platform
             lat = 31.2918f;
             lng = 121.5318f;
             GameEngine.Instance.StartCoroutine(UpdateLocation());
-          //  GameEngine.Instance.StartCoroutine(GetDistant(121.5f,31.3f,(f)=>Debug.LogError("dis: "+f)));
 #else
             Start();
 #endif
@@ -59,7 +58,8 @@ namespace Platform
         ///获取行政位置
         public IEnumerator UpdateLocation()
         {
-            WWW www = new WWW("http://apis.map.qq.com/ws/geocoder/v1/?location=" + lat + "," + lng + "&key=CAIBZ-GYNLF-GXBJN-JGABN-MMAF3-KAFRW&get_poi=0");
+            WWW www = new WWW("http://apis.map.qq.com/ws/geocoder/v1/?location=" + lat + "," +
+                              lng + "&key=CAIBZ-GYNLF-GXBJN-JGABN-MMAF3-KAFRW&get_poi=0");
             yield return www;
             if (string.IsNullOrEmpty(www.error))
             {
@@ -77,7 +77,8 @@ namespace Platform
         ///距离不超过十公里
         public IEnumerator GetDistant(float lng2, float lat2, DelManager.FloatDelegate del)
         {
-            WWW www = new WWW("http://apis.map.qq.com/ws/distance/v1/?mode=driving&from=" + lat + "," + lng + "&to=" + lat2 + "," + lng2 + "&key=CAIBZ-GYNLF-GXBJN-JGABN-MMAF3-KAFRW");
+            WWW www = new WWW("http://apis.map.qq.com/ws/distance/v1/?mode=driving&from=" + lat + "," + 
+                              lng + "&to=" + lat2 + "," + lng2 + "&key=CAIBZ-GYNLF-GXBJN-JGABN-MMAF3-KAFRW");
             yield return www;
             if (string.IsNullOrEmpty(www.error))
             {

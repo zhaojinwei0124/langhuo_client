@@ -21,7 +21,7 @@ public class BasketPage : View
 
     public GameObject m_objGo;
 
-    const int BASECODE = 20000;
+    const int BASECODE = 200000;
 
 
     public override void RefreshView()
@@ -50,7 +50,7 @@ public class BasketPage : View
 
     private void RefreshGPS()
     {
-        if (!PlayerPrefs.HasKey(PlayerprefID.BASE))
+        if (!PlayerPrefs.HasKey(PlayerprefID.BASE) || PlayerPrefs.GetInt(PlayerprefID.BASE,BASECODE) == BASECODE)
         {
             m_lblLocal.text =GameBaseInfo.Instance.address.city+" "+ GameBaseInfo.Instance.address.district;
         }
@@ -71,6 +71,10 @@ public class BasketPage : View
         {
             TBases _base = Tables.Instance.GetTable<List<TBases>>(TableID.BASE).Find(x => x.id == m_base);
             m_lblLocal.text = _base.district + _base.name;
+        }
+        else 
+        {
+            m_lblLocal.text =GameBaseInfo.Instance.address.city+" "+ GameBaseInfo.Instance.address.district;
         }
     }
 

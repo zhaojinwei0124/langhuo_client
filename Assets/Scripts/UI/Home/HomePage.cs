@@ -8,17 +8,17 @@ using Config;
 public class HomePage : View
 {
     public UIPoolList m_pool;
-    public UITexture m_txtBanner;
     public UILabel m_lblCity;
     public UILabel m_lbllDistric;
     public GameObject m_objType;
+    public BannerToggle m_togBanner;
     private List<HomeScrollData> last_data;
-    const int BASECODE = 20000;
+    const int BASECODE = 200000;
 
     public override void RefreshView()
     {
         base.RefreshView();
-        RefreshBanner();
+        m_togBanner.Refresh();
         LocationManager.Instance.locationHandler += RefreshGPS;
         UIEventListener.Get(m_lblCity.gameObject).onClick=OnLocalClick;
         UIEventListener.Get(m_objType).onClick = OnTypeClick;
@@ -38,7 +38,7 @@ public class HomePage : View
 
     private void RefreshGPS()
     {
-        if (!PlayerPrefs.HasKey(PlayerprefID.BASE))
+        if (!PlayerPrefs.HasKey(PlayerprefID.BASE) || PlayerPrefs.GetInt(PlayerprefID.BASE,BASECODE) == BASECODE)
         {
             m_lblCity.text=GameBaseInfo.Instance.address.city;
             m_lbllDistric.text = string.Format(Localization.Get(10024),GameBaseInfo.Instance.address.district);
@@ -104,23 +104,7 @@ public class HomePage : View
         UIHandler.Instance.Push(PageID.TYPE);
     }
 
-    int i, seq = -1;
 
-    private void RefreshBanner()
-    {
-        if (seq == -1)
-        {
-            TimerManager.Instance.AddTimer(2000, 0, (_seq) =>
-            {
-                seq = _seq;
-                ResourceLoad.TextureHandler.Instance.LoadTexture("banner/banner" + i % 3, (txt) =>
-                {
-                    m_txtBanner.mainTexture = (txt as Texture);
-                    i++;
-                });
-            });
-        }
-    }
 
 
 }

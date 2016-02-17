@@ -20,6 +20,8 @@ namespace Network
 
         public string name;
 
+        public Int64 tel;
+
         public string addr;
 
         public Int64 accept;
