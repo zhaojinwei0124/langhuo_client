@@ -25,8 +25,8 @@ public class FriendNode : UIPoolListNode
             return m_data as FriendItem;
         }
     }
-    
-    bool hasOrder;
+
+
     public override void Refresh()
     {
         base.Refresh();
@@ -56,8 +56,7 @@ public class FriendNode : UIPoolListNode
         }
 
         List<NOrder> orders = GameBaseInfo.Instance.myOrders.FindAll(x => x.state == 0);
-        hasOrder = orders != null && orders.Count > 0 && orders.Exists(x=>x.type==1);
-     
+       
         UIEventListener.Get(m_lblGo.gameObject).onClick = Show;
     }
 
@@ -86,7 +85,7 @@ public class FriendNode : UIPoolListNode
             }, (err) => Toast.Instance.Show(10073));
         } else if (Data.code == -1)
         {
-            NetCommand.Instance.RequestFriend(Data.phone,(str) =>
+            NetCommand.Instance.RequestFriend(Data.phone, (str) =>
             {
                 Toast.Instance.Show(10099);
                 GameBaseInfo.Instance.UpdateAccount();
@@ -94,7 +93,7 @@ public class FriendNode : UIPoolListNode
             });
         } else if (Data.code == -2)
         {
-            NetCommand.Instance.ConfirmFriend(Data.phone,(str) =>
+            NetCommand.Instance.ConfirmFriend(Data.phone, (str) =>
             {
                 Toast.Instance.Show(10100);
                 GameBaseInfo.Instance.UpdateAccount();
@@ -102,14 +101,8 @@ public class FriendNode : UIPoolListNode
             });
         } else if (Data.code <= 1)
         {
-            if (!hasOrder)
-            {
-                Toast.Instance.Show(10081);
-            } else
-            {
-                //发送代提请求
-                NGUITools.FindInParents<FriendPage>(gameObject).OnRight(gameObject);
-            }
+            //发送代提请求
+            NGUITools.FindInParents<FriendPage>(gameObject).OnRight(gameObject);
         } else
         {
             Toast.Instance.Show("logic error");

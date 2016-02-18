@@ -30,11 +30,6 @@ namespace GameCore
         //--------------------------------------
         public Timer(int time, int loop, OnTimeUpHandler timeUpHandler, int sequence)
         {
-            if (loop == 0)
-            {
-                loop = -1;
-            }
-
             m_totalTime = time;
             m_loop = loop;
             m_timeUpHandler = timeUpHandler;

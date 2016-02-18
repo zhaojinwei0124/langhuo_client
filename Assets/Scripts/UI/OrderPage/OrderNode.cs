@@ -7,9 +7,7 @@ public class OrderItem
 {
     public int[] itemids;
     public int[] cnts;
-    public int state;
-    //0代表未付款 >0表示已付款是orderid
-    public int orderid;  
+    public NOrder noder;//null代表未付款  
 }
 
 public class OrderNode : UIPoolListNode
@@ -36,7 +34,7 @@ public class OrderNode : UIPoolListNode
       
         m_lblDesc.text = GetDesc();
 
-        m_lblOK.text = Data.orderid <= 0 ? Localization.Get(10033) + "      " : Localization.Get(10034) + "      ";
+        m_lblOK.text = Data.noder ==null ? Localization.Get(10033) + "      " : m_poplist.items[Data.noder.type] + "      ";
 
     }
 
@@ -56,36 +54,37 @@ public class OrderNode : UIPoolListNode
 
     public void OnPopChange()
     {
-        if (Data.orderid > 0)
-        {
-            m_lblOK.text = m_poplist.GetSelect();
-            pickType = (PickType)m_poplist.GetIndex();
-
-            Debug.Log("pickType: " + pickType);
-
-            Dialog.Instance.Show(10085, () =>
+        TimerManager.Instance.AddTimer(100, (seq) =>{
+            if (Data.noder != null)
             {
-                NetCommand.Instance.StateOder(Data.orderid.ToString(), (int)pickType, (str) =>
+                m_lblOK.text = m_poplist.GetSelect();
+                pickType = (PickType)m_poplist.GetIndex();
+               
+                Debug.Log("pickType: " + pickType);
+
+                Dialog.Instance.Show(10085, () =>
                 {
-                    if (pickType == PickType.CANCEL)
-                        Toast.Instance.Show(10086);
-                    else
-                        Toast.Instance.Show(10087);
-                    GameBaseInfo.Instance.UpdateOrders((success) =>
-                                                           NGUITools.FindInParents<OrderPage>(gameObject).RefreshList());
+                    NetCommand.Instance.StateOder(Data.noder.id.ToString(), (int)pickType, (str) =>
+                    {
+                        if (pickType == PickType.CANCEL)
+                            Toast.Instance.Show(10086);
+                        else
+                            Toast.Instance.Show(10087);
+                        GameBaseInfo.Instance.UpdateOrders((success) =>
+                                                               NGUITools.FindInParents<OrderPage>(gameObject).RefreshList());
+                    });
+                }, () =>
+                {
+                    m_lblOK.text = m_poplist.items [0];
+                    pickType = PickType.SELF;
                 });
-            }, () =>
-            {
-                m_lblOK.text = m_poplist.items [0];
-                pickType = PickType.SELF;
-            });
-            
-        }
+            }
+        });
     }
 
     private void OnCertainClick(GameObject go)
     {
-        if (Data.orderid == 0)
+        if (Data.noder == null)
         {
             AccountPage.showOrderBtn = true;
             UIHandler.Instance.Push(PageID.ACCOUNT);

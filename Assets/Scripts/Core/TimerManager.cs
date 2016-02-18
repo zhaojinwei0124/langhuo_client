@@ -72,6 +72,11 @@ namespace GameCore
             }
         }
 
+        public int AddTimer(int timer,Timer.OnTimeUpHandler onTimeUpHandler)
+        {
+           return AddTimer(timer,1,onTimeUpHandler);
+        }
+
         //----------------------------------------------
         /// 添加Timer
         /// @time               : 计时时间(ms)
@@ -96,7 +101,6 @@ namespace GameCore
         {
             m_timerSequence++;
             m_timers[(int)(useFrameSync ? enTimerType.FrameSync : enTimerType.Normal)].Add(new Timer(time, loop, onTimeUpHandler, m_timerSequence));
-
             return m_timerSequence;
         }
 

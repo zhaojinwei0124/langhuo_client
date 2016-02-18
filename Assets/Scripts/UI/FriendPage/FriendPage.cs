@@ -52,6 +52,7 @@ public class FriendPage : View
         },(err)=>Toast.Instance.Show(10101));
     }
 
+    //检查浪尖地址
     private bool Check()
     {
         if (GameBaseInfo.Instance.user.bases == 20000)
@@ -72,7 +73,15 @@ public class FriendPage : View
         return GameBaseInfo.Instance.myOrders.Exists(x => x.state <= 1);
     }
 
-    //goto langjian
+    private bool CheckSelfOrder()
+    {
+        List<NOrder> orders =GameBaseInfo.Instance.myOrders;
+        Debug.Log("type: "+orders[0].type+" cnt: "+orders.Count+" state: "+orders[0].state);
+        return orders.Count>0 && orders.Exists(x => x.type == 0 && x.state <= 1);
+    }
+
+
+    //go to langjian
     private void OnLeft(GameObject go)
     {
         if (Check())
@@ -90,34 +99,34 @@ public class FriendPage : View
     //qiudaiti or cancel
     public void OnRight(GameObject go)
     {
-        if (GameBaseInfo.Instance.user.code == 1)
+        if (GameBaseInfo.Instance.user.code == 1) //如果去浪尖code =1  点击取消去浪尖code = 0
         {
-            Dialog.Instance.Show(10091, () =>
-            {
-                NetCommand.Instance.UpdateUserCode(0, (str) => 
-                {
-                    Toast.Instance.Show(10076);
-                    GameBaseInfo.Instance.UpdateAccount();
-                    SyncFriends();
-                });
-            });
+            Dialog.Instance.Show(10091, () =>UpdateCode(0));
             return;
         }
-        if (!CheckOrder())
+        if (!CheckOrder()) //如果没有订单 就去浪尖就没有意义
         {
             Toast.Instance.Show(10090);
             return;
         }
-        if (Check())
+        if (Check())    //检查浪尖地址 去浪尖code =1
         {
+            //如果没有消息code = 0, 求代提code =2，如果已经去浪尖code =1, 就没有必要去求代提了
             int code = GameBaseInfo.Instance.user.code == 0 ? 2 : 0;
-            NetCommand.Instance.UpdateUserCode(code, (str) => 
-            {
-                Toast.Instance.Show(10076);
-                GameBaseInfo.Instance.UpdateAccount((succ) => {
-                    RefreshView();});
-            });
+            if(CheckSelfOrder())Dialog.Instance.Show(10034, ()=>UpdateCode(code));
+            else UpdateCode(code);
         }
+    }
+
+
+    private void UpdateCode(int code)
+    {
+        NetCommand.Instance.UpdateUserCode(code, (str) => 
+        {
+            Toast.Instance.Show(10076);
+            GameBaseInfo.Instance.UpdateAccount((succ) => {
+                RefreshView();});
+        });
     }
 
     public void SyncFriends()

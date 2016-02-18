@@ -35,8 +35,7 @@ public class OrderPage : View
             OrderItem item = new OrderItem();
             item.cnts = orders [i].GetCnts();
             item.itemids = orders [i].GetItems();
-            item.orderid = orders [i].id;
-            item.state = orders [i].state;
+            item.noder = orders [i];
             items.Add(item);
         }
 
@@ -44,7 +43,7 @@ public class OrderPage : View
         if (buys.Count > 0)
         {
             OrderItem item = new OrderItem();
-            item.orderid = 0;
+            item.noder = null;
             item.itemids = buys.ConvertAll<int>(x => x.id).ToArray();
             item.cnts = buys.ConvertAll<int>(x => x.cnt).ToArray();
             items.Add(item);
